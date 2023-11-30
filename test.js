@@ -27,9 +27,9 @@ function getStopsAfterString(filePath, searchString) {
   }
 }
 
-// Example usage
-const filePath = 'basic_info.txt';
-const searchString = 'Main & Murray';
-const stopsArray = getStopsAfterString(filePath, searchString);
+// // Example usage
+// const filePath = 'basic_info.txt';
+// const searchString = 'Main & Murray';
+// const stopsArray = getStopsAfterString(filePath, searchString);
 
-console.log(`Stops after "${searchString}":`, stopsArray);
+// console.log(`Stops after "${searchString}":`, stopsArray);
