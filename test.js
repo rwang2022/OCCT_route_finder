@@ -1,26 +1,26 @@
 const fs = require('fs');
 
-function getStopsAfterSelectedStop(selectedStop, filePath) {
+function getStopsAfterString(filePath, searchString) {
   try {
     const data = fs.readFileSync(filePath, 'utf8');
     const lines = data.split('\n');
     
-    let stopsFound = false;
-    const stopsAfterSelectedStop = [];
+    const stopsAfterString = [];
 
     for (const line of lines) {
       const stops = line.split(',').map(stop => stop.trim());
-      
-      if (stopsFound) {
-        stopsAfterSelectedStop.push(...stops);
-      }
 
-      if (stops.includes(selectedStop)) {
-        stopsFound = true;
+      // Check if the line contains the search string
+      if (stops.includes(searchString)) {
+        // Find the index of the search string
+        const searchStringIndex = stops.indexOf(searchString);
+
+        // Add stops after the search string to the array (avoid duplicates)
+        stopsAfterString.push(...stops.slice(searchStringIndex + 1).filter(stop => !stopsAfterString.includes(stop)));
       }
     }
 
-    return stopsAfterSelectedStop;
+    return stopsAfterString;
   } catch (error) {
     console.error('Error reading the file:', error.message);
     return [];
@@ -28,8 +28,8 @@ function getStopsAfterSelectedStop(selectedStop, filePath) {
 }
 
 // Example usage
-const selectedStop = 'Floral & Main';
 const filePath = 'basic_info.txt';
-const stopsArray = getStopsAfterSelectedStop(selectedStop, filePath);
+const searchString = 'Main & Murray';
+const stopsArray = getStopsAfterString(filePath, searchString);
 
-console.log('Stops after', selectedStop, ':', stopsArray);
+console.log(`Stops after "${searchString}":`, stopsArray);
