@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,51 +16,23 @@
       margin-bottom: 20px;
     }
 
-    select {
-      font-size: 18px;
-      margin: 10px;
-    }
-
     button {
       font-size: 18px;
       margin-top: 10px;
     }
-
-    table {
-      border-collapse: collapse;
-      width: 80%;
-      margin-top: 20px;
-      margin-left: 10%;
-    }
-
-    table, th, td {
-      border: 1px solid #ddd;
-    }
-
-    th, td {
-      padding: 15px;
-      text-align: left;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
   </style>
 </head>
+
 <body>
 
-  <h1>I want to go from 
-      <select id="busStops">
-        <option value="Leaves Union">Leaves Union</option>
-        <option value="Floral & Main">Floral & Main</option>
-        <option value="Main & Murray">Main & Murray</option>
-        <option value="Arrives at UDC">Arrives at UDC</option>
-      </select>
+  <h1>I want to go from
+    <input list="busStops">
+    <datalist id="busStops">
+      <!-- Stops will be populated dynamically using JavaScript -->
+    </datalist>
     to
     <select id="location2">
-      <option value="locationX">Location X</option>
-      <option value="locationY">Location Y</option>
-      <option value="locationZ">Location Z</option>
+      <!-- Stops will be populated dynamically using JavaScript -->
     </select>
   </h1>
 
@@ -70,68 +43,23 @@
   </table>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-  // Replace this array with the stops obtained from Python
-const uniqueStops = ['Riverside & Columbus', 'Town Square Mall (Walmart)', 'of places', 'A lot', 'Oakdale Commons', 'Floral & Main', 'Leaves UDC', 'Returns to Mohawk', 'Leroy & Murray', 'Leaves Downtown', 'Parkway Plaza (Target)', 'Leaves Rafuse', 'sorry im lazy', 'ITC', 'Susquehanna', 'State & Hawley', 'Main & Floral', 'UClub', 'Washington & Lehigh', 'Mountainview', 'Leroy & Murray UClub (BY REQUEST)', 'Wegmans', 'on campus', 'UClub (BY REQUEST)', 'UClub (After 1 AM)', 'Parkway Plaza', 'Returns to Lower Campus', 'Arrives on Campus', 'Returns to Campus', 'Leaves Union', 'Arrives Downtown', 'Leaves Mohawk', 'Meadows & Hayes', 'UClub (Before 1 AM)', 'Hillside', 'Arrives at UDC', 'Main & Murray', 'Pharmacy School']
+    document.addEventListener('DOMContentLoaded', function () {
+      const uniqueStops = ['Riverside & Columbus', 'Town Square Mall (Walmart)', 'of places', 'A lot', 'Oakdale Commons', 'Floral & Main', 'Leaves UDC', 'Returns to Mohawk', 'Leroy & Murray', 'Leaves Downtown', 'Parkway Plaza (Target)', 'Leaves Rafuse', 'sorry im lazy', 'ITC', 'Susquehanna', 'State & Hawley', 'Main & Floral', 'UClub', 'Washington & Lehigh', 'Mountainview', 'Leroy & Murray UClub (BY REQUEST)', 'Wegmans', 'on campus', 'UClub (BY REQUEST)', 'UClub (After 1 AM)', 'Parkway Plaza', 'Returns to Lower Campus', 'Arrives on Campus', 'Returns to Campus', 'Leaves Union', 'Arrives Downtown', 'Leaves Mohawk', 'Meadows & Hayes', 'UClub (Before 1 AM)', 'Hillside', 'Arrives at UDC', 'Main & Murray', 'Pharmacy School']
 
-  const busStopsDropdown = document.getElementById('busStops');
+      const busStopsDropdown = document.getElementById('busStops');
 
-  // Populate the dropdown with unique stops
-  uniqueStops.forEach(stop => {
-    const option = document.createElement('option');
-    option.value = stop.toLowerCase(); // Use lowercase values for consistency
-    option.textContent = stop;
-    busStopsDropdown.appendChild(option);
-  });
-});
+      // Populate the dropdown with unique stops
+      uniqueStops.forEach(stop => {
+        const option = document.createElement('option');
+        option.value = stop; // Use lowercase values for consistency
+        option.id="busStop";
+        busStopsDropdown.appendChild(option);
+      });
 
-    function showBuses() {
-      // Get selected values from the dropdowns
-      var location1 = document.getElementById("location1").value;
-      var location2 = document.getElementById("location2").value;
-
-      // Simulate fetching bus information (replace this with your actual data retrieval logic)
-      var busInfo = getBusInfo(location1, location2);
-
-      // Display the bus information in a table
-      displayBusTable(busInfo);
-    }
-
-    function getBusInfo(location1, location2) {
-      // This function should be replaced with your actual data retrieval logic
-      // For now, let's just return a placeholder object
-      return {
-        bus1: { name: "Bus A", departureTime: "10:00 AM", arrivalTime: "12:00 PM" },
-        bus2: { name: "Bus B", departureTime: "11:00 AM", arrivalTime: "1:00 PM" },
-        // Add more bus information as needed
-      };
-    }
-
-    function displayBusTable(busInfo) {
-      var table = document.getElementById("busTable");
-      table.innerHTML = ""; // Clear previous content
-
-      // Create table headers
-      var headerRow = table.insertRow(0);
-      var nameHeader = headerRow.insertCell(0);
-      var departureHeader = headerRow.insertCell(1);
-      var arrivalHeader = headerRow.insertCell(2);
-      nameHeader.innerHTML = "<b>Bus Name</b>";
-      departureHeader.innerHTML = "<b>Departure Time</b>";
-      arrivalHeader.innerHTML = "<b>Arrival Time</b>";
-
-      // Populate the table with bus information
-      for (var bus in busInfo) {
-        var row = table.insertRow(-1);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        cell1.innerHTML = busInfo[bus].name;
-        cell2.innerHTML = busInfo[bus].departureTime;
-        cell3.innerHTML = busInfo[bus].arrivalTime;
-      }
-    }
+      
+    });
   </script>
 
 </body>
+
 </html>
