@@ -49,7 +49,7 @@
 <body>
 
   <h1>I want to go from 
-      <select id="location1">
+      <select id="busStops">
         <option value="Leaves Union">Leaves Union</option>
         <option value="Floral & Main">Floral & Main</option>
         <option value="Main & Murray">Main & Murray</option>
@@ -60,7 +60,7 @@
       <option value="locationX">Location X</option>
       <option value="locationY">Location Y</option>
       <option value="locationZ">Location Z</option>
-    </select>.
+    </select>
   </h1>
 
   <button onclick="showBuses()">Show me buses</button>
@@ -70,6 +70,21 @@
   </table>
 
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  // Replace this array with the stops obtained from Python
+const uniqueStops = ['Riverside & Columbus', 'Town Square Mall (Walmart)', 'of places', 'A lot', 'Oakdale Commons', 'Floral & Main', 'Leaves UDC', 'Returns to Mohawk', 'Leroy & Murray', 'Leaves Downtown', 'Parkway Plaza (Target)', 'Leaves Rafuse', 'sorry im lazy', 'ITC', 'Susquehanna', 'State & Hawley', 'Main & Floral', 'UClub', 'Washington & Lehigh', 'Mountainview', 'Leroy & Murray UClub (BY REQUEST)', 'Wegmans', 'on campus', 'UClub (BY REQUEST)', 'UClub (After 1 AM)', 'Parkway Plaza', 'Returns to Lower Campus', 'Arrives on Campus', 'Returns to Campus', 'Leaves Union', 'Arrives Downtown', 'Leaves Mohawk', 'Meadows & Hayes', 'UClub (Before 1 AM)', 'Hillside', 'Arrives at UDC', 'Main & Murray', 'Pharmacy School']
+
+  const busStopsDropdown = document.getElementById('busStops');
+
+  // Populate the dropdown with unique stops
+  uniqueStops.forEach(stop => {
+    const option = document.createElement('option');
+    option.value = stop.toLowerCase(); // Use lowercase values for consistency
+    option.textContent = stop;
+    busStopsDropdown.appendChild(option);
+  });
+});
+
     function showBuses() {
       // Get selected values from the dropdowns
       var location1 = document.getElementById("location1").value;
