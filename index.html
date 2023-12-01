@@ -217,8 +217,7 @@
       const startStop = document.getElementById('chosenStart').value;
       const endStop = document.getElementById('chosenEnd').value;
       const busLinesIndexes = arrayIndexesLines(startStop, endStop);
-
-      console.log("busLinesIndexes" + busLinesIndexes);
+      console.log("busLinesIndexes: " + busLinesIndexes);
 
     }
 
@@ -230,12 +229,15 @@
       const filePath = 'full info.txt';
       // ^ everything UP TO HERE is fine
 
+      // for each of the bus lines
       for (let i = 0; i < busLinesIndexes.length; i++) {
         getTextForPage(filePath, busLinesIndexes[i], (err, text) => {
           if (err) {
             console.error(err.message);
             return;
           }
+          // print bus line info
+          // const busNumToInfo = { 1: ['WS Westside Outbound', 'Mon-Fri', 'Leaves Union, Floral & Main, Main & Murray,Arrives at UDC'], etc}
           console.log(busNumToInfo[busLinesIndexes[i]], ':\n', text);
         });
       }
