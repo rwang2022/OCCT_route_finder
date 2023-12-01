@@ -231,15 +231,10 @@
 
       // for each of the bus lines
       for (let i = 0; i < busLinesIndexes.length; i++) {
-        getTextForPage(filePath, busLinesIndexes[i], (err, text) => {
-          if (err) {
-            console.error(err.message);
-            return;
-          }
           // print bus line info
           // const busNumToInfo = { 1: ['WS Westside Outbound', 'Mon-Fri', 'Leaves Union, Floral & Main, Main & Murray,Arrives at UDC'], etc}
-          console.log(busNumToInfo[busLinesIndexes[i]], ':\n', text);
-        });
+          console.log("bus line #: " + busLinesIndexes[i]);
+          console.log(busNumToInfo[busLinesIndexes[i]]);
       }
     }
 
