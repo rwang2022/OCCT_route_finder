@@ -249,6 +249,9 @@
       const busDaysOfWeek = busNumToInfo[busNumber][1];
       const busStopsList = busNumToInfo[busNumber][2];
 
+      // find the output div
+      const output = document.getElementById("output");
+
       // Create busDiv
       const busDiv = document.createElement('div');
 
@@ -289,9 +292,12 @@
       // Display scheduleText as table rows and columns
       const tbody = document.createElement('tbody');
 
-      // Split scheduleText into rows
-      const scheduleRows = scheduleText.split('\n');
+      // Split scheduleText into rows, remove whitespace rows
+      const scheduleRows = scheduleText.split('\n').map(row=>row.trim()).filter(row=>row);
+      console.log("scheduleRows: " + scheduleRows);
+
       scheduleRows.forEach(row => {
+        
         const tr = document.createElement('tr');
 
         // Split each row into columns
@@ -309,7 +315,7 @@
       table.appendChild(tbody);
 
       // Append busDiv to the document body or another container
-      document.body.appendChild(busDiv);
+      output.appendChild(busDiv);
     }
 
     function print_info() {
@@ -317,9 +323,12 @@
       const endStop = document.getElementById('chosenEnd').value;
       const busLinesIndexes = arrayIndexesLines(startStop, endStop);
       const filePath = 'full info.txt';
-      // ^ everything UP TO HERE is fine
 
-      // for each of the bus lines
+      // clear previous bus info
+      const output = document.getElementById("output");
+      output.innerHTML = "";
+
+      // for each of the bus lines, get the bus times and create a bus div 
       for (let i = 0; i < busLinesIndexes.length; i++) {
         const busNumber = busLinesIndexes[i];
 
@@ -335,7 +344,13 @@
 
           // const scheduleText = filterLinesByCurrentTime(result);
 
-          createBusDiv(busLinesIndexes, i, filterLinesByCurrentTime(result));
+          if (filterLinesByCurrentTime(result) !== undefined)
+            createBusDiv(busLinesIndexes, i, filterLinesByCurrentTime(result));
+          else if (i == 0) {
+            const p = document.createElement('h2');
+            p.innerHTML = "there are no buses right now that run to those stops";
+            output.appendChild(p);
+          }
         });
 
       }
