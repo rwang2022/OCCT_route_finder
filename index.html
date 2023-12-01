@@ -228,6 +228,15 @@
       return hours1 - hours2;
     }
 
+    function displayAsH2(text) {
+      const h2Element = document.createElement('h2');
+      h2Element.textContent = text;
+
+      // Assuming you have a container div with the id "output" in your HTML
+      const outputContainer = document.getElementById('output');
+      outputContainer.appendChild(h2Element);
+    }
+
     function print_info() {
       const startStop = document.getElementById('chosenStart').value;
       const endStop = document.getElementById('chosenEnd').value;
@@ -240,9 +249,14 @@
         // print bus line info
         // const busNumToInfo = { 1: ['WS Westside Outbound', 'Mon-Fri', 'Leaves Union, Floral & Main, Main & Murray,Arrives at UDC'], etc}
         const busNumber = busLinesIndexes[i];
+        // busNumToInfo[busNumber]); // [name, days of week, stops]
+        const busName = busNumToInfo[busNumber][0];
+        const busDaysOfWeek = busNumToInfo[busNumber][1];
+        const busStopsList = busNumToInfo[busNumber][2];
 
-        console.log("bus line #: " + busNumber); // bus line number
-        console.log(busNumToInfo[busNumber]); // name, days of week, stops
+        displayAsH2("Bus " + busNumber);
+        displayAsH2(busName);
+        displayAsH2(busDaysOfWeek);
 
         // bus line times
         getTextForPage(busNumber, (error, result) => {
