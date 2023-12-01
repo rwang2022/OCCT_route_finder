@@ -77,6 +77,8 @@
       'Leaves Mohawk, Susquehanna, Hillside, Mountainview, Returns to Lower Campus'
     ]
 
+    const busNumToName = {1: 'WS Westside Outbound', 2: 'DCL Downtown Center Leroy Inbound', 3: 'DCL Downtown Center Leroy Outbound', 4: 'WS Westside Inbound', 5: 'UDC University Downtown Center Outbound', 6: 'MS Main Street Inbound', 7: 'MS Main Street Outbound', 8: 'UDC University Downtown Center Inbound', 9: 'LRS Leroy Southside', 10: 'IU ITC-UClub Shuttle', 11: 'UC UClub Shuttle', 12: 'RRT Riviera Ridge - Town Square Mall Shuttle', 13: 'OC Oakdale Commons Shuttle', 14: 'CS Campus Shuttle', 15: 'WS Westside Outbound', 16: 'DCL Downtown Center Leroy Inbound', 17: 'DCL Downtown Center Leroy Outbound', 18: 'WS Westside Inbound', 19: 'LRS Leroy Southside', 20: 'RRT Riviera Ridge - Town Square Mall Shuttle', 21: 'OC Oakdale Commons Shuttle', 22: 'UC UClub Shuttle', 23: 'CS Campus Shuttle', 24: 'DE Downtown Express', 25: 'DE Downtown Express', 26: 'WS Late Nite Westside Outbound', 27: 'DCL Late Nite Downtown Center Leroy Inbound', 28: 'DCL Late Nite Downtown Center Leroy Outbound', 29: 'WS Late Nite Westside Inbound', 30: 'CS Late Nite Campus Shuttle'}
+
     // given startStop, return an array of possible destination stops
     function getStopsAfterString(searchString) {
       try {
@@ -224,7 +226,7 @@
             console.error(err.message);
             return;
           }
-          console.log('Text for PAGE', busLinesIndexes[i], ':\n', text);
+          console.log(busNumToName[busLinesIndexes[i]], ':\n', text);
         });
       }
     }
