@@ -140,6 +140,32 @@
 
     });
 
+    // returns true if both startStop and endStop are in StringStops, and 
+    // startStop appears before endStop. Otherwise, it returns false
+    function containsBoth(StringStops, startStop, endStop) {
+      const stops = StringStops.split(',').map(stop => stop.trim());
+
+      const startStopIndex = stops.indexOf(startStop);
+      const endStopIndex = stops.indexOf(endStop);
+
+      // Check if both startStop and endStop are present on the line
+      return startStopIndex !== -1 && endStopIndex !== -1 && startStopIndex < endStopIndex;
+    }
+
+    // returns array of indexes of lines, i, such that 
+    // containsBoth(lines[i], startStop, endStop) 
+    function arrayIndexesLines(startStop, endStop) {
+      const indexes = [];
+      for (let i = 0; i < lines.length; i++) {
+        if (containsBoth(lines[i], startStop, endStop)) {
+          indexes.push(i);
+        }
+      }
+      return indexes;
+    }
+
+    // console.log(arrayIndexesLines(startStop, endStop));
+
   </script>
 
 </body>
