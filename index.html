@@ -228,38 +228,85 @@
       return hours1 - hours2;
     }
 
-    function displayAsH2(text) {
-      const h2Element = document.createElement('h2');
-      h2Element.textContent = text;
+    // function displayAsH2(text) {
+    //   const h2Element = document.createElement('h2');
+    //   h2Element.textContent = text;
 
-      // Assuming you have a container div with the id "output" in your HTML
-      const outputContainer = document.getElementById('output');
-      outputContainer.appendChild(h2Element);
-    }
+    //   // Assuming you have a container div with the id "output" in your HTML
+    //   const outputContainer = document.getElementById('output');
+    //   outputContainer.appendChild(h2Element);
+    // }
 
-    function displayAsTableHeader(inputString) {
-      // Split the input string by ","
-      const columns = inputString.split(',').map(column => column.trim());
+    // function displayAsTableHeader(inputString) {
+    //   // Split the input string by ","
+    //   const columns = inputString.split(',').map(column => column.trim());
 
-      // Create a table element
+    //   // Create a table element
+    //   const table = document.createElement('table');
+    //   table.border = '1';
+
+    //   // Create table header row
+    //   const headerRow = document.createElement('tr');
+
+    //   // Create and append table header cells
+    //   columns.forEach(columnText => {
+    //     const thElement = document.createElement('th');
+    //     thElement.textContent = columnText;
+    //     headerRow.appendChild(thElement);
+    //   });
+
+    //   // Append the header row to the table
+    //   table.appendChild(headerRow);
+
+    //   // Append the table to the body of the document
+    //   document.body.appendChild(table);
+    // }
+    // Function to create a busDiv for each bus
+    function createBusDiv(busLinesIndexes, i) {
+      const busNumber = busLinesIndexes[i];
+      const busName = busNumToInfo[busNumber][0];
+      const busDaysOfWeek = busNumToInfo[busNumber][1];
+      const busStopsList = busNumToInfo[busNumber][2];
+
+      // Create busDiv
+      const busDiv = document.createElement('div');
+
+      // Create h2 elements
+      const nameH2 = document.createElement('h2');
+      nameH2.textContent = busName;
+
+      const daysOfWeekH2 = document.createElement('h2');
+      daysOfWeekH2.textContent = busDaysOfWeek;
+
+      // Append h2 elements to busDiv
+      busDiv.appendChild(nameH2);
+      busDiv.appendChild(daysOfWeekH2);
+
+      // Display busStopsList as a table header
       const table = document.createElement('table');
-      table.border = '1';
+      const thead = document.createElement('thead');
+      const tr = document.createElement('tr');
 
-      // Create table header row
-      const headerRow = document.createElement('tr');
-
-      // Create and append table header cells
-      columns.forEach(columnText => {
-        const thElement = document.createElement('th');
-        thElement.textContent = columnText;
-        headerRow.appendChild(thElement);
+      // Split busStopsList into columns
+      const stops = busStopsList.split(', ');
+      stops.forEach(stop => {
+        const th = document.createElement('th');
+        th.textContent = stop;
+        tr.appendChild(th);
       });
 
-      // Append the header row to the table
-      table.appendChild(headerRow);
+      // Append thead to table
+      thead.appendChild(tr);
+      table.appendChild(thead);
 
-      // Append the table to the body of the document
-      document.body.appendChild(table);
+      // Append table to busDiv
+      busDiv.appendChild(table);
+
+      // Set busDiv attributes or styles if needed
+      // ...
+
+      // Append busDiv to the document body or another container
+      document.body.appendChild(busDiv);
     }
 
     function print_info() {
@@ -271,20 +318,9 @@
 
       // for each of the bus lines
       for (let i = 0; i < busLinesIndexes.length; i++) {
-        // print bus line info
-        // const busNumToInfo = { 1: ['WS Westside Outbound', 'Mon-Fri', 'Leaves Union, Floral & Main, Main & Murray,Arrives at UDC'], etc}
+        createBusDiv(busLinesIndexes, i);
+
         const busNumber = busLinesIndexes[i];
-        // busNumToInfo[busNumber]); // [name, days of week, stops]
-        const busName = busNumToInfo[busNumber][0];
-        const busDaysOfWeek = busNumToInfo[busNumber][1];
-
-        displayAsH2("Bus " + busNumber);
-        displayAsH2(busName);
-        displayAsH2(busDaysOfWeek);
-
-        const busStopsList = busNumToInfo[busNumber][2]; // stops list, display as table header row
-        displayAsTableHeader(busStopsList);
-
 
         // bus line times
         getTextForPage(busNumber, (error, result) => {
