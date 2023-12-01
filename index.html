@@ -288,10 +288,10 @@
       const tr = document.createElement('tr');
 
       // Split busStopsList into columns
-      const stops = busStopsList.split(', ');
+      const stops = busStopsList.split(',');
       stops.forEach(stop => {
         const th = document.createElement('th');
-        th.textContent = stop;
+        th.textContent = stop.trim();
         tr.appendChild(th);
       });
 
