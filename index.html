@@ -244,7 +244,13 @@
           callback(null, result);
           for (let i = 0; i < busLinesIndexes.length; i++) {
             const outputElement = document.getElementById('output');
-            outputElement.innerHTML += `<p>${busNumToInfo[busLinesIndexes[i]]}:</p><table border="1">${result.split('\n').map(line => `<tr>${line.split(' ').map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}</table>`;
+            const bus_stops_here = busNumToInfo[busLinesIndexes[i]][2].split(",");
+            console.log(bus_stops_here);
+            const tableRow = `<tr>${bus_stops_here.map(item => `<th>${item}</th>`).join('')}</tr>`;
+            outputElement.innerHTML += `<h2>${busNumToInfo[busLinesIndexes[i]][0]}</h2>`;
+            outputElement.innerHTML += `<table border="1">`;
+            // outputElement.innerHTML += tableRow;
+            outputElement.innerHTML += `<table border="1">${tableRow}${result.split('\n').map(line => `<tr>${line.split(' ').map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}</table>`;
             // outputElement.innerHTML += `<p>${busNumToInfo[busLinesIndexes[i]]}:</p><pre>${result}</pre>`;
           }
         })
