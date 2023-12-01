@@ -37,7 +37,7 @@
     </datalist>
   </h1>
 
-  <button onclick="printBusLineIndexes()">Show me buses</button>
+  <button onclick="print_info()">Show me buses</button>
 
   <table id="busTable">
     <!-- Bus information will be displayed here after clicking the button -->
@@ -184,11 +184,50 @@
       }
     }
 
-    function relevantInfo() {
-      // it's in test.js
+
+    function getTextForPage(filePath, pageNumber, callback) {
+      const targetPage = `PAGE ${pageNumber}`;
+
+      fetch(filePath)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Error loading ${filePath}: ${response.status} ${response.statusText}`);
+          }
+          return response.text();
+        })
+        .then(data => {
+          const lines = data.split('\n');
+          const startIndex = lines.findIndex(line => line.includes(targetPage));
+
+          if (startIndex === -1) {
+            throw new Error(`Page ${pageNumber} not found`);
+          }
+
+          const endIndex = lines.findIndex((line, index) => index > startIndex && line.includes(`PAGE ${pageNumber + 1}`));
+
+          const result = lines.slice(startIndex + 4, endIndex !== -1 ? endIndex : undefined).join('\n');
+          callback(null, result);
+        })
+        .catch(error => callback(error, null));
     }
 
 
+    function print_info() {
+      const startStop = document.getElementById('chosenStart').value;
+      const endStop = document.getElementById('chosenEnd').value;
+      const busLinesIndexes = arrayIndexesLines(startStop, endStop);
+      const filePath = 'full info.txt';
+
+      for (let i = 0; i < busLinesIndexes.length; i++) {
+        getTextForPage(filePath, busLinesIndexes[i], (err, text) => {
+          if (err) {
+            console.error(err.message);
+            return;
+          }
+          console.log('Text for PAGE', busLinesIndexes[i], ':\n', text);
+        });
+      }
+    }
 
   </script>
 

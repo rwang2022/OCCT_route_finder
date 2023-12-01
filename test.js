@@ -22,8 +22,8 @@ function getTextForPage(filePath, pageNumber, callback) {
 }
 
 // Example usage
-const filePath = 'full info.txt';
-const pageNumber = 5;
+const filePath = 'path/to/your/file.txt';
+const pageNumber = 1;
 
 getTextForPage(filePath, pageNumber, (err, text) => {
   if (err) {
