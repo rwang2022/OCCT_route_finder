@@ -200,7 +200,41 @@
     }
 
     // given bus times text, return filtered text (bus times >= current time)
-    
+    function filterLinesByCurrentTime(inputText) {
+      return inputText;
+
+      // Get the current time in HH:MM format
+      const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      // Split the input text into lines
+      const lines = inputText.split('\n').filter(item => item != "");
+
+      for (let i = 0; i < lines.length; i++) {
+        const leftTime = lines[i].split(" ")[0];
+        const diff = compareTimes(lines[i], currentTime);
+        if (diff >= 0) {
+          const startIndex = i;
+          break;
+        }
+      }
+
+      lines.slice(startIndex);
+
+      return lines;
+    }
+
+    // boolean function to compare two times in HH:MM format
+    // for now, just compare hours
+    // does NOT take into account minutes or AM/PM
+    function compareTimes(time1, time2) {
+      const [hours1, minutes1] = time1.split(':').map(Number);
+      const [hours2, minutes2] = time2.split(':').map(Number);
+
+      console.log("hours1 " + hours1);
+      console.log("hours2 " + hours2);
+
+      return hours1 - hours2;
+    }
 
     function print_info() {
       const startStop = document.getElementById('chosenStart').value;
@@ -221,7 +255,8 @@
         // bus line times
         getTextForPage(busNumber, (error, result) => {
           if (error) { console.error(error.message); }
-          console.log(result);
+          console.log("all bus times\n" + result);
+          console.log("filtered bus times\n" + filterLinesByCurrentTime(result));
         });
       }
     }
