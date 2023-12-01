@@ -196,6 +196,10 @@
       const endStop = document.getElementById('chosenEnd').value;
       const busLinesIndexes = arrayIndexesLines(startStop, endStop);
 
+      const outputElement = document.getElementById('output');
+      outputElement.innerHTML = '';
+
+
       fetch(filePath)
         .then(response => {
           if (!response.ok) {
