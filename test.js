@@ -3,13 +3,16 @@ function filterLinesByCurrentTime(inputText) {
   const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
   // Split the input text into lines
-  const lines = inputText.split('\n').filter(item=>item!="");
-  
+  const lines = inputText.split('\n').filter(item => item != "");
+
   let startIndex = 0;
 
   for (let i = 0; i < lines.length; i++) {
     const leftTime = lines[i].split(" ")[0];
-    const diff = compareTimes(lines[i], currentTime);
+    const diff = compareTimes(leftTime, currentTime);
+    // console.log("lines[i]: " + lines[i]);
+    // console.log("leftTime: " + leftTime);
+    // console.log("diff: " + diff);
     if (diff >= 0) {
       startIndex = i;
       return lines.slice(startIndex).join("\n");
@@ -17,15 +20,28 @@ function filterLinesByCurrentTime(inputText) {
   }
 }
 
-// boolean function to compare two times in HH:MM format
-// for now, just compare hours
-// does NOT take into account minutes or AM/PM
-function compareTimes(time1, time2) {
-  const [hours1, minutes1] = time1.split(':').map(Number);
-  const [hours2, minutes2] = time2.split(':').map(Number);
+function parseTime(time) {
+  const period = time.slice(-2).toUpperCase();
+  const timePart = time.slice(0, -2);
+  const hours = parseInt(timePart.split(':')[0], 10);
+  const minutes = parseInt(timePart.split(':')[1], 10);
 
-  return hours1 - hours2;
+  // console.log("parseTime: " + [hours, minutes, period]);
+  return [hours, minutes, period];
 }
+
+
+function compareTimes(time1, time2) {
+  const [hours1, minutes1, period1] = parseTime(time1);
+  const [hours2, minutes2, period2] = parseTime(time2);
+
+  // Convert 12-hour format to 24-hour format
+  const adjustedHours1 = (period1 === 'PM' && hours1 !== 12) ? (hours1 + 12) : hours1;
+  const adjustedHours2 = (period2 === 'PM' && hours2 !== 12) ? (hours2 + 12) : hours2;
+
+  return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
+}
+
 
 // Example usage:
 const inputText = `
