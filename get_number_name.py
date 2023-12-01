@@ -8,7 +8,8 @@ def parse_full_info(file_path):
         for line in file:
             if line.startswith('PAGE '):
                 current_page = int(line.split()[1])
-                result_dict[current_page] = next(lines_iter, None).strip()
+                next_three_lines = [next(file).strip() for _ in range(3)]
+                result_dict[current_page] = next_three_lines
 
     return result_dict
 
