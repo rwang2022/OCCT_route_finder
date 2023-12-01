@@ -4,17 +4,17 @@ function filterLinesByCurrentTime(inputText) {
 
   // Split the input text into lines
   const lines = inputText.split('\n').filter(item=>item!="");
+  
+  let startIndex = 0;
 
   for (let i = 0; i < lines.length; i++) {
     const leftTime = lines[i].split(" ")[0];
     const diff = compareTimes(lines[i], currentTime);
     if (diff >= 0) {
-      const startIndex = i;
-      break;
+      startIndex = i;
+      return lines.slice(startIndex).join("\n");
     }
   }
-
-  lines.slice(startIndex);
 }
 
 // boolean function to compare two times in HH:MM format
@@ -23,9 +23,6 @@ function filterLinesByCurrentTime(inputText) {
 function compareTimes(time1, time2) {
   const [hours1, minutes1] = time1.split(':').map(Number);
   const [hours2, minutes2] = time2.split(':').map(Number);
-
-  console.log("hours1 " + hours1);
-  console.log("hours2 " + hours2);
 
   return hours1 - hours2;
 }
@@ -68,4 +65,4 @@ Mon-Thu10:40PM 10:43PM 10:49PM 11:00PM
 Fri11:35PM 11:38PM 11:44PM 11:55PM
 `;
 
-filterLinesByCurrentTime(inputText);
+console.log(filterLinesByCurrentTime(inputText));
