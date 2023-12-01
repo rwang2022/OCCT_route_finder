@@ -229,7 +229,7 @@
     }
 
     // Function to create a busDiv for each bus
-    function createBusDiv(busLinesIndexes, i) {
+    function createBusDiv(busLinesIndexes, i, scheduleText) {
       const busNumber = busLinesIndexes[i];
       const busName = busNumToInfo[busNumber][0];
       const busDaysOfWeek = busNumToInfo[busNumber][1];
@@ -272,6 +272,28 @@
       // Set busDiv attributes or styles if needed
       // ...
 
+      // Display scheduleText as table rows and columns
+      const tbody = document.createElement('tbody');
+
+      // Split scheduleText into rows
+      const scheduleRows = scheduleText.split('\n');
+      scheduleRows.forEach(row => {
+        const tr = document.createElement('tr');
+
+        // Split each row into columns
+        const columns = row.split(' ');
+        columns.forEach(column => {
+          const td = document.createElement('td');
+          td.textContent = column.trim();
+          tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+      });
+
+      // Append tbody to table
+      table.appendChild(tbody);
+
       // Append busDiv to the document body or another container
       document.body.appendChild(busDiv);
     }
@@ -285,16 +307,23 @@
 
       // for each of the bus lines
       for (let i = 0; i < busLinesIndexes.length; i++) {
-        createBusDiv(busLinesIndexes, i);
-
         const busNumber = busLinesIndexes[i];
 
         // bus line times
         getTextForPage(busNumber, (error, result) => {
-          if (error) { console.error(error.message); }
+          if (error) {
+            console.error(error.message);
+            return;
+          }
+
           // console.log("all bus times\n" + result);
           console.log("filtered bus times\n" + filterLinesByCurrentTime(result));
+
+          // const scheduleText = filterLinesByCurrentTime(result);
+
+          createBusDiv(busLinesIndexes, i, filterLinesByCurrentTime(result));
         });
+
       }
     }
 
