@@ -127,10 +127,6 @@
         const destinationStopsDropdown = document.getElementById("location2");
         const destinationStops = getStopsAfterString(startStop);
 
-        console.log("busStopsDropdown" + busStopsDropdown);
-        console.log("Start Stop:" +  startStop);
-        console.log("Destination Stops:" + destinationStops);
-
         // Populate destination stops dropdown with possible stops
         destinationStopsDropdown.innerHTML = '';
         destinationStops.forEach(stop => {
