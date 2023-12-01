@@ -43,6 +43,10 @@
     <!-- Bus information will be displayed here after clicking the button -->
   </table>
 
+  <div id="output">
+    <!-- Will be populated dynamically -->
+  </div>
+
   <script>
     const lines = [
       'Leaves Union, Floral & Main, Main & Murray, Arrives at UDC',
@@ -77,7 +81,7 @@
       'Leaves Mohawk, Susquehanna, Hillside, Mountainview, Returns to Lower Campus'
     ]
 
-    const busNumToName = {1: 'WS Westside Outbound', 2: 'DCL Downtown Center Leroy Inbound', 3: 'DCL Downtown Center Leroy Outbound', 4: 'WS Westside Inbound', 5: 'UDC University Downtown Center Outbound', 6: 'MS Main Street Inbound', 7: 'MS Main Street Outbound', 8: 'UDC University Downtown Center Inbound', 9: 'LRS Leroy Southside', 10: 'IU ITC-UClub Shuttle', 11: 'UC UClub Shuttle', 12: 'RRT Riviera Ridge - Town Square Mall Shuttle', 13: 'OC Oakdale Commons Shuttle', 14: 'CS Campus Shuttle', 15: 'WS Westside Outbound', 16: 'DCL Downtown Center Leroy Inbound', 17: 'DCL Downtown Center Leroy Outbound', 18: 'WS Westside Inbound', 19: 'LRS Leroy Southside', 20: 'RRT Riviera Ridge - Town Square Mall Shuttle', 21: 'OC Oakdale Commons Shuttle', 22: 'UC UClub Shuttle', 23: 'CS Campus Shuttle', 24: 'DE Downtown Express', 25: 'DE Downtown Express', 26: 'WS Late Nite Westside Outbound', 27: 'DCL Late Nite Downtown Center Leroy Inbound', 28: 'DCL Late Nite Downtown Center Leroy Outbound', 29: 'WS Late Nite Westside Inbound', 30: 'CS Late Nite Campus Shuttle'}
+    const busNumToName = { 1: 'WS Westside Outbound', 2: 'DCL Downtown Center Leroy Inbound', 3: 'DCL Downtown Center Leroy Outbound', 4: 'WS Westside Inbound', 5: 'UDC University Downtown Center Outbound', 6: 'MS Main Street Inbound', 7: 'MS Main Street Outbound', 8: 'UDC University Downtown Center Inbound', 9: 'LRS Leroy Southside', 10: 'IU ITC-UClub Shuttle', 11: 'UC UClub Shuttle', 12: 'RRT Riviera Ridge - Town Square Mall Shuttle', 13: 'OC Oakdale Commons Shuttle', 14: 'CS Campus Shuttle', 15: 'WS Westside Outbound', 16: 'DCL Downtown Center Leroy Inbound', 17: 'DCL Downtown Center Leroy Outbound', 18: 'WS Westside Inbound', 19: 'LRS Leroy Southside', 20: 'RRT Riviera Ridge - Town Square Mall Shuttle', 21: 'OC Oakdale Commons Shuttle', 22: 'UC UClub Shuttle', 23: 'CS Campus Shuttle', 24: 'DE Downtown Express', 25: 'DE Downtown Express', 26: 'WS Late Nite Westside Outbound', 27: 'DCL Late Nite Downtown Center Leroy Inbound', 28: 'DCL Late Nite Downtown Center Leroy Outbound', 29: 'WS Late Nite Westside Inbound', 30: 'CS Late Nite Campus Shuttle' }
 
     // given startStop, return an array of possible destination stops
     function getStopsAfterString(searchString) {
@@ -170,7 +174,7 @@
       const indexes = [];
       for (let i = 0; i < lines.length; i++) {
         if (containsBoth(lines[i], startStop, endStop)) {
-          indexes.push(i+1);
+          indexes.push(i + 1);
         }
       }
       return indexes;
@@ -189,6 +193,9 @@
 
     function getTextForPage(filePath, pageNumber, callback) {
       const targetPage = `PAGE ${pageNumber}`;
+      const startStop = document.getElementById('chosenStart').value;
+      const endStop = document.getElementById('chosenEnd').value;
+      const busLinesIndexes = arrayIndexesLines(startStop, endStop);
 
       fetch(filePath)
         .then(response => {
@@ -209,6 +216,10 @@
 
           const result = lines.slice(startIndex + 4, endIndex !== -1 ? endIndex : undefined).join('\n');
           callback(null, result);
+          for (let i = 0; i < busLinesIndexes.length; i++) {
+            const outputElement = document.getElementById('output');
+            outputElement.innerHTML = `<p>${busNumToName[busLinesIndexes[i]]}:</p><pre>${result}</pre>`;
+          }
         })
         .catch(error => callback(error, null));
     }
