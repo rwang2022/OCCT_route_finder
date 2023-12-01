@@ -217,10 +217,7 @@
 
         // bus line times
         getTextForPage(busNumber, (error, result) => {
-          if (error) {
-            console.error(error.message);
-            return;
-          }
+          if (error) { console.error(error.message); }
           console.log(result);
         });
       }
