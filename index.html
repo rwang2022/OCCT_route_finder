@@ -26,7 +26,7 @@
 <body>
 
   <h1>I want to go from
-    <input list="busStops">
+    <input list="busStops" id="chosenStart">
     <datalist id="busStops">
       <!-- Stops will be populated dynamically using JavaScript -->
     </datalist>
@@ -103,6 +103,8 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+      
+      
       // START stop
       const uniqueStops = ['Riverside & Columbus', 'Town Square Mall (Walmart)', 'of places', 'A lot', 'Oakdale Commons', 'Floral & Main', 'Leaves UDC', 'Returns to Mohawk', 'Leroy & Murray', 'Leaves Downtown', 'Parkway Plaza (Target)', 'Leaves Rafuse', 'sorry im lazy', 'ITC', 'Susquehanna', 'State & Hawley', 'Main & Floral', 'UClub', 'Washington & Lehigh', 'Mountainview', 'Leroy & Murray UClub (BY REQUEST)', 'Wegmans', 'on campus', 'UClub (BY REQUEST)', 'UClub (After 1 AM)', 'Parkway Plaza', 'Returns to Lower Campus', 'Arrives on Campus', 'Returns to Campus', 'Leaves Union', 'Arrives Downtown', 'Leaves Mohawk', 'Meadows & Hayes', 'UClub (Before 1 AM)', 'Hillside', 'Arrives at UDC', 'Main & Murray', 'Pharmacy School']
       const busStopsDropdown = document.getElementById('busStops');
@@ -114,27 +116,32 @@
         option.id = "busStop";
         busStopsDropdown.appendChild(option);
       });
-    });
 
-
-    document.addEventListener('change', function () {
+      // console.log(busStopsDropdown.value);
+      
       // END stop
-      const destinationStopsDropdown = document.getElementById("location2");
-      const startStop = 'Leaves UDC';
-      const destinationStops = getStopsAfterString(startStop);
+      document.addEventListener('input', function () {
+        console.log("busStopsDropdown changed!");
+        const startStop = document.getElementById('chosenStart').value;
 
-      console.log("please?");
-      console.log("Start Stop:", startStop);
-      console.log("Destination Stops:", destinationStops);
+        const destinationStopsDropdown = document.getElementById("location2");
+        const destinationStops = getStopsAfterString(startStop);
 
-      // Populate destination stops dropdown with possible stops
-      destinationStopsDropdown.innerHTML = '';
-      destinationStops.forEach(stop => {
-        const option = document.createElement('option');
-        option.value = stop;
-        option.id = "busStop";
-        destinationStopsDropdown.appendChild(option);
+        console.log("busStopsDropdown" + busStopsDropdown);
+        console.log("Start Stop:" +  startStop);
+        console.log("Destination Stops:" + destinationStops);
+
+        // Populate destination stops dropdown with possible stops
+        destinationStopsDropdown.innerHTML = '';
+        destinationStops.forEach(stop => {
+          const option = document.createElement('option');
+          option.value = stop;
+          option.id = "busStop";
+          destinationStopsDropdown.appendChild(option);
+        });
       });
+
+
     });
 
   </script>
