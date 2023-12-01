@@ -168,7 +168,7 @@
       const indexes = [];
       for (let i = 0; i < lines.length; i++) {
         if (containsBoth(lines[i], startStop, endStop)) {
-          indexes.push(i);
+          indexes.push(i+1);
         }
       }
       return indexes;
