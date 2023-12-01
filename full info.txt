@@ -1,7 +1,7 @@
 PAGE 1
 WS Westside Outbound
 Mon-Fri
-Leaves Union, Floral & Main, Main & Murray,ArriveSatUDC
+Leaves Union, Floral & Main, Main & Murray, Arrives at UDC
 7:35AM 7:44AM 7:50AM 8:00AM
 8:45AM 8:54AM 9:00AM 9:10AM
 9:05AM 9:14AM 9:20AM 9:30AM
@@ -76,7 +76,7 @@ Fri11:35PM 11:38PM 11:44PM 11:55PM
 PAGE 3
 DCL Downtown Center Leroy Outbound
 Mon-Fri
-Leaves Union, Riverside & Columbus, Leroy & Murray,ArriveSatUDC
+Leaves Union, Riverside & Columbus, Leroy & Murray,Arrives at UDC
 7:00AM 7:06AM 7:11AM 7:18AM
 7:30AM 7:36AM 7:41AM 7:48AM
 8:00AM 8:06AM 8:11AM 8:18AM
@@ -147,7 +147,7 @@ Mon-Thu12:00AM 12:03AM 12:09AM 12:25AM
 PAGE 5
 UDC University Downtown Center Outbound
 Mon-Fri
-Leaves Union,ArriveSatUDC
+Leaves Union,Arrives at UDC
 7:00AM 7:15AM
 7:15AM 7:30AM
 7:30AM 7:45AM
@@ -194,7 +194,7 @@ Leaves UDC, Main & Murray, Main & Floral,Pharmacy School, Returns to Campus
 PAGE 7
 MS Main Street Outbound
 Mon-Fri
-Leaves Union,Pharmacy School, Main & Floral, Main & Murray,ArriveSatUDC
+Leaves Union,Pharmacy School, Main & Floral, Main & Murray,Arrives at UDC
 8:05AM 8:14AM 8:17AM 8:23AM 8:35AM
 8:20AM 8:29AM 8:32AM 8:38AM 8:50AM
 9:00AM 9:09AM 9:12AM 9:18AM 9:30AM
@@ -320,7 +320,7 @@ A lot, ofPlaces, on campus, sorry im lazy
 PAGE 15
 WS Westside Outbound 
 Saturday & Sunday
-Leaves Union, Floral & Main, Main & Murray,ArriveSatUDC
+Leaves Union, Floral & Main, Main & Murray,Arrives at UDC
 10:00AM 10:09AM 10:15AM 10:25AM
 10:45AM 10:54AM 11:00AM 11:10AM
 11:30AM 11:39AM 11:45AM 11:55AM
@@ -370,7 +370,7 @@ Sun12:25AM 12:28AM 12:34AM 12:45AM
 PAGE 17
 DCL Downtown Center Leroy Outbound
 Saturday & Sunday
-Leaves Union, Riverside & Columbus, Leroy & Murray,ArriveSatUDC
+Leaves Union, Riverside & Columbus, Leroy & Murray,Arrives at UDC
 8:45AM 8:51AM 8:56AM 9:03AM
 9:30AM 9:36AM 9:41AM 9:48AM
 10:15AM 10:21AM 10:26AM 10:33AM
