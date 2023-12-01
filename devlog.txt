@@ -1,1 +1,1 @@
-you need to display a message when there are NO buses at that time whatsoever
+I still need to exclude results for Sunday or Saturday buses when it is Saturday 
