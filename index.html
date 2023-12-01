@@ -202,16 +202,6 @@
       return indexes;
     }
 
-    function printBusLineIndexes() {
-      const startStop = document.getElementById('chosenStart').value;
-      const endStop = document.getElementById('chosenEnd').value;
-      const busLinesIndexes = arrayIndexesLines(startStop, endStop);
-      for (let i = 0; i < busLinesIndexes.length; i++) {
-        console.log(busLinesIndexes[i] + " ");
-        console.log(lines[busLinesIndexes[i]]);
-      }
-    }
-
 
     function print_info() {
       const startStop = document.getElementById('chosenStart').value;
