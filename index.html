@@ -241,8 +241,8 @@
       }
     }
 
-    function datesMatch() {
-      
+    function datesMatch(dateString) {
+      // see if dateString matches the current day of the week
     }
 
 
@@ -252,6 +252,8 @@
       const busName = busNumToInfo[busNumber][0];
       const busDaysOfWeek = busNumToInfo[busNumber][1];
       const busStopsList = busNumToInfo[busNumber][2];
+
+      if (datesMatch(busDaysOfWeek)) return;
 
       // find the output div
       const output = document.getElementById("output");
