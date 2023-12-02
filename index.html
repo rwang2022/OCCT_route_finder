@@ -341,8 +341,8 @@
           if (filterLinesByCurrentTime(result) === undefined) {
             console.log("Bus " + busNumber + " is not running right now.");
           } else {
-            console.log("filtered bus times: \n" + filterLinesByCurrentTime(result));
             createBusDiv(busLinesIndexes[i], filterLinesByCurrentTime(result));
+            // console.log("filtered bus times: \n" + filterLinesByCurrentTime(result));
           }
         });
       }
