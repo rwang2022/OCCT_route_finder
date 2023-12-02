@@ -43,6 +43,11 @@
       background-color: #4CAF50;
       color: white;
     }
+
+    th.dark {
+      background-color: #333;
+      color: #fff;
+    }
   </style>
 </head>
 
@@ -260,6 +265,9 @@
 
     // Function to create a busDiv for each bus
     function createBusDiv(busLinesIndexes, i, scheduleText) {
+      const startStop = document.getElementById('chosenStart').value;
+      const endStop = document.getElementById('chosenEnd').value;
+
       const busNumber = busLinesIndexes[i];
       const busName = busNumToInfo[busNumber][0];
       const busDaysOfWeek = busNumToInfo[busNumber][1];
@@ -273,16 +281,12 @@
       // Create busDiv
       const busDiv = document.createElement('div');
 
-      // Create h2 elements
-      const nameH2 = document.createElement('h2');
-      nameH2.textContent = busName;
-
-      const daysOfWeekH2 = document.createElement('h2');
-      daysOfWeekH2.textContent = busDaysOfWeek;
+      // Create h2 element with num, name, daysOfWeek
+      const busGeneralInfo = document.createElement('h2');
+      busGeneralInfo.textContent = "#" + busNumber + " " + busName + " " + busDaysOfWeek;
 
       // Append h2 elements to busDiv
-      busDiv.appendChild(nameH2);
-      busDiv.appendChild(daysOfWeekH2);
+      busDiv.appendChild(busGeneralInfo);
 
       // Display busStopsList as a table header
       const table = document.createElement('table');
@@ -294,6 +298,9 @@
       stops.forEach(stop => {
         const th = document.createElement('th');
         th.textContent = stop.trim();
+        if (th.textContent == startStop || th.textContent == endStop) {
+          th.textContent = "STOP";
+        }
         tr.appendChild(th);
       });
 
