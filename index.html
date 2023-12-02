@@ -44,9 +44,11 @@
       color: white;
     }
 
-    th.dark {
-      background-color: #333;
-      color: #fff;
+    input, datalist, option, button {
+      height: 2em; 
+      width: 10em;
+      color: blue;
+      font-size: x-large;
     }
   </style>
 </head>
@@ -299,7 +301,7 @@
         const th = document.createElement('th');
         th.textContent = stop.trim();
         if (th.textContent == startStop || th.textContent == endStop) {
-          th.textContent = "STOP";
+          th.style.backgroundColor = '#5E716A';
         }
         tr.appendChild(th);
       });
