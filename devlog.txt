@@ -1,1 +1,2 @@
-I still need to exclude results for Sunday or Saturday buses when it is Saturday 
+within each table, there is Sun/Sat/etc info to left and right, need to remove unnecessary
+need to learn how to handle N/A in some of them, unless it IS handled?
