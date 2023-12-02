@@ -77,7 +77,7 @@
     </datalist>
   </h1>
 
-  <button onclick="print_info()">Show me buses</button>
+  <button onclick="displayAllFilteredBuses()">Show me buses</button>
 
   <table id="busTable">
     <!-- Bus information will be displayed here after clicking the button -->
@@ -91,25 +91,18 @@
     const lines = ['Leaves Union, Floral & Main, Main & Murray, Arrives at UDC', 'Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus', 'Leaves Union, Riverside & Columbus, Leroy & Murray, Arrives at UDC', 'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus', 'Leaves Union, Arrives at UDC', 'Leaves UDC, Main & Murray, Main & Floral, Pharmacy School, Returns to Campus', 'Leaves Union, Pharmacy School, Main & Floral, Main & Murray, Arrives at UDC', 'Leaves UDC, Arrives on Campus', 'Leaves Union, Floral & Main, Leroy & Murray, UClub (BY REQUEST), Returns to Campus', 'Leaves Mohawk, ITC, UClub, Meadows & Hayes, Returns to Mohawk', 'Leaves Mohawk, UClub, Washington & Lehigh', 'Leaves Rafuse, Parkway Plaza, Town Square Mall (Walmart), Returns to Campus', 'Leaves Rafuse, Oakdale Commons, Wegmans, Returns to Campus', 'A lot, of places, on campus, sorry im lazy', 'Leaves Union, Floral & Main, Main & Murray, Arrives at UDC', 'Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus', 'Leaves Union, Riverside & Columbus, Leroy & Murray, Arrives at UDC', 'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus', 'Leaves Union, Floral & Main, Leroy & Murray, UClub (BY REQUEST), Returns to Campus', 'Leaves Rafuse, Parkway Plaza (Target), Town Square Mall (Walmart), Returns to Campus', 'Leaves Rafuse, Oakdale Commons, Wegmans, Returns to Campus', 'Leaves Mohawk, UClub, Washington & Lehigh', 'Leaves Mohawk, Susquehanna, Hillside, Mountainview, Returns to Lower Campus', 'Leaves Union, UClub (Before 1 AM), Arrives Downtown, UClub (After 1 AM), Returns to Campus', 'Leaves Union, UClub (Before 1 AM), Arrives Downtown, UClub (After 1 AM), Returns to Campus', 'Leaves Union, Floral & Main, Main & Murray, State & Hawley', 'Leaves Downtown, Leroy & Murray, Riverside & Columbus, Returns to Campus', 'Leaves Union, Riverside & Columbus, Leroy & Murray, State & Hawley', 'Leaves Downtown, Main & Murray, Floral & Main, Returns to Campus', 'Leaves Mohawk, Susquehanna, Hillside, Mountainview, Returns to Lower Campus']
     const busNumToInfo = { 1: ['WS Westside Outbound', 'Mon-Fri', 'Leaves Union, Floral & Main, Main & Murray,Arrives at UDC'], 2: ['DCL Downtown Center Leroy Inbound', 'Mon-Fri', 'Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus'], 3: ['DCL Downtown Center Leroy Outbound', 'Mon-Fri', 'Leaves Union, Riverside & Columbus, Leroy & Murray,Arrives at UDC'], 4: ['WS Westside Inbound', 'Mon-Fri', 'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus'], 5: ['UDC University Downtown Center Outbound', 'Mon-Fri', 'Leaves Union,Arrives at UDC'], 6: ['MS Main Street Inbound', 'Mon-Fri', 'Leaves UDC, Main & Murray, Main & Floral,Pharmacy School, Returns to Campus'], 7: ['MS Main Street Outbound', 'Mon-Fri', 'Leaves Union,Pharmacy School, Main & Floral, Main & Murray,Arrives at UDC'], 8: ['UDC University Downtown Center Inbound', 'Mon-Fri', 'Leaves UDC,Arrives on Campus'], 9: ['LRS Leroy Southside', 'Mon-Fri', 'Leaves Union, Floral & Main, Leroy & Murray, UClub (BY REQUEST), Returns to Campus'], 10: ['IU ITC-UClub Shuttle', 'Mon-Fri', 'Leaves Mohawk, ITC, UClub, Meadows & Hayes, Returns to Mohawk'], 11: ['UC UClub Shuttle', 'Mon-Fri', 'Leaves Mohawk, UClub, Washington & Lehigh'], 12: ['RRT Riviera Ridge - Town Square Mall Shuttle', 'Mon-Fri', 'Leaves Rafuse,ParkwayPlaza, Town Square Mall (Walmart), Returns to Campus'], 13: ['OC Oakdale Commons Shuttle', 'Mon-Fri', 'Leaves Rafuse, Oakdale Commons, Wegmans, Returns to Campus'], 14: ['CS Campus Shuttle', 'Mon-Fri', 'A lot, ofPlaces, on campus, sorry im lazy'], 15: ['WS Westside Outbound', 'Saturday & Sunday', 'Leaves Union, Floral & Main, Main & Murray,Arrives at UDC'], 16: ['DCL Downtown Center Leroy Inbound', 'Saturday & Sunday', 'Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus'], 17: ['DCL Downtown Center Leroy Outbound', 'Saturday & Sunday', 'Leaves Union, Riverside & Columbus, Leroy & Murray,Arrives at UDC'], 18: ['WS Westside Inbound', 'Saturday & Sunday', 'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus'], 19: ['LRS Leroy Southside', 'Saturday & Sunday', 'Leaves Union, Floral & Main, Leroy & Murray, UClub (BY REQUEST), Returns to Campus'], 20: ['RRT Riviera Ridge - Town Square Mall Shuttle', 'Saturday & Sunday', 'Leaves Rafuse,ParkwayPlaza (Target), Town Square Mall (Walmart), Returns to Campus'], 21: ['OC Oakdale Commons Shuttle', 'Saturday & Sunday', 'Leaves Rafuse, Oakdale Commons, Wegmans, Returns to Campus'], 22: ['UC UClub Shuttle', 'Saturday & Sunday', 'Leaves Mohawk, UClub, Washington & Lehigh'], 23: ['CS Campus Shuttle', 'Saturday & Sunday', 'Leaves Mohawk, Susquehanna, Hillside, Mountainview, Returns to Lower Campus'], 24: ['DE Downtown Express', 'Friday', 'Leaves Union, UClub (Before 1AM),Arrives Downtown, UClub (After 1AM), Returns to Campus'], 25: ['DE Downtown Express', 'Saturday', 'Leaves Union, UClub (Before 1AM),Arrives Downtown, UClub (After 1AM), Returns to Campus'], 26: ['WS Late Nite Westside Outbound', 'Friday & Saturday', 'Leaves Union, Floral & Main, Main & Murray, State & Hawley'], 27: ['DCL Late Nite Downtown Center Leroy Inbound', 'Friday & Saturday', 'Leaves Downtown, Leroy & Murray, Riverside & Columbus, Returns to Campus'], 28: ['DCL Late Nite Downtown Center Leroy Outbound', 'Friday & Saturday', 'Leaves Union, Riverside & Columbus, Leroy & Murray, State & Hawley'], 29: ['WS Late Nite Westside Inbound', 'Friday & Saturday', 'Leaves Downtown, Main & Murray, Floral & Main, Returns to Campus'], 30: ['CS Late Nite Campus Shuttle', 'Friday & Saturday', 'Leaves Mohawk, Susquehanna, Hillside, Mountainview, Returns to Lower Campus'] }
     const uniqueStops = ['A lot', 'Arrives Downtown', 'Arrives at UDC', 'Arrives on Campus', 'Floral & Main', 'Hillside', 'ITC', 'Leaves Downtown', 'Leaves Mohawk', 'Leaves Rafuse', 'Leaves UDC', 'Leaves Union', 'Leroy & Murray', 'Leroy & Murray UClub (BY REQUEST)', 'Main & Floral', 'Main & Murray', 'Meadows & Hayes', 'Mountainview', 'Oakdale Commons', 'Parkway Plaza', 'Parkway Plaza (Target)', 'Pharmacy School', 'Returns to Campus', 'Returns to Lower Campus', 'Returns to Mohawk', 'Riverside & Columbus', 'State & Hawley', 'Susquehanna', 'Town Square Mall (Walmart)', 'UClub', 'UClub (After 1 AM)', 'UClub (BY REQUEST)', 'UClub (Before 1 AM)', 'Washington & Lehigh', 'Wegmans', 'of places', 'on campus', 'sorry im lazy']
+    
     // given startStop, return an array of possible destination stops
     function getStopsAfterString(searchString) {
       try {
-
         const stopsAfterString = [];
-
         for (const line of lines) {
           const stops = line.split(',').map(stop => stop.trim());
-
-          // Check if the line contains the search string
           if (stops.includes(searchString)) {
-            // Find the index of the search string
             const searchStringIndex = stops.indexOf(searchString);
-
-            // Add stops after the search string to the array (avoid duplicates)
             stopsAfterString.push(...stops.slice(searchStringIndex + 1).filter(stop => !stopsAfterString.includes(stop)));
           }
         }
-
         return stopsAfterString;
       } catch (error) {
         console.error('Error reading the file:', error.message);
@@ -118,49 +111,30 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-
-
       // START stop
       const busStopsDropdown = document.getElementById('busStops');
-
-      // Populate the dropdown with unique stops
+      
+      // Populate possible START stops
       uniqueStops.forEach(stop => {
         const option = document.createElement('option');
-        option.value = stop; // Use lowercase values for consistency
-        option.id = "busStop";
+        option.value = stop; 
         busStopsDropdown.appendChild(option);
       });
 
-      // console.log(busStopsDropdown.value);
-
-      // END stop
       document.addEventListener('input', function () {
-        // console.log("busStopsDropdown changed!");
         const startStop = document.getElementById('chosenStart').value;
-
         const destinationStopsDropdown = document.getElementById("location2");
-        const destinationStops = getStopsAfterString(startStop);
+        const destinationStops = getStopsAfterString(startStop); // array of possible END stops
 
-        // Populate destination stops dropdown with possible stops
+        // Populate possible destination stops dropdown (depends on choice of START stop)
         destinationStopsDropdown.innerHTML = '';
         destinationStops.forEach(stop => {
           const option = document.createElement('option');
           option.value = stop;
           option.id = "busStop";
           destinationStopsDropdown.appendChild(option);
-
-          // After endStop is selected, print start and end Stop
-          const endStopInput = document.getElementById('chosenEnd');
-          endStopInput.addEventListener('input', function () {
-            const endStop = document.getElementById('chosenEnd').value;
-            // console.log("startStop: " + startStop);
-            // console.log("endStop: " + endStop);
-          });
         });
-
       });
-
-
     });
 
     // returns true if both startStop and endStop are in StringStops, and 
@@ -187,8 +161,37 @@
       return indexes;
     }
 
-    // given pageNumber, return bus times as a string 
+    // helper function for compareTimes
+    // takes in 1:23PM
+    // returns [1,23,'PM']
+    function parseTime(time) {
+      const period = time.slice(-2).toUpperCase();
+      const timePart = time.slice(0, -2);
+      const hours = parseInt(timePart.split(':')[0], 10);
+      const minutes = parseInt(timePart.split(':')[1], 10);
+
+      // console.log("parseTime: " + [hours, minutes, period]);
+      return [hours, minutes, period];
+    }
+
+    // takes in 1:23PM, 2:34AM => parseTime
+    // returns time1 - time2, takes into account AM/PM
+    function compareTimes(time1, time2) {
+      const [hours1, minutes1, period1] = parseTime(time1);
+      const [hours2, minutes2, period2] = parseTime(time2);
+
+      // Convert 12-hour format to 24-hour format
+      const adjustedHours1 = (period1 === 'PM' && hours1 !== 12) ? (hours1 + 12) : hours1;
+      const adjustedHours2 = (period2 === 'PM' && hours2 !== 12) ? (hours2 + 12) : hours2;
+
+      return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
+    }
+
+    // helper function to displayAllFilteredBuses()
+    // takes in a single page number 
+    // return (unfiltered) bus times as a string 
     function getTextForPage(pageNumber, callback) {
+      // console.log("bus number " + pageNumber);
       const filePath = "full info.txt"
       const targetPage = `PAGE ${pageNumber}`;
 
@@ -206,7 +209,6 @@
           if (startIndex === -1) {
             throw new Error(`Page ${pageNumber} not found`);
           }
-
           const endIndex = lines.findIndex((line, index) => index > startIndex && line.includes(`PAGE ${pageNumber + 1}`));
 
           const result = lines.slice(startIndex + 4, endIndex !== -1 ? endIndex : undefined).join('\n');
@@ -215,88 +217,56 @@
         .catch(error => callback(error, null));
     }
 
-    function parseTime(time) {
-      const period = time.slice(-2).toUpperCase();
-      const timePart = time.slice(0, -2);
-      const hours = parseInt(timePart.split(':')[0], 10);
-      const minutes = parseInt(timePart.split(':')[1], 10);
-
-      // console.log("parseTime: " + [hours, minutes, period]);
-      return [hours, minutes, period];
-    }
-
-
-    function compareTimes(time1, time2) {
-      const [hours1, minutes1, period1] = parseTime(time1);
-      const [hours2, minutes2, period2] = parseTime(time2);
-
-      // Convert 12-hour format to 24-hour format
-      const adjustedHours1 = (period1 === 'PM' && hours1 !== 12) ? (hours1 + 12) : hours1;
-      const adjustedHours2 = (period2 === 'PM' && hours2 !== 12) ? (hours2 + 12) : hours2;
-
-      return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
-    }
-
-
+    // takes in an (unfiltered) string of bus times for one bus line
+    // returns filtered string containing only times AFTER current time
     function filterLinesByCurrentTime(inputText) {
-      // Get the current time in HH:MM format
       const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-      // Split the input text into lines
       const lines = inputText.split('\n').filter(item => item != "");
-
-      let startIndex = 0;
 
       for (let i = 0; i < lines.length; i++) {
         const leftTime = lines[i].split(" ")[0];
         const diff = compareTimes(leftTime, currentTime);
-        if (diff >= 0) {
-          startIndex = i;
-          return lines.slice(startIndex).join("\n");
+        if (diff >= 0) { // if leftTime is AFTER currentTime
+          return lines.slice(i).join("\n");
         }
       }
     }
 
+    // helper to createBusDiv() - compare busDaysOfWeek to today, avoid displaying useless info
+    // takes either "Mon-Fri" or "Saturday & Sunday" 
+    // returns whether today matches that 
     function datesMatch(dateString) {
       const today = new Date();
       const dayOfWeek = today.getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
 
       if (dateString === 'Mon-Fri') {
-        // Check if today is Monday through Friday (weekday)
         return dayOfWeek >= 1 && dayOfWeek <= 5;
       } else if (dateString === 'Saturday & Sunday') {
-        // Check if today is Saturday or Sunday (weekend)
         return dayOfWeek === 0 || dayOfWeek === 6;
       } else {
-        // Invalid dateString, return false
         return false;
       }
     }
 
-
-    // Function to create a busDiv for each bus
-    function createBusDiv(busLinesIndexes, i, scheduleText) {
+    // helper to displayAllFilteredBuses()
+    // takes in filtered times for one bus 
+    // displays information in a div/table
+    function createBusDiv(busNumber, scheduleText) {
       const startStop = document.getElementById('chosenStart').value;
       const endStop = document.getElementById('chosenEnd').value;
 
-      const busNumber = busLinesIndexes[i];
       const busName = busNumToInfo[busNumber][0];
       const busDaysOfWeek = busNumToInfo[busNumber][1];
       const busStopsList = busNumToInfo[busNumber][2];
 
       if (!datesMatch(busDaysOfWeek)) return;
 
-      // find the output div
       const output = document.getElementById("output");
-
-      // Create busDiv
       const busDiv = document.createElement('div');
 
-      // Create h2 element with num, name, daysOfWeek
       const busGeneralInfo = document.createElement('h2');
       busGeneralInfo.textContent = "#" + busNumber + " " + busName + " " + busDaysOfWeek;
-
-      // Append h2 elements to busDiv
       busDiv.appendChild(busGeneralInfo);
 
       // Display busStopsList as a table header
@@ -315,15 +285,9 @@
         tr.appendChild(th);
       });
 
-      // Append thead to table
       thead.appendChild(tr);
       table.appendChild(thead);
-
-      // Append table to busDiv
       busDiv.appendChild(table);
-
-      // Set busDiv attributes or styles if needed
-      // ...
 
       // Display scheduleText as table rows and columns
       const tbody = document.createElement('tbody');
@@ -333,7 +297,6 @@
       console.log("scheduleRows: " + scheduleRows);
 
       scheduleRows.forEach(row => {
-
         const tr = document.createElement('tr');
 
         // Split each row into columns
@@ -347,14 +310,16 @@
         tbody.appendChild(tr);
       });
 
-      // Append tbody to table
       table.appendChild(tbody);
-
-      // Append busDiv to the document body or another container
       output.appendChild(busDiv);
     }
 
-    function print_info() {
+    // ultimate function of this application
+    // given startStop, endStop
+    // get all bus lines with startStop/endStop
+    // compare today's date and time with those of the buses
+    // show only relevant info
+    function displayAllFilteredBuses() {
       const startStop = document.getElementById('chosenStart').value;
       const endStop = document.getElementById('chosenEnd').value;
       const busLinesIndexes = arrayIndexesLines(startStop, endStop);
@@ -367,31 +332,22 @@
       // for each of the bus lines, get the bus times and create a bus div 
       for (let i = 0; i < busLinesIndexes.length; i++) {
         const busNumber = busLinesIndexes[i];
-
         // bus line times
         getTextForPage(busNumber, (error, result) => {
           if (error) {
             console.error(error.message);
             return;
           }
-
-          // console.log("all bus times\n" + result);
-          console.log("filtered bus times\n" + filterLinesByCurrentTime(result));
-
-          // const scheduleText = filterLinesByCurrentTime(result);
-
-          if (filterLinesByCurrentTime(result) !== undefined)
-            createBusDiv(busLinesIndexes, i, filterLinesByCurrentTime(result));
-          else if (i == 0) {
-            const p = document.createElement('h2');
-            p.innerHTML = "There are no buses right now that run to those stops.";
-            output.appendChild(p);
+          
+          if (filterLinesByCurrentTime(result) === undefined) {
+            console.log("Bus " + busNumber + " is not running right now.");
+          } else {
+            console.log("filtered bus times: \n" + filterLinesByCurrentTime(result));
+            createBusDiv(busLinesIndexes[i], filterLinesByCurrentTime(result));
           }
         });
-
       }
     }
-
   </script>
 
 </body>
