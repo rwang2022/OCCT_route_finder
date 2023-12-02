@@ -228,7 +228,7 @@ Leaves UDC,Arrives on Campus
 PAGE 9
 LRS Leroy Southside
 Mon-Fri
-Leaves Union, Floral & Main, Leroy & Murray UClub (BY REQUEST), Returns to Campus
+Leaves Union, Floral & Main, Leroy & Murray, UClub (BY REQUEST), Returns to Campus
 5:15PM 5:25PM 5:33PM 5:49PM 5:58PM
 6:15PM 6:25PM 6:33PM 6:49PM 6:58PM
 7:15PM 7:25PM 7:33PM 7:49PM 7:58PM
