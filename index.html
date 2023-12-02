@@ -242,7 +242,19 @@
     }
 
     function datesMatch(dateString) {
-      // see if dateString matches the current day of the week
+      const today = new Date();
+      const dayOfWeek = today.getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
+
+      if (dateString === 'Mon-Fri') {
+        // Check if today is Monday through Friday (weekday)
+        return dayOfWeek >= 1 && dayOfWeek <= 5;
+      } else if (dateString === 'Saturday & Sunday') {
+        // Check if today is Saturday or Sunday (weekend)
+        return dayOfWeek === 0 || dayOfWeek === 6;
+      } else {
+        // Invalid dateString, return false
+        return false;
+      }
     }
 
 
@@ -253,7 +265,7 @@
       const busDaysOfWeek = busNumToInfo[busNumber][1];
       const busStopsList = busNumToInfo[busNumber][2];
 
-      if (datesMatch(busDaysOfWeek)) return;
+      if (!datesMatch(busDaysOfWeek)) return;
 
       // find the output div
       const output = document.getElementById("output");
@@ -299,11 +311,11 @@
       const tbody = document.createElement('tbody');
 
       // Split scheduleText into rows, remove whitespace rows
-      const scheduleRows = scheduleText.split('\n').map(row=>row.trim()).filter(row=>row);
+      const scheduleRows = scheduleText.split('\n').map(row => row.trim()).filter(row => row);
       console.log("scheduleRows: " + scheduleRows);
 
       scheduleRows.forEach(row => {
-        
+
         const tr = document.createElement('tr');
 
         // Split each row into columns
