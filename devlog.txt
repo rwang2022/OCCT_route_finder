@@ -1,2 +1,5 @@
-within each table, there is Sun/Sat/etc info to left and right, need to remove unnecessary
-need to learn how to handle N/A in some of them, unless it IS handled?
+1. within each table, there are rows with Sun/Sat/etc, need to filter those
+
+2. need to learn how to handle N/A in some bus lines, unless it IS handled?
+
+3. 
