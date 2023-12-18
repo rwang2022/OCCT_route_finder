@@ -77,8 +77,13 @@
       <!-- Stops will be populated dynamically using JavaScript -->
     </datalist>
   </h1>
+  <h1>
+    arriving before
+    <input id="userPreferredTime" value="10:00PM">
+  </h1>
 
   <button onclick="displayAllFilteredBuses()">Show me buses</button>
+  <p>Email me at rwang122@binghamton.edu if you have any bugs/suggestions/questions</p>
 
   <table id="busTable">
     <!-- Bus information will be displayed here after clicking the button -->
@@ -93,7 +98,7 @@
     const busNumToInfo = { 1: ['WS Westside Outbound', 'Mon-Fri', 'Leaves Union, Floral & Main, Main & Murray,Arrives at UDC'], 2: ['DCL Downtown Center Leroy Inbound', 'Mon-Fri', 'Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus'], 3: ['DCL Downtown Center Leroy Outbound', 'Mon-Fri', 'Leaves Union, Riverside & Columbus, Leroy & Murray,Arrives at UDC'], 4: ['WS Westside Inbound', 'Mon-Fri', 'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus'], 5: ['UDC University Downtown Center Outbound', 'Mon-Fri', 'Leaves Union,Arrives at UDC'], 6: ['MS Main Street Inbound', 'Mon-Fri', 'Leaves UDC, Main & Murray, Main & Floral,Pharmacy School, Returns to Campus'], 7: ['MS Main Street Outbound', 'Mon-Fri', 'Leaves Union,Pharmacy School, Main & Floral, Main & Murray,Arrives at UDC'], 8: ['UDC University Downtown Center Inbound', 'Mon-Fri', 'Leaves UDC,Arrives on Campus'], 9: ['LRS Leroy Southside', 'Mon-Fri', 'Leaves Union, Floral & Main, Leroy & Murray, UClub (BY REQUEST), Returns to Campus'], 10: ['IU ITC-UClub Shuttle', 'Mon-Fri', 'Leaves Mohawk, ITC, UClub, Meadows & Hayes, Returns to Mohawk'], 11: ['UC UClub Shuttle', 'Mon-Fri', 'Leaves Mohawk, UClub, Washington & Lehigh'], 12: ['RRT Riviera Ridge - Town Square Mall Shuttle', 'Mon-Fri', 'Leaves Rafuse,ParkwayPlaza, Town Square Mall (Walmart), Returns to Campus'], 13: ['OC Oakdale Commons Shuttle', 'Mon-Fri', 'Leaves Rafuse, Oakdale Commons, Wegmans, Returns to Campus'], 14: ['CS Campus Shuttle', 'Mon-Fri', 'A lot, ofPlaces, on campus, sorry im lazy'], 15: ['WS Westside Outbound', 'Saturday & Sunday', 'Leaves Union, Floral & Main, Main & Murray,Arrives at UDC'], 16: ['DCL Downtown Center Leroy Inbound', 'Saturday & Sunday', 'Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus'], 17: ['DCL Downtown Center Leroy Outbound', 'Saturday & Sunday', 'Leaves Union, Riverside & Columbus, Leroy & Murray,Arrives at UDC'], 18: ['WS Westside Inbound', 'Saturday & Sunday', 'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus'], 19: ['LRS Leroy Southside', 'Saturday & Sunday', 'Leaves Union, Floral & Main, Leroy & Murray, UClub (BY REQUEST), Returns to Campus'], 20: ['RRT Riviera Ridge - Town Square Mall Shuttle', 'Saturday & Sunday', 'Leaves Rafuse,ParkwayPlaza (Target), Town Square Mall (Walmart), Returns to Campus'], 21: ['OC Oakdale Commons Shuttle', 'Saturday & Sunday', 'Leaves Rafuse, Oakdale Commons, Wegmans, Returns to Campus'], 22: ['UC UClub Shuttle', 'Saturday & Sunday', 'Leaves Mohawk, UClub, Washington & Lehigh'], 23: ['CS Campus Shuttle', 'Saturday & Sunday', 'Leaves Mohawk, Susquehanna, Hillside, Mountainview, Returns to Lower Campus'], 24: ['DE Downtown Express', 'Friday', 'Leaves Union, UClub (Before 1AM),Arrives Downtown, UClub (After 1AM), Returns to Campus'], 25: ['DE Downtown Express', 'Saturday', 'Leaves Union, UClub (Before 1AM),Arrives Downtown, UClub (After 1AM), Returns to Campus'], 26: ['WS Late Nite Westside Outbound', 'Friday & Saturday', 'Leaves Union, Floral & Main, Main & Murray, State & Hawley'], 27: ['DCL Late Nite Downtown Center Leroy Inbound', 'Friday & Saturday', 'Leaves Downtown, Leroy & Murray, Riverside & Columbus, Returns to Campus'], 28: ['DCL Late Nite Downtown Center Leroy Outbound', 'Friday & Saturday', 'Leaves Union, Riverside & Columbus, Leroy & Murray, State & Hawley'], 29: ['WS Late Nite Westside Inbound', 'Friday & Saturday', 'Leaves Downtown, Main & Murray, Floral & Main, Returns to Campus'], 30: ['CS Late Nite Campus Shuttle', 'Friday & Saturday', 'Leaves Mohawk, Susquehanna, Hillside, Mountainview, Returns to Lower Campus'] }
     const uniqueStops = ['A lot', 'Arrives Downtown', 'Arrives at UDC', 'Arrives on Campus', 'Floral & Main', 'Hillside', 'ITC', 'Leaves Downtown', 'Leaves Mohawk', 'Leaves Rafuse', 'Leaves UDC', 'Leaves Union', 'Leroy & Murray', 'Leroy & Murray UClub (BY REQUEST)', 'Main & Floral', 'Main & Murray', 'Meadows & Hayes', 'Mountainview', 'Oakdale Commons', 'Parkway Plaza', 'Parkway Plaza (Target)', 'Pharmacy School', 'Returns to Campus', 'Returns to Lower Campus', 'Returns to Mohawk', 'Riverside & Columbus', 'State & Hawley', 'Susquehanna', 'Town Square Mall (Walmart)', 'UClub', 'UClub (After 1 AM)', 'UClub (BY REQUEST)', 'UClub (Before 1 AM)', 'Washington & Lehigh', 'Wegmans', 'of places', 'on campus', 'sorry im lazy']
 
-    // given startStop, return an array of possible destination stops
+    // given startStop, return an array of possible destination stops.
     function getStopsAfterString(searchString) {
       try {
         const stopsAfterString = [];
@@ -111,6 +116,7 @@
       }
     }
 
+    // populate the dropdown for start/destination stops.
     document.addEventListener('DOMContentLoaded', function () {
       // START stop
       const busStopsDropdown = document.getElementById('busStops');
@@ -138,8 +144,7 @@
       });
     });
 
-    // returns true if both startStop and endStop are in StringStops, and 
-    // startStop appears before endStop. Otherwise, it returns false
+    // returns boolean of whether startStop appears before endStop in StringStops
     function containsBoth(StringStops, startStop, endStop) {
       const stops = StringStops.split(',').map(stop => stop.trim());
 
@@ -150,8 +155,7 @@
       return startStopIndex !== -1 && endStopIndex !== -1 && startStopIndex < endStopIndex;
     }
 
-    // returns array of indexes of lines, i, such that 
-    // containsBoth(lines[i], startStop, endStop) 
+    // returns array of indexes of lines, i, such that containsBoth(lines[i], startStop, endStop) 
     function arrayIndexesLines(startStop, endStop) {
       const indexes = [];
       for (let i = 0; i < lines.length; i++) {
@@ -162,9 +166,7 @@
       return indexes;
     }
 
-    // helper function for compareTimes
-    // takes in 1:23PM
-    // returns [1,23,'PM']
+    // helper function for compareTimes. takes in 1:23PM, returns [1,23,'PM']
     function parseTime(time) {
       const period = time.slice(-2).toUpperCase();
       const timePart = time.slice(0, -2);
@@ -175,8 +177,7 @@
       return [hours, minutes, period];
     }
 
-    // takes in 1:23PM, 2:34AM => parseTime
-    // returns time1 - time2, takes into account AM/PM
+    // takes in 1:23PM, 2:34AM => parseTime. returns time1 - time2, takes into account AM/PM
     function compareTimes(time1, time2) {
       const [hours1, minutes1, period1] = parseTime(time1);
       const [hours2, minutes2, period2] = parseTime(time2);
@@ -188,9 +189,7 @@
       return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
     }
 
-    // helper function to displayAllFilteredBuses()
-    // takes in a single page number 
-    // return (unfiltered) bus times as a string 
+    // helper function to displayAllFilteredBuses(): takes in a single page number, return (unfiltered) bus times as a string 
     function getTextForPage(pageNumber, callback) {
       // console.log("bus number " + pageNumber);
       const filePath = "full info.txt"
@@ -220,18 +219,29 @@
 
     // takes in an (unfiltered) string of bus times for one bus line
     // returns filtered string containing only times AFTER current time
-    function filterLinesByCurrentTime(inputText) {
+    // TODO also filter times BEFORE some desired time (e.g. before 5pm or within 3 hours)
+    function filterLinesByTimes(inputText, userPreferredTime) {
+      const filteredLineArray = [];
+      // const currentTime = "3:00PM";
       const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
       const lines = inputText.split('\n').filter(item => item != "");
 
       for (let i = 0; i < lines.length; i++) {
-        const leftTime = lines[i].split(" ")[0];
-        const diff = compareTimes(leftTime, currentTime);
-        if (diff >= 0) { // if leftTime is AFTER currentTime
-          return lines.slice(i).join("\n");
+        const line = lines[i];
+        const line_array = line.split(" ");
+        const leftTime = line_array[0]; // TODO the start stop is not necessarily index 0!
+        const rightTime = line_array[line_array.length - 1].trim(); // TODO the end stop is not necessarily the last index!
+
+        const diff1 = compareTimes(leftTime, currentTime);
+        const diff2 = compareTimes(rightTime, userPreferredTime);
+        // console.log(rightTime + " - " + userPreferredTime + " = " + diff2); 
+        if (diff1 >= 0 && diff2 <= 0) { 
+          filteredLineArray.push(line);
         }
       }
+      // console.log("filteredLineArray: " + filteredLineArray);
+      return filteredLineArray.join("\n");
     }
 
     // helper to createBusDiv() - compare busDaysOfWeek to today, avoid displaying useless info
@@ -326,6 +336,9 @@
       const busLinesIndexes = arrayIndexesLines(startStop, endStop);
       const filePath = 'full info.txt';
 
+      // also filter by "arriveByTime"
+      const userPreferredTime = document.getElementById("userPreferredTime").value;
+      
       // clear previous bus info
       const output = document.getElementById("output");
       output.innerHTML = "";
@@ -342,11 +355,10 @@
             return;
           }
 
-          if (filterLinesByCurrentTime(result) === undefined) {
-            console.log("Bus " + busNumber + " is not running right now.");
+          if (filterLinesByTimes(result, userPreferredTime) !== undefined) {
+            createBusDiv(busLinesIndexes[i], filterLinesByTimes(result, userPreferredTime));
           } else {
-            createBusDiv(busLinesIndexes[i], filterLinesByCurrentTime(result));
-            // console.log("filtered bus times: \n" + filterLinesByCurrentTime(result));
+            console.log("Bus " + busNumber + " is not running right now.");
           }
         });
       }
