@@ -233,10 +233,10 @@
         const leftTime = line_array[0]; // TODO the start stop is not necessarily index 0!
         const rightTime = line_array[line_array.length - 1].trim(); // TODO the end stop is not necessarily the last index!
 
-        const diff1 = compareTimes(leftTime, currentTime);
+        const diff1 = compareTimes(currentTime, leftTime);
         const diff2 = compareTimes(rightTime, userPreferredTime);
         // console.log(rightTime + " - " + userPreferredTime + " = " + diff2); 
-        if (diff1 >= 0 && diff2 <= 0) { 
+        if (diff1 <= 0 && diff2 <= 0) { 
           filteredLineArray.push(line);
         }
       }
