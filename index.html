@@ -185,8 +185,12 @@
       const [hours2, minutes2, period2] = parseTime(time2);
 
       // Convert 12-hour format to 24-hour format
-      const adjustedHours1 = (period1 === 'PM' && hours1 !== 12) ? (hours1 + 12) : hours1;
-      const adjustedHours2 = (period2 === 'PM' && hours2 !== 12) ? (hours2 + 12) : hours2;
+      let adjustedHours1 = (period1 === 'PM' && hours1 !== 12) ? (hours1 + 12) : hours1;
+      let adjustedHours2 = (period2 === 'PM' && hours2 !== 12) ? (hours2 + 12) : hours2;
+
+      // adjust for 12AM
+      if (hours1 === 12 && period1 === 'AM') adjustedHours1 = 0;
+      if (hours2 === 12 && period2 === 'AM') adjustedHours2 = 0;
 
       return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
     }
