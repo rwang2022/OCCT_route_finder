@@ -53,7 +53,7 @@
     option,
     button {
       height: 2em;
-      width: 10em;
+      width: 12em;
       color: blue;
       font-size: x-large;
     }
@@ -63,24 +63,24 @@
 <body>
 
   <h1>I want to go </h1>
-  <h1>
+  <h2>
     from
-    <input list="busStops" id="chosenStart" value="Leaves UDC">
+    <input list="busStops" id="chosenStart" value="Leaves UDC" type="search">
     <datalist id="busStops">
       <!-- Stops will be populated dynamically using JavaScript -->
     </datalist>
-  </h1>
-  <h1>
+  </h2>
+  <h2>
     to
-    <input list="location2" id="chosenEnd" value="Returns to Campus">
+    <input list="location2" id="chosenEnd" value="Returns to Campus" type="search">
     <datalist id="location2">
       <!-- Stops will be populated dynamically using JavaScript -->
     </datalist>
-  </h1>
-  <h1>
+  </h2>
+  <h2>
     arriving before
-    <input id="userPreferredTime" value="10:00PM">
-  </h1>
+    <input id="userPreferredTime" value="10:00PM" type="search">
+  </h2>
 
   <button onclick="displayAllFilteredBuses()">Show me buses</button>
   <p>Email me at rwang122@binghamton.edu if you have any bugs/suggestions/questions</p>
