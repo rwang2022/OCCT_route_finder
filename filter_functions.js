@@ -1,20 +1,6 @@
-// given startStop, return an array of possible destination stops.
-function getStopsAfterString(searchString) {
-    try {
-        const stopsAfterString = [];
-        for (const line of lines) {
-            const stops = line.split(',').map(stop => stop.trim());
-            if (stops.includes(searchString)) {
-                const searchStringIndex = stops.indexOf(searchString);
-                stopsAfterString.push(...stops.slice(searchStringIndex + 1).filter(stop => !stopsAfterString.includes(stop)));
-            }
-        }
-        return stopsAfterString;
-    } catch (error) {
-        console.error('Error reading the file:', error.message);
-        return [];
-    }
-}
+// ######################################################################################################################
+//* 2 functions for filtering by BUS STOPS
+// ######################################################################################################################
 
 // returns boolean of whether startStop appears before endStop in StringStops
 function containsBoth(StringStops, startStop, endStop) {
@@ -36,6 +22,25 @@ function arrayIndexesLines(startStop, endStop) {
         }
     }
     return indexes;
+}
+
+// ######################################################################################################################
+//* 4 functions for filtering by DATE/TIME
+// ######################################################################################################################
+
+// helper to createBusDiv() - compare busDaysOfWeek to today, avoid displaying useless info
+// takes either "Mon-Fri" | "Saturday & Sunday" and returns whether today matches that 
+function datesMatch(dateString) {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
+
+    if (dateString === 'Mon-Fri') {
+        return dayOfWeek >= 1 && dayOfWeek <= 5;
+    } else if (dateString === 'Saturday & Sunday') {
+        return dayOfWeek === 0 || dayOfWeek === 6;
+    } else {
+        return false;
+    }
 }
 
 // helper function for compareTimes. takes in 1:23PM, returns [1,23,'PM']
@@ -65,25 +70,7 @@ function compareTimes(time1, time2) {
     return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
 }
 
-// helper to createBusDiv() - compare busDaysOfWeek to today, avoid displaying useless info
-// takes either "Mon-Fri" or "Saturday & Sunday" 
-// returns whether today matches that 
-function datesMatch(dateString) {
-    const today = new Date();
-    const dayOfWeek = today.getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
-
-    if (dateString === 'Mon-Fri') {
-        return dayOfWeek >= 1 && dayOfWeek <= 5;
-    } else if (dateString === 'Saturday & Sunday') {
-        return dayOfWeek === 0 || dayOfWeek === 6;
-    } else {
-        return false;
-    }
-}
-
-// takes in an (unfiltered) string of bus times for one bus line
-// returns filtered string containing only times AFTER current time
-// TODO also filter times BEFORE some desired time (e.g. before 5pm or within 3 hours)
+// takes in an (unfiltered) string of bus times for one bus line, return filtered string by TIMES
 function filterLinesByTimes(inputText, userPreferredTime) {
     const filteredLineArray = [];
     // const currentTime = "3:00PM";
@@ -106,33 +93,4 @@ function filterLinesByTimes(inputText, userPreferredTime) {
     }
     // console.log("filteredLineArray: " + filteredLineArray);
     return filteredLineArray.join("\n");
-}
-
-
-// helper function to displayAllFilteredBuses(): takes in a single page number, return (unfiltered) bus times as a string 
-function getTextForPage(pageNumber, callback) {
-    // console.log("bus number " + pageNumber);
-    const filePath = "full info.txt"
-    const targetPage = `PAGE ${pageNumber}`;
-
-    fetch(filePath)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error loading ${filePath}: ${response.status} ${response.statusText}`);
-            }
-            return response.text();
-        })
-        .then(data => {
-            const lines = data.split('\n');
-            const startIndex = lines.findIndex(line => line.includes(targetPage));
-
-            if (startIndex === -1) {
-                throw new Error(`Page ${pageNumber} not found`);
-            }
-            const endIndex = lines.findIndex((line, index) => index > startIndex && line.includes(`PAGE ${pageNumber + 1}`));
-
-            const result = lines.slice(startIndex + 4, endIndex !== -1 ? endIndex : undefined).join('\n');
-            callback(null, result);
-        })
-        .catch(error => callback(error, null));
 }
