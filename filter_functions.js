@@ -37,27 +37,23 @@ function filterLinesByTimes(inputText, userPreferredTime) {
     const lines = inputText.split('\n').filter(item => item != "");
     
     for (let i = 0; i < lines.length; i++) {
-        // ! TESTING start. 
-        // TODO issue: getTextForPage does NOT give you stop information, only times. you need to get that one row above
-        // const stops = lines[i].split(',').map(stop => stop.trim());
-        // const startStop = document.getElementById('chosenStart').value;
-        // const endStop = document.getElementById('chosenEnd').value;
-        // const startStopIndex = stops.indexOf(startStop);
-        // const endStopIndex = stops.indexOf(endStop);
-        // console.log(stops);
-        // console.log(startStop);
-        // console.log(endStop);
-        // console.log(startStopIndex);
-        // console.log(endStopIndex);
-        // ! TESTING end
-
         const line = lines[i];
         const line_array = line.split(" ");
 
-        // TODO the start stop index is not necessarily 0!
-        const startBusTime = line_array[0]; 
-        // TODO the end stop index is not necessarily the last!
-        const endBusTime = line_array[line_array.length - 1].trim(); 
+        // TODO start and end stops are not necessarily the first and last ones
+        let startStopIndex = 0;
+        let endStopIndex = line_array.length - 1;
+
+        // ! TESTING start. 
+        // const stops = lines[0].split(',').map(stop => stop.trim());
+        // const startStop = document.getElementById('chosenStart').value;
+        // const endStop = document.getElementById('chosenEnd').value;
+        // startStopIndex = stops.indexOf(startStop);
+        // endStopIndex = stops.indexOf(endStop);
+        // ! TESTING end
+
+        const startBusTime = line_array[startStopIndex]; 
+        const endBusTime = line_array[endStopIndex].trim(); 
 
         if (compareTimes(currentTime, startBusTime) <= 0 && compareTimes(endBusTime, userPreferredTime) <= 0) {
             filteredLineArray.push(line);

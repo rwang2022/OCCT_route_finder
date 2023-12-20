@@ -81,7 +81,8 @@ function getTextForPage(pageNumber, callback) {
             }
             const endIndex = lines.findIndex((line, index) => index > startIndex && line.includes(`PAGE ${pageNumber + 1}`));
 
-            const result = lines.slice(startIndex + 4, endIndex !== -1 ? endIndex : undefined).join('\n');
+            //* once startIndex + 4, excluded bus stops line
+            const result = lines.slice(startIndex + 3, endIndex !== -1 ? endIndex : undefined).join('\n'); 
             callback(null, result);
         })
         .catch(error => callback(error, null));
