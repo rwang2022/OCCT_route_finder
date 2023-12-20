@@ -2,12 +2,15 @@
 //* 2 functions for filtering by BUS STOPS
 // ######################################################################################################################
 
-// returns boolean of whether startStop appears before endStop in StringStops
+// helper arrayIndexesLines - returns boolean of whether startStop appears before endStop in StringStops
 function containsBoth(StringStops, startStop, endStop) {
     const stops = StringStops.split(',').map(stop => stop.trim());
 
     const startStopIndex = stops.indexOf(startStop);
     const endStopIndex = stops.indexOf(endStop);
+
+    console.log("hello world");
+    console.log(startStopIndex + "" + endStopIndex)
 
     // Check if both startStop and endStop are present on the line
     return startStopIndex !== -1 && endStopIndex !== -1 && startStopIndex < endStopIndex;
@@ -27,6 +30,35 @@ function arrayIndexesLines(startStop, endStop) {
 // ######################################################################################################################
 //* 4 functions for filtering by DATE/TIME
 // ######################################################################################################################
+// takes in an (unfiltered) string of bus times for one bus line, return filtered string by TIMES
+function filterLinesByTimes(inputText, userPreferredTime) {
+    const filteredLineArray = [];
+    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // "3:00PM"
+    const lines = inputText.split('\n').filter(item => item != "");
+
+    
+    for (let i = 0; i < lines.length; i++) {
+        // ! TESTING start
+        const stops = lines[i].split(',').map(stop => stop.trim());
+        const startStop = document.getElementById('chosenStart').value;
+        const endStop = document.getElementById('chosenEnd').value;
+        const startStopIndex = stops.indexOf(startStop);
+        const endStopIndex = stops.indexOf(endStop);
+        // ! TESTING end
+
+        const line = lines[i];
+        const line_array = line.split(" ");
+
+        const leftTime = line_array[0]; // TODO the start stop is not necessarily index 0!
+        const rightTime = line_array[line_array.length - 1].trim(); // TODO the end stop is not necessarily the last index!
+
+        if (compareTimes(currentTime, leftTime) <= 0 && compareTimes(rightTime, userPreferredTime) <= 0) {
+            filteredLineArray.push(line);
+        }
+    }
+
+    return filteredLineArray.join("\n");
+}
 
 // helper to createBusDiv() - compare busDaysOfWeek to today, avoid displaying useless info
 // takes either "Mon-Fri" | "Saturday & Sunday" and returns whether today matches that 
@@ -68,29 +100,4 @@ function compareTimes(time1, time2) {
     if (hours2 === 12 && period2 === 'AM') adjustedHours2 = 0;
 
     return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
-}
-
-// takes in an (unfiltered) string of bus times for one bus line, return filtered string by TIMES
-function filterLinesByTimes(inputText, userPreferredTime) {
-    const filteredLineArray = [];
-    // const currentTime = "3:00PM";
-    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-    const lines = inputText.split('\n').filter(item => item != "");
-
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const line_array = line.split(" ");
-        const leftTime = line_array[0]; // TODO the start stop is not necessarily index 0!
-        const rightTime = line_array[line_array.length - 1].trim(); // TODO the end stop is not necessarily the last index!
-
-        const diff1 = compareTimes(currentTime, leftTime);
-        const diff2 = compareTimes(rightTime, userPreferredTime);
-        // console.log(rightTime + " - " + userPreferredTime + " = " + diff2); 
-        if (diff1 <= 0 && diff2 <= 0) {
-            filteredLineArray.push(line);
-        }
-    }
-    // console.log("filteredLineArray: " + filteredLineArray);
-    return filteredLineArray.join("\n");
 }

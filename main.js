@@ -156,15 +156,13 @@ function displayAllFilteredBuses() {
     const startStop = document.getElementById('chosenStart').value;
     const endStop = document.getElementById('chosenEnd').value;
     const busLinesIndexes = arrayIndexesLines(startStop, endStop);
-    const filePath = 'full info.txt';
 
     // also filter by "arriveByTime"
-    const userPreferredTime = document.getElementById("userPreferredTime").value;
+    const preferredArrivalTime = document.getElementById("userPreferredTime").value;
 
-    // clear previous bus info
+    // clear previous bus info and console
     const output = document.getElementById("output");
     output.innerHTML = "";
-    // clear previous console
     console.clear();
 
     // for each of the bus lines, get the bus times and create a bus div 
@@ -177,8 +175,8 @@ function displayAllFilteredBuses() {
                 return;
             }
 
-            if (filterLinesByTimes(result, userPreferredTime) !== undefined) {
-                createBusDiv(busLinesIndexes[i], filterLinesByTimes(result, userPreferredTime));
+            if (filterLinesByTimes(result, preferredArrivalTime) !== undefined) {
+                createBusDiv(busLinesIndexes[i], filterLinesByTimes(result, preferredArrivalTime));
             } else {
                 console.log("Bus " + busNumber + " is not running right now.");
             }
