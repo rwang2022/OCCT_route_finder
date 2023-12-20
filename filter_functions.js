@@ -35,24 +35,31 @@ function filterLinesByTimes(inputText, userPreferredTime) {
     const filteredLineArray = [];
     const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // "3:00PM"
     const lines = inputText.split('\n').filter(item => item != "");
-
     
     for (let i = 0; i < lines.length; i++) {
-        // ! TESTING start
-        const stops = lines[i].split(',').map(stop => stop.trim());
-        const startStop = document.getElementById('chosenStart').value;
-        const endStop = document.getElementById('chosenEnd').value;
-        const startStopIndex = stops.indexOf(startStop);
-        const endStopIndex = stops.indexOf(endStop);
+        // ! TESTING start. 
+        // TODO issue: getTextForPage does NOT give you stop information, only times. you need to get that one row above
+        // const stops = lines[i].split(',').map(stop => stop.trim());
+        // const startStop = document.getElementById('chosenStart').value;
+        // const endStop = document.getElementById('chosenEnd').value;
+        // const startStopIndex = stops.indexOf(startStop);
+        // const endStopIndex = stops.indexOf(endStop);
+        // console.log(stops);
+        // console.log(startStop);
+        // console.log(endStop);
+        // console.log(startStopIndex);
+        // console.log(endStopIndex);
         // ! TESTING end
 
         const line = lines[i];
         const line_array = line.split(" ");
 
-        const leftTime = line_array[0]; // TODO the start stop is not necessarily index 0!
-        const rightTime = line_array[line_array.length - 1].trim(); // TODO the end stop is not necessarily the last index!
+        // TODO the start stop index is not necessarily 0!
+        const startBusTime = line_array[0]; 
+        // TODO the end stop index is not necessarily the last!
+        const endBusTime = line_array[line_array.length - 1].trim(); 
 
-        if (compareTimes(currentTime, leftTime) <= 0 && compareTimes(rightTime, userPreferredTime) <= 0) {
+        if (compareTimes(currentTime, startBusTime) <= 0 && compareTimes(endBusTime, userPreferredTime) <= 0) {
             filteredLineArray.push(line);
         }
     }
