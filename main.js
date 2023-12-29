@@ -75,6 +75,7 @@ function getTextForPage(pageNumber, callback) {
             }
             return response.text();
         })
+        // given the pageNumber, return a string containing the bus stops and the bus times
         .then(data => {
             const lines = data.split('\n');
             const startIndex = lines.findIndex(line => line.includes(targetPage));
@@ -84,7 +85,7 @@ function getTextForPage(pageNumber, callback) {
             }
             const endIndex = lines.findIndex((line, index) => index > startIndex && line.includes(`PAGE ${pageNumber + 1}`));
 
-            //* once startIndex + 4, excluded bus stops line
+            //! it was startIndex + 4 at one point, which excluded bus stops line (so it was only the bus times)
             const result = lines.slice(startIndex + 3, endIndex !== -1 ? endIndex : undefined).join('\n'); 
             callback(null, result);
         })
@@ -106,16 +107,11 @@ function createBusDiv(busNumber, scheduleText) {
     * @returns boolean of if today matches dateString
     */
     function datesMatch(dateString) {
-        const today = new Date();
-        const dayOfWeek = today.getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
+        const dayOfWeek = new Date().getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
 
-        if (dateString === 'Mon-Fri') {
-            return dayOfWeek >= 1 && dayOfWeek <= 5;
-        } else if (dateString === 'Saturday & Sunday') {
-            return dayOfWeek === 0 || dayOfWeek === 6;
-        } else {
-            return false;
-        }
+        if (dateString === 'Mon-Fri') return dayOfWeek >= 1 && dayOfWeek <= 5;
+        else if (dateString === 'Saturday & Sunday') return dayOfWeek === 0 || dayOfWeek === 6;
+        else return false;
     }
 
     if (!datesMatch(busDaysOfWeek)) return;
