@@ -1,23 +1,27 @@
 // ######################################################################################################################
-//* 2 functions for filtering by BUS STOPS
+//* filtering by BUS STOPS
 // ######################################################################################################################
 
-// helper arrayIndexesLines - returns boolean of whether startStop appears before endStop in StringStops
-function containsBoth(StringStops, startStop, endStop) {
-    const stops = StringStops.split(',').map(stop => stop.trim());
-
-    const startStopIndex = stops.indexOf(startStop);
-    const endStopIndex = stops.indexOf(endStop);
-
-    console.log("hello world");
-    console.log(startStopIndex + "" + endStopIndex)
-
-    // Check if both startStop and endStop are present on the line
-    return startStopIndex !== -1 && endStopIndex !== -1 && startStopIndex < endStopIndex;
-}
-
-// returns array of indexes of lines, i, such that containsBoth(lines[i], startStop, endStop) 
+/**
+ * @param {*} startStop 
+ * @param {*} endStop 
+ * @returns array of (indexes of bus lines) that contain both startStop and endStop
+ */
 function arrayIndexesLines(startStop, endStop) {
+    // helper arrayIndexesLines - returns boolean of whether startStop appears before endStop in StringStops
+    function containsBoth(StringStops, startStop, endStop) {
+        const stops = StringStops.split(',').map(stop => stop.trim());
+    
+        const startStopIndex = stops.indexOf(startStop);
+        const endStopIndex = stops.indexOf(endStop);
+    
+        console.log("hello world");
+        console.log(startStopIndex + "" + endStopIndex)
+    
+        // Check if both startStop and endStop are present on the line
+        return startStopIndex !== -1 && endStopIndex !== -1 && startStopIndex < endStopIndex;
+    }
+
     const indexes = [];
     for (let i = 0; i < lines.length; i++) {
         if (containsBoth(lines[i], startStop, endStop)) {
@@ -28,9 +32,14 @@ function arrayIndexesLines(startStop, endStop) {
 }
 
 // ######################################################################################################################
-//* 4 functions for filtering by DATE/TIME
+//* filtering by DATE/TIME
 // ######################################################################################################################
-// takes in an (unfiltered) string of bus times for one bus line, return filtered string by TIMES
+/**
+ * takes in an (unfiltered) string of bus times for one bus line, return filtered string by TIMES
+ * @param {*} inputText a string of complete bus times (for one bus line)
+ * @param {*} userPreferredTime a string for the preferred arrival time
+ * @returns a string of times that arrive before userPreferredTime
+ */
 function filterLinesByTimes(inputText, userPreferredTime) {
     const filteredLineArray = [];
     const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // "3:00PM"
@@ -63,34 +72,24 @@ function filterLinesByTimes(inputText, userPreferredTime) {
     return filteredLineArray.join("\n");
 }
 
-// helper to createBusDiv() - compare busDaysOfWeek to today, avoid displaying useless info
-// takes either "Mon-Fri" | "Saturday & Sunday" and returns whether today matches that 
-function datesMatch(dateString) {
-    const today = new Date();
-    const dayOfWeek = today.getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
 
-    if (dateString === 'Mon-Fri') {
-        return dayOfWeek >= 1 && dayOfWeek <= 5;
-    } else if (dateString === 'Saturday & Sunday') {
-        return dayOfWeek === 0 || dayOfWeek === 6;
-    } else {
-        return false;
-    }
-}
-
-// helper function for compareTimes. takes in 1:23PM, returns [1,23,'PM']
-function parseTime(time) {
-    const period = time.slice(-2).toUpperCase();
-    const timePart = time.slice(0, -2);
-    const hours = parseInt(timePart.split(':')[0], 10);
-    const minutes = parseInt(timePart.split(':')[1], 10);
-
-    // console.log("parseTime: " + [hours, minutes, period]);
-    return [hours, minutes, period];
-}
-
-// takes in 1:23PM, 2:34AM => parseTime. returns time1 - time2, takes into account AM/PM
+/**
+ * @param {*} time1 a string like 1:23PM or 4:56AM
+ * @param {*} time2 a string like 1:23PM or 4:56AM
+ * @returns an int time1-time2 representing difference in minutes
+ */
 function compareTimes(time1, time2) {
+    // helper function for compareTimes. takes in 1:23PM, returns [1,23,'PM']
+    function parseTime(time) {
+        const period = time.slice(-2).toUpperCase();
+        const timePart = time.slice(0, -2);
+        const hours = parseInt(timePart.split(':')[0], 10);
+        const minutes = parseInt(timePart.split(':')[1], 10);
+    
+        // console.log("parseTime: " + [hours, minutes, period]);
+        return [hours, minutes, period];
+    }
+
     const [hours1, minutes1, period1] = parseTime(time1);
     const [hours2, minutes2, period2] = parseTime(time2);
 

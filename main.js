@@ -5,29 +5,9 @@ const uniqueStops = ['A lot', 'Arrives Downtown', 'Arrives at UDC', 'Arrives on 
 /* cSpell:enable */
 
 // ######################################################################################################################
-//* 2 functions for DESTINATIONS DROPDOWN
+//* populate the start and destination stops dropdown
 // ######################################################################################################################
 
-// helper function for destination dropdown
-// given startStop, return an array of possible destination stops.
-function getStopsAfterString(searchString) {
-    try {
-        const stopsAfterString = [];
-        for (const line of lines) {
-            const stops = line.split(',').map(stop => stop.trim());
-            if (stops.includes(searchString)) {
-                const searchStringIndex = stops.indexOf(searchString);
-                stopsAfterString.push(...stops.slice(searchStringIndex + 1).filter(stop => !stopsAfterString.includes(stop)));
-            }
-        }
-        return stopsAfterString;
-    } catch (error) {
-        console.error('Error reading the file:', error.message);
-        return [];
-    }
-}
-
-// populate the dropdown for start/destination stops.
 document.addEventListener('DOMContentLoaded', function () {
     // START stop
     const busStopsDropdown = document.getElementById('busStops');
@@ -38,8 +18,30 @@ document.addEventListener('DOMContentLoaded', function () {
         option.value = stop;
         busStopsDropdown.appendChild(option);
     });
-
+    
     document.addEventListener('input', function () {
+        /**
+         * helper function for populating destination dropdown with possible stops
+         * @param {string} searchString the startStop that the user chooses
+         * @returns an array of possible destination stops
+         */
+        function getStopsAfterString(searchString) {
+            try {
+                const stopsAfterString = [];
+                for (const line of lines) {
+                    const stops = line.split(',').map(stop => stop.trim());
+                    if (stops.includes(searchString)) {
+                        const searchStringIndex = stops.indexOf(searchString);
+                        stopsAfterString.push(...stops.slice(searchStringIndex + 1).filter(stop => !stopsAfterString.includes(stop)));
+                    }
+                }
+                return stopsAfterString;
+            } catch (error) {
+                console.error('Error reading the file:', error.message);
+                return [];
+            }
+        }
+
         const startStop = document.getElementById('chosenStart').value;
         const destinationStopsDropdown = document.getElementById("location2");
         const destinationStops = getStopsAfterString(startStop); // array of possible END stops
@@ -66,6 +68,7 @@ function getTextForPage(pageNumber, callback) {
     const targetPage = `PAGE ${pageNumber}`;
 
     fetch(filePath)
+        // get the text of the filePath file
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error loading ${filePath}: ${response.status} ${response.statusText}`);
@@ -96,6 +99,24 @@ function createBusDiv(busNumber, scheduleText) {
     const busName = busNumToInfo[busNumber][0];
     const busDaysOfWeek = busNumToInfo[busNumber][1];
     const busStopsList = busNumToInfo[busNumber][2];
+
+    /**
+    * compare busDaysOfWeek to today, avoid displaying useless info
+    * @param {string} dateString bus dates: either "Mon-Fri" or "Saturday & Sunday"
+    * @returns boolean of if today matches dateString
+    */
+    function datesMatch(dateString) {
+        const today = new Date();
+        const dayOfWeek = today.getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
+
+        if (dateString === 'Mon-Fri') {
+            return dayOfWeek >= 1 && dayOfWeek <= 5;
+        } else if (dateString === 'Saturday & Sunday') {
+            return dayOfWeek === 0 || dayOfWeek === 6;
+        } else {
+            return false;
+        }
+    }
 
     if (!datesMatch(busDaysOfWeek)) return;
 
