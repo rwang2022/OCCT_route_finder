@@ -1,4 +1,5 @@
 /* cSpell:disable */
+//* we will be relying on these globals. bad practice, don't do this.
 const lines = ['Leaves Union, Floral & Main, Main & Murray, Arrives at UDC', 'Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus', 'Leaves Union, Riverside & Columbus, Leroy & Murray, Arrives at UDC', 'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus', 'Leaves Union, Arrives at UDC', 'Leaves UDC, Main & Murray, Main & Floral, Pharmacy School, Returns to Campus', 'Leaves Union, Pharmacy School, Main & Floral, Main & Murray, Arrives at UDC', 'Leaves UDC, Arrives on Campus', 'Leaves Union, Floral & Main, Leroy & Murray, UClub (BY REQUEST), Returns to Campus', 'Leaves Mohawk, ITC, UClub, Meadows & Hayes, Returns to Mohawk', 'Leaves Mohawk, UClub, Washington & Lehigh', 'Leaves Rafuse, Parkway Plaza, Town Square Mall (Walmart), Returns to Campus', 'Leaves Rafuse, Oakdale Commons, Wegmans, Returns to Campus', 'A lot, of places, on campus, sorry im lazy', 'Leaves Union, Floral & Main, Main & Murray, Arrives at UDC', 'Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus', 'Leaves Union, Riverside & Columbus, Leroy & Murray, Arrives at UDC', 'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus', 'Leaves Union, Floral & Main, Leroy & Murray, UClub (BY REQUEST), Returns to Campus', 'Leaves Rafuse, Parkway Plaza (Target), Town Square Mall (Walmart), Returns to Campus', 'Leaves Rafuse, Oakdale Commons, Wegmans, Returns to Campus', 'Leaves Mohawk, UClub, Washington & Lehigh', 'Leaves Mohawk, Susquehanna, Hillside, Mountainview, Returns to Lower Campus', 'Leaves Union, UClub (Before 1 AM), Arrives Downtown, UClub (After 1 AM), Returns to Campus', 'Leaves Union, UClub (Before 1 AM), Arrives Downtown, UClub (After 1 AM), Returns to Campus', 'Leaves Union, Floral & Main, Main & Murray, State & Hawley', 'Leaves Downtown, Leroy & Murray, Riverside & Columbus, Returns to Campus', 'Leaves Union, Riverside & Columbus, Leroy & Murray, State & Hawley', 'Leaves Downtown, Main & Murray, Floral & Main, Returns to Campus', 'Leaves Mohawk, Susquehanna, Hillside, Mountainview, Returns to Lower Campus']
 const busNumToInfo = { 1: ['WS Westside Outbound', 'Mon-Fri', 'Leaves Union, Floral & Main, Main & Murray,Arrives at UDC'], 2: ['DCL Downtown Center Leroy Inbound', 'Mon-Fri', 'Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus'], 3: ['DCL Downtown Center Leroy Outbound', 'Mon-Fri', 'Leaves Union, Riverside & Columbus, Leroy & Murray,Arrives at UDC'], 4: ['WS Westside Inbound', 'Mon-Fri', 'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus'], 5: ['UDC University Downtown Center Outbound', 'Mon-Fri', 'Leaves Union,Arrives at UDC'], 6: ['MS Main Street Inbound', 'Mon-Fri', 'Leaves UDC, Main & Murray, Main & Floral,Pharmacy School, Returns to Campus'], 7: ['MS Main Street Outbound', 'Mon-Fri', 'Leaves Union,Pharmacy School, Main & Floral, Main & Murray,Arrives at UDC'], 8: ['UDC University Downtown Center Inbound', 'Mon-Fri', 'Leaves UDC,Arrives on Campus'], 9: ['LRS Leroy Southside', 'Mon-Fri', 'Leaves Union, Floral & Main, Leroy & Murray, UClub (BY REQUEST), Returns to Campus'], 10: ['IU ITC-UClub Shuttle', 'Mon-Fri', 'Leaves Mohawk, ITC, UClub, Meadows & Hayes, Returns to Mohawk'], 11: ['UC UClub Shuttle', 'Mon-Fri', 'Leaves Mohawk, UClub, Washington & Lehigh'], 12: ['RRT Riviera Ridge - Town Square Mall Shuttle', 'Mon-Fri', 'Leaves Rafuse,ParkwayPlaza, Town Square Mall (Walmart), Returns to Campus'], 13: ['OC Oakdale Commons Shuttle', 'Mon-Fri', 'Leaves Rafuse, Oakdale Commons, Wegmans, Returns to Campus'], 14: ['CS Campus Shuttle', 'Mon-Fri', 'A lot, ofPlaces, on campus, sorry im lazy'], 15: ['WS Westside Outbound', 'Saturday & Sunday', 'Leaves Union, Floral & Main, Main & Murray,Arrives at UDC'], 16: ['DCL Downtown Center Leroy Inbound', 'Saturday & Sunday', 'Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus'], 17: ['DCL Downtown Center Leroy Outbound', 'Saturday & Sunday', 'Leaves Union, Riverside & Columbus, Leroy & Murray,Arrives at UDC'], 18: ['WS Westside Inbound', 'Saturday & Sunday', 'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus'], 19: ['LRS Leroy Southside', 'Saturday & Sunday', 'Leaves Union, Floral & Main, Leroy & Murray, UClub (BY REQUEST), Returns to Campus'], 20: ['RRT Riviera Ridge - Town Square Mall Shuttle', 'Saturday & Sunday', 'Leaves Rafuse,ParkwayPlaza (Target), Town Square Mall (Walmart), Returns to Campus'], 21: ['OC Oakdale Commons Shuttle', 'Saturday & Sunday', 'Leaves Rafuse, Oakdale Commons, Wegmans, Returns to Campus'], 22: ['UC UClub Shuttle', 'Saturday & Sunday', 'Leaves Mohawk, UClub, Washington & Lehigh'], 23: ['CS Campus Shuttle', 'Saturday & Sunday', 'Leaves Mohawk, Susquehanna, Hillside, Mountainview, Returns to Lower Campus'], 24: ['DE Downtown Express', 'Friday', 'Leaves Union, UClub (Before 1AM),Arrives Downtown, UClub (After 1AM), Returns to Campus'], 25: ['DE Downtown Express', 'Saturday', 'Leaves Union, UClub (Before 1AM),Arrives Downtown, UClub (After 1AM), Returns to Campus'], 26: ['WS Late Nite Westside Outbound', 'Friday & Saturday', 'Leaves Union, Floral & Main, Main & Murray, State & Hawley'], 27: ['DCL Late Nite Downtown Center Leroy Inbound', 'Friday & Saturday', 'Leaves Downtown, Leroy & Murray, Riverside & Columbus, Returns to Campus'], 28: ['DCL Late Nite Downtown Center Leroy Outbound', 'Friday & Saturday', 'Leaves Union, Riverside & Columbus, Leroy & Murray, State & Hawley'], 29: ['WS Late Nite Westside Inbound', 'Friday & Saturday', 'Leaves Downtown, Main & Murray, Floral & Main, Returns to Campus'], 30: ['CS Late Nite Campus Shuttle', 'Friday & Saturday', 'Leaves Mohawk, Susquehanna, Hillside, Mountainview, Returns to Lower Campus'] }
 const uniqueStops = ['A lot', 'Arrives Downtown', 'Arrives at UDC', 'Arrives on Campus', 'Floral & Main', 'Hillside', 'ITC', 'Leaves Downtown', 'Leaves Mohawk', 'Leaves Rafuse', 'Leaves UDC', 'Leaves Union', 'Leroy & Murray', 'Leroy & Murray UClub (BY REQUEST)', 'Main & Floral', 'Main & Murray', 'Meadows & Hayes', 'Mountainview', 'Oakdale Commons', 'Parkway Plaza', 'Parkway Plaza (Target)', 'Pharmacy School', 'Returns to Campus', 'Returns to Lower Campus', 'Returns to Mohawk', 'Riverside & Columbus', 'State & Hawley', 'Susquehanna', 'Town Square Mall (Walmart)', 'UClub', 'UClub (After 1 AM)', 'UClub (BY REQUEST)', 'UClub (Before 1 AM)', 'Washington & Lehigh', 'Wegmans', 'of places', 'on campus', 'sorry im lazy']
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         option.value = stop;
         busStopsDropdown.appendChild(option);
     });
-    
+
     document.addEventListener('input', function () {
         /**
          * helper function for populating destination dropdown with possible stops
@@ -58,40 +59,52 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ######################################################################################################################
-//* 3 functions for RETRIEVING + DISPLAYING INFO
+//* functions for RETRIEVING + DISPLAYING INFO
 // ######################################################################################################################
 
-//takes in a single page number, return (unfiltered) bus times as a string 
+//* the format of "full info.txt"
+/* PAGE 1 - //* startIndex
+   WS Westside Outbound
+   Mon-Fri
+   Leaves Union, Floral & Main, Main & Murray, Arrives at UDC //* startIndex + 3
+   7:35AM 7:44AM 7:50AM 8:00AM
+   more times...
+   more and more times... and finally...
+   PAGE 2 - //* endIndex
+*/
+
+/**
+ * given page #, return (unfiltered/raw) bus times (string, not array)
+ * @param {*} pageNumber what page # of the bus you want
+ * @param {*} callback idk tbh
+ */
 function getTextForPage(pageNumber, callback) {
-    // console.log("bus number " + pageNumber);
     const filePath = "full info.txt"
     const targetPage = `PAGE ${pageNumber}`;
 
     fetch(filePath)
-        // get the text of the filePath file
+        // get the text of the filePath file, call this data
         .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error loading ${filePath}: ${response.status} ${response.statusText}`);
-            }
+            if (!response.ok) throw new Error(`Error loading ${filePath}: ${response.status} ${response.statusText}`);
             return response.text();
         })
-        // given the pageNumber, return a string containing the bus stops and the bus times
+        // given data, return a string containing the bus stops and the bus times
         .then(data => {
             const lines = data.split('\n');
+            
             const startIndex = lines.findIndex(line => line.includes(targetPage));
-
-            if (startIndex === -1) {
-                throw new Error(`Page ${pageNumber} not found`);
-            }
+            if (startIndex === -1) throw new Error(`Page ${pageNumber} not found`);
             const endIndex = lines.findIndex((line, index) => index > startIndex && line.includes(`PAGE ${pageNumber + 1}`));
-
-            //! it was startIndex + 4 at one point, which excluded bus stops line (so it was only the bus times)
-            const result = lines.slice(startIndex + 3, endIndex !== -1 ? endIndex : undefined).join('\n'); 
+            
+            //* it was startIndex + 4 at one point, which excluded bus stops line (so it was only the bus times)
+            const result = lines.slice(startIndex + 3, endIndex !== -1 ? endIndex : undefined).join('\n');
             callback(null, result);
         })
+        // catch any errors hmmm
         .catch(error => callback(error, null));
 }
 
+// TODO this function should not display tables that have no rows
 // takes in (filtered) times for one bus and displays information in a div/table
 function createBusDiv(busNumber, scheduleText) {
     const startStop = document.getElementById('chosenStart').value;
@@ -168,15 +181,11 @@ function createBusDiv(busNumber, scheduleText) {
     output.appendChild(busDiv);
 }
 
-// USING FILTERS. given startStop, endStop: get all bus lines with startStop/endStop 
-// show only relevant info: compare current date/time with bus days/times
 function displayAllFilteredBuses() {
     const startStop = document.getElementById('chosenStart').value;
     const endStop = document.getElementById('chosenEnd').value;
-    const busLinesIndexes = arrayIndexesLines(startStop, endStop);
-
-    // also filter by "arriveByTime"
     const preferredArrivalTime = document.getElementById("userPreferredTime").value;
+    const busLinesIndexes = arrayIndexesLines(startStop, endStop); // buses that contain startStop and endStop
 
     // clear previous bus info and console
     const output = document.getElementById("output");
@@ -186,14 +195,12 @@ function displayAllFilteredBuses() {
     // for each of the bus lines, get the bus times and create a bus div 
     for (let i = 0; i < busLinesIndexes.length; i++) {
         const busNumber = busLinesIndexes[i];
-        // bus line times
+        //* get the bus times
         getTextForPage(busNumber, (error, result) => {
-            if (error) {
-                console.error(error.message);
-                return;
-            }
+            if (error) { console.error(error.message); return; }
 
             if (filterLinesByTimes(result, preferredArrivalTime) !== undefined) {
+                //* display the relevant info in a bus div
                 createBusDiv(busLinesIndexes[i], filterLinesByTimes(result, preferredArrivalTime));
             } else {
                 console.log("Bus " + busNumber + " is not running right now.");
