@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //* the format of "full info.txt"
 /* PAGE 1 - //* startIndex
-   WS Westside Outbound
+   WS Westside Outbound // cspell: disable-line 
    Mon-Fri
    Leaves Union, Floral & Main, Main & Murray, Arrives at UDC //* startIndex + 3
    7:35AM 7:44AM 7:50AM 8:00AM
