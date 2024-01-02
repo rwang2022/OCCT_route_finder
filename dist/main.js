@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     uniqueStops.forEach(function (stop) {
         var option = document.createElement('option');
         option.value = stop;
-        busStopsDropdown.appendChild(option);
+        busStopsDropdown === null || busStopsDropdown === void 0 ? void 0 : busStopsDropdown.appendChild(option);
     });
     document.addEventListener('input', function () {
         /**
@@ -156,7 +156,8 @@ function createBusDiv(busNumber, scheduleText) {
         tbody.appendChild(tr);
     });
     table.appendChild(tbody);
-    output.appendChild(busDiv);
+    if (output != null)
+        output.appendChild(busDiv);
 }
 function displayAllFilteredBuses() {
     var startStop = document.getElementById('chosenStart').value;
@@ -165,7 +166,8 @@ function displayAllFilteredBuses() {
     var busLinesIndexes = arrayIndexesLines(startStop, endStop); // buses that contain startStop and endStop
     // clear previous bus info and console
     var output = document.getElementById("output");
-    output.innerHTML = "";
+    if (output !== null)
+        output.innerHTML = "";
     console.clear();
     var _loop_1 = function (i) {
         var busNumber = busLinesIndexes[i];

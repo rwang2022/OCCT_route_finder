@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     uniqueStops.forEach(stop => {
         const option = document.createElement('option');
         option.value = stop;
-        busStopsDropdown.appendChild(option);
+        busStopsDropdown?.appendChild(option);
     });
 
     document.addEventListener('input', function () {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
          */
         function getStopsAfterString(searchString) {
             try {
-                const stopsAfterString = [];
+                const stopsAfterString: string[] = [];
                 for (const line of lines) {
                     const stops = line.split(',').map(stop => stop.trim());
                     if (stops.includes(searchString)) {
@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        const startStop = document.getElementById('chosenStart').value;
-        const destinationStopsDropdown = document.getElementById("location2");
+        const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
+        const destinationStopsDropdown = document.getElementById("location2") as HTMLInputElement;
         const destinationStops = getStopsAfterString(startStop); // array of possible END stops
 
         // Populate possible destination stops dropdown (depends on choice of START stop)
@@ -106,9 +106,9 @@ function getTextForPage(pageNumber, callback) {
 
 // TODO this function should not display tables that have no rows
 // takes in (filtered) times for one bus and displays information in a div/table
-function createBusDiv(busNumber, scheduleText) {
-    const startStop = document.getElementById('chosenStart').value;
-    const endStop = document.getElementById('chosenEnd').value;
+function createBusDiv(busNumber: number, scheduleText: string) {
+    const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
+    const endStop = (document.getElementById('chosenEnd') as HTMLInputElement).value;
 
     const busName = busNumToInfo[busNumber][0];
     const busDaysOfWeek = busNumToInfo[busNumber][1];
@@ -119,7 +119,7 @@ function createBusDiv(busNumber, scheduleText) {
     * @param {string} dateString bus dates: either "Mon-Fri" or "Saturday & Sunday"
     * @returns boolean of if today matches dateString
     */
-    function datesMatch(dateString) {
+    function datesMatch(dateString: string) {
         const dayOfWeek = new Date().getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
 
         if (dateString === 'Mon-Fri') return dayOfWeek >= 1 && dayOfWeek <= 5;
@@ -178,18 +178,18 @@ function createBusDiv(busNumber, scheduleText) {
     });
 
     table.appendChild(tbody);
-    output.appendChild(busDiv);
+    if (output != null) output.appendChild(busDiv);
 }
 
 function displayAllFilteredBuses() {
-    const startStop = document.getElementById('chosenStart').value;
-    const endStop = document.getElementById('chosenEnd').value;
-    const preferredArrivalTime = document.getElementById("userPreferredTime").value;
+    const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
+    const endStop = (document.getElementById('chosenEnd') as HTMLInputElement).value;
+    const preferredArrivalTime = (document.getElementById("userPreferredTime") as HTMLInputElement).value;
     const busLinesIndexes = arrayIndexesLines(startStop, endStop); // buses that contain startStop and endStop
 
     // clear previous bus info and console
     const output = document.getElementById("output");
-    output.innerHTML = "";
+    if (output !== null) output.innerHTML = "";
     console.clear();
 
     // for each of the bus lines, get the bus times and create a bus div 
