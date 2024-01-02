@@ -1,5 +1,0 @@
-1. within each table, there are rows with Sun/Sat/etc, need to filter those
-
-2. need to learn how to handle N/A in some bus lines, unless it IS handled?
-
-3. 
