@@ -41,22 +41,17 @@ function arrayIndexesLines(startStop, endStop) {
 function filterLinesByTimes(inputText, userPreferredTime) {
     var filteredLineArray = [];
     var currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // "3:00PM"
-    var lines = inputText.split('\n').filter(function (item) { return item != ""; });
-    for (var i = 0; i < lines.length; i++) {
-        var line = lines[i];
+    var completeBusInfo = inputText.split('\n').filter(function (item) { return item != ""; });
+    var stops = completeBusInfo[0].split(',').map(function (stop) { return stop.trim(); });
+    var startStop = document.getElementById('chosenStart').value;
+    var endStop = document.getElementById('chosenEnd').value;
+    var startStopIndex = stops.indexOf(startStop);
+    var endStopIndex = stops.indexOf(endStop);
+    for (var i = 1; i < completeBusInfo.length; i++) {
+        var line = completeBusInfo[i]; // 'Leaves Union, Floral & Main, Main & Murray, Arrives at UDC'
         var line_array = line.split(" ");
-        // TODO start and end stops are not necessarily the first and last ones
-        var startStopIndex = 0;
-        var endStopIndex = line_array.length - 1;
-        // ! TESTING start. 
-        // const stops = lines[0].split(',').map(stop => stop.trim());
-        // const startStop = document.getElementById('chosenStart').value;
-        // const endStop = document.getElementById('chosenEnd').value;
-        // startStopIndex = stops.indexOf(startStop);
-        // endStopIndex = stops.indexOf(endStop);
-        // ! TESTING end
         var startBusTime = line_array[startStopIndex];
-        var endBusTime = line_array[endStopIndex].trim();
+        var endBusTime = line_array[endStopIndex];
         if (compareTimes(currentTime, startBusTime) <= 0 && compareTimes(endBusTime, userPreferredTime) <= 0) {
             filteredLineArray.push(line);
         }

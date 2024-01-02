@@ -46,27 +46,21 @@ function arrayIndexesLines(startStop: string, endStop: string) {
  */
 function filterLinesByTimes(inputText: string, userPreferredTime: string) {
     const filteredLineArray: string[] = [];
-    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // "3:00PM"
-    const lines = inputText.split('\n').filter(item => item != "");
+    const currentTime: string = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // "3:00PM"
+    const completeBusInfo: string[] = inputText.split('\n').filter(item => item != "");
     
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const line_array = line.split(" ");
+    const stops: string[] = completeBusInfo[0].split(',').map(stop => stop.trim());
+    const startStop: string = (document.getElementById('chosenStart') as HTMLInputElement).value;
+    const endStop: string = (document.getElementById('chosenEnd') as HTMLInputElement).value;
+    const startStopIndex: number = stops.indexOf(startStop);
+    const endStopIndex: number = stops.indexOf(endStop);
 
-        // TODO start and end stops are not necessarily the first and last ones
-        let startStopIndex = 0;
-        let endStopIndex = line_array.length - 1;
+    for (let i = 1; i < completeBusInfo.length; i++) {
+        const line: string = completeBusInfo[i]; // 'Leaves Union, Floral & Main, Main & Murray, Arrives at UDC'
+        const line_array: string[] = line.split(" ");
 
-        // ! TESTING start. 
-        // const stops = lines[0].split(',').map(stop => stop.trim());
-        // const startStop = document.getElementById('chosenStart').value;
-        // const endStop = document.getElementById('chosenEnd').value;
-        // startStopIndex = stops.indexOf(startStop);
-        // endStopIndex = stops.indexOf(endStop);
-        // ! TESTING end
-
-        const startBusTime = line_array[startStopIndex]; 
-        const endBusTime = line_array[endStopIndex].trim(); 
+        const startBusTime: string = line_array[startStopIndex]; 
+        const endBusTime: string = line_array[endStopIndex];
 
         if (compareTimes(currentTime, startBusTime) <= 0 && compareTimes(endBusTime, userPreferredTime) <= 0) {
             filteredLineArray.push(line);
