@@ -161,7 +161,6 @@ function createBusDiv(busNumber: number, scheduleText: string) {
 
     // Split scheduleText into rows, remove whitespace rows
     const scheduleRows = scheduleText.split('\n').map(row => row.trim()).filter(row => row);
-    console.log("scheduleRows: " + scheduleRows);
 
     scheduleRows.forEach(row => {
         const tr = document.createElement('tr');

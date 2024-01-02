@@ -143,7 +143,6 @@ function createBusDiv(busNumber, scheduleText) {
     var tbody = document.createElement('tbody');
     // Split scheduleText into rows, remove whitespace rows
     var scheduleRows = scheduleText.split('\n').map(function (row) { return row.trim(); }).filter(function (row) { return row; });
-    console.log("scheduleRows: " + scheduleRows);
     scheduleRows.forEach(function (row) {
         var tr = document.createElement('tr');
         // Split each row into columns

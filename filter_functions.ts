@@ -54,15 +54,18 @@ function filterLinesByTimes(inputText: string, userPreferredTime: string) {
     const endStop: string = (document.getElementById('chosenEnd') as HTMLInputElement).value;
     const startStopIndex: number = stops.indexOf(startStop);
     const endStopIndex: number = stops.indexOf(endStop);
+    console.log("endStopIndex: " + endStopIndex);
+    
 
     for (let i = 1; i < completeBusInfo.length; i++) {
-        const line: string = completeBusInfo[i]; // 'Leaves Union, Floral & Main, Main & Murray, Arrives at UDC'
-        const line_array: string[] = line.split(" ");
-
-        const startBusTime: string = line_array[startStopIndex]; 
+        const line: string = completeBusInfo[i]; // "7:35AM 7:44AM 7:50AM 8:00AM"
+        const line_array: string[] = line.split(" "); // above as array
+        const startBusTime: string = line_array[startStopIndex];
         const endBusTime: string = line_array[endStopIndex];
-
-        if (compareTimes(currentTime, startBusTime) <= 0 && compareTimes(endBusTime, userPreferredTime) <= 0) {
+        
+        if ((compareTimes(currentTime, startBusTime) <= 0) && (compareTimes(endBusTime, userPreferredTime) <= 0)) {
+            // console.log(currentTime + " - " + startBusTime + " = " + compareTimes(currentTime, startBusTime));
+            console.log(endBusTime + " - " + userPreferredTime + " = " + compareTimes(endBusTime, userPreferredTime));
             filteredLineArray.push(line);
         }
     }
@@ -72,19 +75,18 @@ function filterLinesByTimes(inputText: string, userPreferredTime: string) {
 
 
 /**
- * @param {*} time1 a string like 1:23PM or 4:56AM
- * @param {*} time2 a string like 1:23PM or 4:56AM
+ * @param {*} time1 e.g. "1:23PM" or "4:56AM"
+ * @param {*} time2 e.g. "1:23PM" or "4:56AM"
  * @returns an int time1-time2 representing difference in minutes
  */
-function compareTimes(time1, time2) {
+function compareTimes(time1: string, time2: string) {
     // helper function for compareTimes. takes in 1:23PM, returns [1,23,'PM']
-    function parseTime(time) {
-        const period = time.slice(-2).toUpperCase();
+    function parseTime(time: string) {
+        const period = time.trim().slice(-2).toUpperCase();
         const timePart = time.slice(0, -2);
-        const hours = parseInt(timePart.split(':')[0], 10);
-        const minutes = parseInt(timePart.split(':')[1], 10);
-    
-        // console.log("parseTime: " + [hours, minutes, period]);
+        const hours: number = parseInt(timePart.split(':')[0], 10);
+        const minutes: number = parseInt(timePart.split(':')[1], 10);
+        
         return [hours, minutes, period];
     }
 

@@ -47,30 +47,32 @@ function filterLinesByTimes(inputText, userPreferredTime) {
     var endStop = document.getElementById('chosenEnd').value;
     var startStopIndex = stops.indexOf(startStop);
     var endStopIndex = stops.indexOf(endStop);
+    console.log("endStopIndex: " + endStopIndex);
     for (var i = 1; i < completeBusInfo.length; i++) {
-        var line = completeBusInfo[i]; // 'Leaves Union, Floral & Main, Main & Murray, Arrives at UDC'
-        var line_array = line.split(" ");
+        var line = completeBusInfo[i]; // "7:35AM 7:44AM 7:50AM 8:00AM"
+        var line_array = line.split(" "); // above as array
         var startBusTime = line_array[startStopIndex];
         var endBusTime = line_array[endStopIndex];
-        if (compareTimes(currentTime, startBusTime) <= 0 && compareTimes(endBusTime, userPreferredTime) <= 0) {
+        if ((compareTimes(currentTime, startBusTime) <= 0) && (compareTimes(endBusTime, userPreferredTime) <= 0)) {
+            // console.log(currentTime + " - " + startBusTime + " = " + compareTimes(currentTime, startBusTime));
+            console.log(endBusTime + " - " + userPreferredTime + " = " + compareTimes(endBusTime, userPreferredTime));
             filteredLineArray.push(line);
         }
     }
     return filteredLineArray.join("\n");
 }
 /**
- * @param {*} time1 a string like 1:23PM or 4:56AM
- * @param {*} time2 a string like 1:23PM or 4:56AM
+ * @param {*} time1 e.g. "1:23PM" or "4:56AM"
+ * @param {*} time2 e.g. "1:23PM" or "4:56AM"
  * @returns an int time1-time2 representing difference in minutes
  */
 function compareTimes(time1, time2) {
     // helper function for compareTimes. takes in 1:23PM, returns [1,23,'PM']
     function parseTime(time) {
-        var period = time.slice(-2).toUpperCase();
+        var period = time.trim().slice(-2).toUpperCase();
         var timePart = time.slice(0, -2);
         var hours = parseInt(timePart.split(':')[0], 10);
         var minutes = parseInt(timePart.split(':')[1], 10);
-        // console.log("parseTime: " + [hours, minutes, period]);
         return [hours, minutes, period];
     }
     var _a = parseTime(time1), hours1 = _a[0], minutes1 = _a[1], period1 = _a[2];
