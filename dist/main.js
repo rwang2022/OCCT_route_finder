@@ -118,10 +118,11 @@ function createBusDiv(busNumber, scheduleText) {
         return;
     var output = document.getElementById("output");
     var busDiv = document.createElement('div');
+    // Attach header info to bus div
     var busGeneralInfo = document.createElement('h2');
     busGeneralInfo.textContent = "#" + busNumber + " " + busName + " " + busDaysOfWeek;
     busDiv.appendChild(busGeneralInfo);
-    // Display busStopsList as a table header
+    // Display busStopsList in the table header row
     var table = document.createElement('table');
     var thead = document.createElement('thead');
     var tr = document.createElement('tr');
@@ -138,13 +139,12 @@ function createBusDiv(busNumber, scheduleText) {
     thead.appendChild(tr);
     table.appendChild(thead);
     busDiv.appendChild(table);
-    // Display scheduleText as table rows and columns
+    // Display scheduleText (which contains the times) in the table body
     var tbody = document.createElement('tbody');
     // Split scheduleText into rows, remove whitespace rows
     var scheduleRows = scheduleText.split('\n').map(function (row) { return row.trim(); }).filter(function (row) { return row; });
-    // if there are no times for that bus
     if (scheduleRows.length == 0)
-        return;
+        return; // if empty bus times don't display
     scheduleRows.forEach(function (row) {
         var tr = document.createElement('tr');
         // Split each row into columns
@@ -172,18 +172,13 @@ function displayAllFilteredBuses() {
     console.clear();
     var _loop_1 = function (i) {
         var busNumber = busLinesIndexes[i];
-        //* get the bus times
         getTextForPage(busNumber, function (error, result) {
             if (error) {
                 console.error(error.message);
                 return;
             }
             if (filterLinesByTimes(result, preferredArrivalTime) !== undefined) {
-                //* display the relevant info in a bus div
-                createBusDiv(busLinesIndexes[i], filterLinesByTimes(result, preferredArrivalTime));
-            }
-            else {
-                console.log("Bus " + busNumber + " is not running right now.");
+                createBusDiv(busNumber, filterLinesByTimes(result, preferredArrivalTime));
             }
         });
     };

@@ -125,17 +125,17 @@ function createBusDiv(busNumber: number, scheduleText: string) {
         else if (dateString === 'Saturday & Sunday') return dayOfWeek === 0 || dayOfWeek === 6;
         else return false;
     }
-
     if (!datesMatch(busDaysOfWeek)) return;
 
     const output = document.getElementById("output");
     const busDiv = document.createElement('div');
 
+    // Attach header info to bus div
     const busGeneralInfo = document.createElement('h2');
     busGeneralInfo.textContent = "#" + busNumber + " " + busName + " " + busDaysOfWeek;
     busDiv.appendChild(busGeneralInfo);
 
-    // Display busStopsList as a table header
+    // Display busStopsList in the table header row
     const table = document.createElement('table');
     const thead = document.createElement('thead');
     const tr = document.createElement('tr');
@@ -150,18 +150,16 @@ function createBusDiv(busNumber: number, scheduleText: string) {
         }
         tr.appendChild(th);
     });
-
     thead.appendChild(tr);
     table.appendChild(thead);
     busDiv.appendChild(table);
 
-    // Display scheduleText as table rows and columns
+    // Display scheduleText (which contains the times) in the table body
     const tbody = document.createElement('tbody');
 
     // Split scheduleText into rows, remove whitespace rows
     const scheduleRows: string[] = scheduleText.split('\n').map(row => row.trim()).filter(row => row);
-    // if there are no times for that bus
-    if (scheduleRows.length == 0) return;
+    if (scheduleRows.length == 0) return; // if empty bus times don't display
 
     scheduleRows.forEach(row => {
         const tr = document.createElement('tr');
@@ -173,7 +171,6 @@ function createBusDiv(busNumber: number, scheduleText: string) {
             td.textContent = column.trim();
             tr.appendChild(td);
         });
-
         tbody.appendChild(tr);
     });
 
@@ -195,15 +192,11 @@ function displayAllFilteredBuses() {
     // for each of the bus lines, get the bus times and create a bus div 
     for (let i = 0; i < busLinesIndexes.length; i++) {
         const busNumber = busLinesIndexes[i];
-        //* get the bus times
         getTextForPage(busNumber, (error, result) => {
             if (error) { console.error(error.message); return; }
 
             if (filterLinesByTimes(result, preferredArrivalTime) !== undefined) {
-                //* display the relevant info in a bus div
-                createBusDiv(busLinesIndexes[i], filterLinesByTimes(result, preferredArrivalTime));
-            } else {
-                console.log("Bus " + busNumber + " is not running right now.");
+                createBusDiv(busNumber, filterLinesByTimes(result, preferredArrivalTime));
             }
         });
     }
