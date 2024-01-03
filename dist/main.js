@@ -93,7 +93,6 @@ function getTextForPage(pageNumber, callback) {
         callback(null, result);
     })["catch"](function (error) { return callback(error, null); });
 }
-// TODO this function should not display tables that have no rows
 // takes in (filtered) times for one bus and displays information in a div/table
 function createBusDiv(busNumber, scheduleText) {
     var startStop = document.getElementById('chosenStart').value;
@@ -126,7 +125,7 @@ function createBusDiv(busNumber, scheduleText) {
     var table = document.createElement('table');
     var thead = document.createElement('thead');
     var tr = document.createElement('tr');
-    // Split busStopsList into columns
+    // Header Row: split busStopsList into columns
     var stops = busStopsList.split(',');
     stops.forEach(function (stop) {
         var th = document.createElement('th');
@@ -143,6 +142,9 @@ function createBusDiv(busNumber, scheduleText) {
     var tbody = document.createElement('tbody');
     // Split scheduleText into rows, remove whitespace rows
     var scheduleRows = scheduleText.split('\n').map(function (row) { return row.trim(); }).filter(function (row) { return row; });
+    // if there are no times for that bus
+    if (scheduleRows.length == 0)
+        return;
     scheduleRows.forEach(function (row) {
         var tr = document.createElement('tr');
         // Split each row into columns

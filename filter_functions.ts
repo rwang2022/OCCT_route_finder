@@ -82,24 +82,25 @@ function filterLinesByTimes(inputText: string, userPreferredTime: string) {
 function compareTimes(time1: string, time2: string) {
     // helper function for compareTimes. takes in 1:23PM, returns [1,23,'PM']
     function parseTime(time: string) {
-        const period = time.trim().slice(-2).toUpperCase();
-        const timePart = time.slice(0, -2);
+        const period: string = time.trim().slice(-2).toUpperCase();
+        const timePart: string = time.slice(0, -2);
         const hours: number = parseInt(timePart.split(':')[0], 10);
         const minutes: number = parseInt(timePart.split(':')[1], 10);
+        const periodValue: number = (period==='PM') ? 1 : 0;
         
-        return [hours, minutes, period];
+        return [hours, minutes, periodValue];
     }
 
     const [hours1, minutes1, period1] = parseTime(time1);
     const [hours2, minutes2, period2] = parseTime(time2);
 
     // Convert 12-hour format to 24-hour format
-    let adjustedHours1 = (period1 === 'PM' && hours1 !== 12) ? (hours1 + 12) : hours1;
-    let adjustedHours2 = (period2 === 'PM' && hours2 !== 12) ? (hours2 + 12) : hours2;
+    let adjustedHours1 = (period1 === 1 && hours1 !== 12) ? (hours1 + 12) : hours1;
+    let adjustedHours2 = (period2 === 1 && hours2 !== 12) ? (hours2 + 12) : hours2;
 
     // adjust for 12AM
-    if (hours1 === 12 && period1 === 'AM') adjustedHours1 = 0;
-    if (hours2 === 12 && period2 === 'AM') adjustedHours2 = 0;
+    if (hours1 === 12 && period1 === 0) adjustedHours1 = 0;
+    if (hours2 === 12 && period2 === 0) adjustedHours2 = 0;
 
     return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
 }

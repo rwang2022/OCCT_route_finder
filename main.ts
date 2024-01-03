@@ -104,7 +104,6 @@ function getTextForPage(pageNumber, callback) {
         .catch(error => callback(error, null));
 }
 
-// TODO this function should not display tables that have no rows
 // takes in (filtered) times for one bus and displays information in a div/table
 function createBusDiv(busNumber: number, scheduleText: string) {
     const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
@@ -141,7 +140,7 @@ function createBusDiv(busNumber: number, scheduleText: string) {
     const thead = document.createElement('thead');
     const tr = document.createElement('tr');
 
-    // Split busStopsList into columns
+    // Header Row: split busStopsList into columns
     const stops = busStopsList.split(',');
     stops.forEach(stop => {
         const th = document.createElement('th');
@@ -160,7 +159,9 @@ function createBusDiv(busNumber: number, scheduleText: string) {
     const tbody = document.createElement('tbody');
 
     // Split scheduleText into rows, remove whitespace rows
-    const scheduleRows = scheduleText.split('\n').map(row => row.trim()).filter(row => row);
+    const scheduleRows: string[] = scheduleText.split('\n').map(row => row.trim()).filter(row => row);
+    // if there are no times for that bus
+    if (scheduleRows.length == 0) return;
 
     scheduleRows.forEach(row => {
         const tr = document.createElement('tr');

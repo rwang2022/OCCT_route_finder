@@ -73,17 +73,18 @@ function compareTimes(time1, time2) {
         var timePart = time.slice(0, -2);
         var hours = parseInt(timePart.split(':')[0], 10);
         var minutes = parseInt(timePart.split(':')[1], 10);
-        return [hours, minutes, period];
+        var periodValue = (period === 'PM') ? 1 : 0;
+        return [hours, minutes, periodValue];
     }
     var _a = parseTime(time1), hours1 = _a[0], minutes1 = _a[1], period1 = _a[2];
     var _b = parseTime(time2), hours2 = _b[0], minutes2 = _b[1], period2 = _b[2];
     // Convert 12-hour format to 24-hour format
-    var adjustedHours1 = (period1 === 'PM' && hours1 !== 12) ? (hours1 + 12) : hours1;
-    var adjustedHours2 = (period2 === 'PM' && hours2 !== 12) ? (hours2 + 12) : hours2;
+    var adjustedHours1 = (period1 === 1 && hours1 !== 12) ? (hours1 + 12) : hours1;
+    var adjustedHours2 = (period2 === 1 && hours2 !== 12) ? (hours2 + 12) : hours2;
     // adjust for 12AM
-    if (hours1 === 12 && period1 === 'AM')
+    if (hours1 === 12 && period1 === 0)
         adjustedHours1 = 0;
-    if (hours2 === 12 && period2 === 'AM')
+    if (hours2 === 12 && period2 === 0)
         adjustedHours2 = 0;
     return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
 }
