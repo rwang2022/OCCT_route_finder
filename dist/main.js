@@ -106,6 +106,7 @@ function createBusDiv(busNumber, scheduleText) {
     * @returns boolean of if today matches dateString
     */
     function datesMatch(dateString) {
+        dateString.trim();
         var dayOfWeek = new Date().getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
         if (dateString === 'Mon-Fri')
             return dayOfWeek >= 1 && dayOfWeek <= 5;
