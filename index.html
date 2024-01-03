@@ -49,41 +49,18 @@
       font-size: x-large;
     }
   </style>
-</head>
 
-<body>
-
-  <h1>I want to go </h1>
-  <h2>
-    from
-    <input list="busStops" id="chosenStart" value="Leaves UDC" type="search">
-    <datalist id="busStops">
-      <!-- Stops will be populated dynamically using JavaScript -->
-    </datalist>
-  </h2>
-  <h2>
-    to
-    <input list="location2" id="chosenEnd" value="Returns to Campus" type="search">
-    <datalist id="location2">
-      <!-- Stops will be populated dynamically using JavaScript -->
-    </datalist>
-  </h2>
-  <h2>
-    arriving by
-    <input id="userPreferredTime" type="search">
-  </h2>
-
-  <button onclick="displayAllFilteredBuses()">Show me buses</button>
-  <br>
-  <br>
-  <p>Email me at rwang122@binghamton.edu if you have any bugs/suggestions/questions</p>
-  <br>
-  <br>
-
-  <div id="output">
-    <!-- Will be populated dynamically -->
-  </div>
-
+  <!-- optional, prevents the submit button from being pressed more than once -->
+  <script>
+    var submitButton = document.getElementById("submit_form");
+    var form = document.getElementById("email_form");
+    form.addEventListener("submit", function (e) {
+      setTimeout(function () {
+        submitButton.value = "Sending...";
+        submitButton.disabled = true;
+      }, 1);
+    });
+  </script>
   <script src="dist/filter_functions.js">
   </script>
   <script src="dist/main.js">
@@ -106,6 +83,34 @@
       return `${hours}:${minutes}${period}`;
     }
   </script>
+</head>
+
+<body>
+
+  <h1>I want to go </h1>
+
+  <h2>
+    from
+    <input list="busStops" id="chosenStart" value="Leaves UDC" type="search">
+    <datalist id="busStops"></datalist>
+  </h2>
+
+  <h2>
+    to
+    <input list="location2" id="chosenEnd" value="Returns to Campus" type="search">
+    <datalist id="location2"></datalist>
+  </h2>
+
+  <h2>
+    arriving by <input id="userPreferredTime" type="search">
+  </h2>
+
+  <button onclick="displayAllFilteredBuses()">Show me buses</button>
+  <br><br>
+  <a href="email.html">Fill this out if you have any bugs/suggestions/questions</a>
+
+  <div id="output">
+  </div>
 </body>
 
 </html>
