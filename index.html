@@ -50,21 +50,6 @@
     }
   </style>
 
-  <!-- optional, prevents the submit button from being pressed more than once -->
-  <script>
-    var submitButton = document.getElementById("submit_form");
-    var form = document.getElementById("email_form");
-    form.addEventListener("submit", function (e) {
-      setTimeout(function () {
-        submitButton.value = "Sending...";
-        submitButton.disabled = true;
-      }, 1);
-    });
-  </script>
-  <script src="dist/filter_functions.js">
-  </script>
-  <script src="dist/main.js">
-  </script>
   <script>
     // Make it so that by default, "arriving by" time is 2 hours from now
     document.addEventListener('DOMContentLoaded', function () {
@@ -82,6 +67,20 @@
       const period = date.getHours() < 12 ? 'AM' : 'PM';
       return `${hours}:${minutes}${period}`;
     }
+
+    // optional, prevents the submit button from being pressed more than once 
+    var submitButton = document.getElementById("submit_form");
+    var form = document.getElementById("email_form");
+    form.addEventListener("submit", function (e) {
+      setTimeout(function () {
+        submitButton.value = "Sending...";
+        submitButton.disabled = true;
+      }, 1);
+    });
+  </script>
+  <script src="dist/filter_functions.js">
+  </script>
+  <script src="dist/main.js">
   </script>
 </head>
 
