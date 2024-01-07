@@ -93,7 +93,10 @@ function getTextForPage(pageNumber, callback) {
         callback(null, result);
     })["catch"](function (error) { return callback(error, null); });
 }
-// takes in (filtered) times for one bus and displays information in a div/table
+/**
+ * given busNumber + already filtered bus schedule text
+ * create a bus div and add to output div
+ */
 function createBusDiv(busNumber, scheduleText) {
     var startStop = document.getElementById('chosenStart').value;
     var endStop = document.getElementById('chosenEnd').value;

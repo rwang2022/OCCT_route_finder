@@ -104,7 +104,10 @@ function getTextForPage(pageNumber, callback) {
         .catch(error => callback(error, null));
 }
 
-// takes in (filtered) times for one bus and displays information in a div/table
+/**
+ * given busNumber + already filtered bus schedule text
+ * create a bus div and add to output div
+ */
 function createBusDiv(busNumber: number, scheduleText: string) {
     const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
     const endStop = (document.getElementById('chosenEnd') as HTMLInputElement).value;
