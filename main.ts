@@ -75,15 +75,7 @@ function formatTime(date) {
     return `${hours}:${minutes}${period}`;
 }
 
-// optional, prevents the submit button from being pressed more than once 
-var submitButton = (document.getElementById("submit_form") as HTMLInputElement);
-var form = (document.getElementById("email_form") as HTMLInputElement);
-form.addEventListener("submit", function (e) {
-    setTimeout(function () {
-        submitButton.value = "Sending...";
-        submitButton.disabled = true;
-    }, 1);
-});
+
 // ######################################################################################################################
 //* functions for RETRIEVING + DISPLAYING INFO
 // ######################################################################################################################
@@ -219,15 +211,19 @@ function displayAllFilteredBuses() {
     if (output !== null) output.innerHTML = "";
     console.clear();
 
-    // for each of the bus lines, get the bus times and create a bus div 
+    // for each of the bus lines, get the bus times and create a bus div (filtered for preferredArrivalTime)
     for (let i = 0; i < busLinesIndexes.length; i++) {
         const busNumber = busLinesIndexes[i];
         getTextForPage(busNumber, (error, result) => {
             if (error) { console.error(error.message); return; }
 
-            if (filterLinesByTimes(result, preferredArrivalTime) !== undefined) {
+            if (filterLinesByTimes(result, preferredArrivalTime) !== undefined || 
+            filterLinesByTimes(result, preferredArrivalTime) !== null) {
                 createBusDiv(busNumber, filterLinesByTimes(result, preferredArrivalTime));
             }
         });
     }
+
+    // if no buses, print a message saying that
+    if (output?.textContent?.trim() == "") output.innerHTML = "<br><p>no buses: try adjusting arriving by time</p>";
 }

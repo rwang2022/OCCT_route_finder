@@ -47,7 +47,7 @@ function filterLinesByTimes(inputText, userPreferredTime) {
     var endStop = document.getElementById('chosenEnd').value;
     var startStopIndex = stops.indexOf(startStop);
     var endStopIndex = stops.indexOf(endStop);
-    console.log("endStopIndex: " + endStopIndex);
+    // console.log("endStopIndex: " + endStopIndex);
     for (var i = 1; i < completeBusInfo.length; i++) {
         var line = completeBusInfo[i]; // "7:35AM 7:44AM 7:50AM 8:00AM"
         var line_array = line.split(" "); // above as array
@@ -55,7 +55,7 @@ function filterLinesByTimes(inputText, userPreferredTime) {
         var endBusTime = line_array[endStopIndex];
         if ((compareTimes(currentTime, startBusTime) <= 0) && (compareTimes(endBusTime, userPreferredTime) <= 0)) {
             // console.log(currentTime + " - " + startBusTime + " = " + compareTimes(currentTime, startBusTime));
-            console.log(endBusTime + " - " + userPreferredTime + " = " + compareTimes(endBusTime, userPreferredTime));
+            // console.log(endBusTime + " - " + userPreferredTime + " = " + compareTimes(endBusTime, userPreferredTime));
             filteredLineArray.push(line);
         }
     }

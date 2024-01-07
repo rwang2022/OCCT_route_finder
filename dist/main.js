@@ -68,15 +68,6 @@ function formatTime(date) {
     var period = date.getHours() < 12 ? 'AM' : 'PM';
     return hours + ":" + minutes + period;
 }
-// optional, prevents the submit button from being pressed more than once 
-var submitButton = document.getElementById("submit_form");
-var form = document.getElementById("email_form");
-form.addEventListener("submit", function (e) {
-    setTimeout(function () {
-        submitButton.value = "Sending...";
-        submitButton.disabled = true;
-    }, 1);
-});
 // ######################################################################################################################
 //* functions for RETRIEVING + DISPLAYING INFO
 // ######################################################################################################################
@@ -189,6 +180,7 @@ function createBusDiv(busNumber, scheduleText) {
         output.appendChild(busDiv);
 }
 function displayAllFilteredBuses() {
+    var _a;
     var startStop = document.getElementById('chosenStart').value;
     var endStop = document.getElementById('chosenEnd').value;
     var preferredArrivalTime = document.getElementById("userPreferredTime").value;
@@ -205,13 +197,17 @@ function displayAllFilteredBuses() {
                 console.error(error.message);
                 return;
             }
-            if (filterLinesByTimes(result, preferredArrivalTime) !== undefined) {
+            if (filterLinesByTimes(result, preferredArrivalTime) !== undefined ||
+                filterLinesByTimes(result, preferredArrivalTime) !== null) {
                 createBusDiv(busNumber, filterLinesByTimes(result, preferredArrivalTime));
             }
         });
     };
-    // for each of the bus lines, get the bus times and create a bus div 
+    // for each of the bus lines, get the bus times and create a bus div (filtered for preferredArrivalTime)
     for (var i = 0; i < busLinesIndexes.length; i++) {
         _loop_1(i);
     }
+    // if no buses, print a message saying that
+    if (((_a = output === null || output === void 0 ? void 0 : output.textContent) === null || _a === void 0 ? void 0 : _a.trim()) == "")
+        output.innerHTML = "<br><p>no buses: try adjusting arriving by time</p>";
 }
