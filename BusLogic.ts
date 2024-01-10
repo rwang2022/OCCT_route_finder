@@ -93,7 +93,7 @@ class Bus {
  * @returns array of all bus information
  */
 async function fetchBusAtPageNumber(pageNumber: number): Promise<string[]> {
-    const filePath = "full info.txt";
+    const filePath = "full_info.txt";
     const targetPage = `PAGE ${pageNumber}`;
 
     try {
@@ -172,7 +172,7 @@ function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, endSto
 
             // setting booleans for our filters
             if (myBus.relevantToSearch(startStop, endStop, departingTime, arrivalTime)) {
-                // myBus.print();
+                myBus.print();
                 createTableForBus(myBus, pageNumber, startStop, endStop); // createTable needs the stops so that it can format those differently
             }
         })

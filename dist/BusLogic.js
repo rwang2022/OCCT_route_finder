@@ -126,7 +126,7 @@ function fetchBusAtPageNumber(pageNumber) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    filePath = "full info.txt";
+                    filePath = "full_info.txt";
                     targetPage = "PAGE " + pageNumber;
                     _a.label = 1;
                 case 1:
@@ -200,7 +200,7 @@ function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, depar
         var myBus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(function (timeLine) { return timeLine.split(" "); }));
         // setting booleans for our filters
         if (myBus.relevantToSearch(startStop, endStop, departingTime, arrivalTime)) {
-            // myBus.print();
+            myBus.print();
             createTableForBus(myBus, pageNumber, startStop, endStop); // createTable needs the stops so that it can format those differently
         }
     })["catch"](function (error) {
