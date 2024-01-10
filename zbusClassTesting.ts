@@ -10,7 +10,16 @@ class Bus {
         this.stops = stops;
         this.times = times;
     }
-    
+
+    relevantToSearch(startStop: string, endStop: string, arrivalTime: string) {
+        const stopsMatch: boolean = this.hasStartAndEndStop(startStop, endStop);
+        const weekdayMatches: boolean = this.weekdaysMatchToday();
+        this.adjustTimes_AfterCurrentTime_AtStartStop(startStop);
+        this.adjustTimes_BeforeArrivalTime_AtEndStop(arrivalTime, endStop);
+        const hasMatchingTimes = this.times.length > 0;
+        return (stopsMatch && weekdayMatches && hasMatchingTimes);
+    }
+
     print() {
         console.log(this.name + "\n");
         console.log(this.weekdays + "\n");
@@ -34,14 +43,14 @@ class Bus {
     adjustTimes_AfterCurrentTime_AtStartStop(startStop: string) {
         const startStopIndex = this.stops.indexOf(startStop);
         const currentTime: string = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // "3:00PM"
-        this.times = this.times.filter(time => 
+        this.times = this.times.filter(time =>
             // TODO for now, we'll pass along times that are in the format "Mon-Fri8:00AM"
             this.differenceInMinutes(currentTime, time[startStopIndex]) <= 0 || this.startsWithLetter(time[0]));
     }
 
     adjustTimes_BeforeArrivalTime_AtEndStop(arrivalTime: string, endStop: string) {
         const endStopIndex = this.stops.indexOf(endStop);
-        this.times = this.times.filter(time => 
+        this.times = this.times.filter(time =>
             // TODO for now, we'll pass along times that are in the format "Mon-Fri8:00AM"
             this.differenceInMinutes(time[endStopIndex], arrivalTime) <= 0 || this.startsWithLetter(time[0]));
     }
@@ -58,7 +67,7 @@ class Bus {
             const hours = parseInt(timePart.split(':')[0], 10);
             const minutes = parseInt(timePart.split(':')[1], 10);
             const periodValue = (period === 'PM') ? 1 : 0;
-    
+
             return [hours, minutes, periodValue];
         }
 
@@ -117,35 +126,47 @@ async function fetchBus(pageNumber: number): Promise<string[]> {
 }
 
 
-function constructBusAtPageNumber(pageNumber: number) {
-    // Example usage
-    fetchBus(1)
+function constructBusAtPageNumber(pageNumber: number, startStop, endStop, arrivalTime) {
+    fetchBus(pageNumber)
         .then(busInfo => {
-            console.log(busInfo);
             const myBus: Bus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(timeLine => timeLine.split(" ")));
-            
-            const startStop = "Leaves Union";
-            const endStop = "Floral & Main";
-            const arrivalTime = "9:55PM";
 
-            if (myBus.hasStartAndEndStop(startStop, endStop)) console.log("we have start and end stop\n");
-            else console.log("we don't have start and end stop\n");
-            if (myBus.weekdaysMatchToday()) console.log("weekdays match today\n");
-            else console.log("weekdays don't match today\n");
-            myBus.adjustTimes_AfterCurrentTime_AtStartStop(startStop);
-            myBus.adjustTimes_BeforeArrivalTime_AtEndStop(arrivalTime, endStop);
-            
-            myBus.print();
+            // setting booleans for our filters
+            if (myBus.relevantToSearch(startStop, endStop, arrivalTime)) {
+                myBus.print();
+                const my_2D_array = myBus.times;
+                createTable(my_2D_array);
+            }
         })
         .catch(error => {
-            console.error(error);
+            // TODO not good error checking, fix when you have time
+            // console.error(error);
         });
 }
 
-
 function constructBus() {
-    const pageNumber: number = 1;
-    constructBusAtPageNumber(pageNumber);
+    // our filters
+    const startStop = "Leaves Union";
+    const endStop = "Floral & Main";
+    const arrivalTime = "9:55PM";
+
+    const NUM_PAGES = 30;
+    for (let pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
+        constructBusAtPageNumber(pageNumber, startStop, endStop, arrivalTime);
+    }
 }
 
+function createTable(tableData: string[][]) {
+    var table = document.createElement('table');
+    var row = {};
+    var cell = {};
 
+    tableData.forEach(function (rowData) {
+        row = table.insertRow(-1); // [-1] for last position in Safari
+        rowData.forEach(function (cellData) {
+            cell = row.insertCell();
+            cell.textContent = cellData;
+        });
+    });
+    document.body.appendChild(table);
+}

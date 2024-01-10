@@ -41,6 +41,14 @@ var Bus = /** @class */ (function () {
         this.stops = stops;
         this.times = times;
     }
+    Bus.prototype.relevantToSearch = function (startStop, endStop, arrivalTime) {
+        var stopsMatch = this.hasStartAndEndStop(startStop, endStop);
+        var weekdayMatches = this.weekdaysMatchToday();
+        this.adjustTimes_AfterCurrentTime_AtStartStop(startStop);
+        this.adjustTimes_BeforeArrivalTime_AtEndStop(arrivalTime, endStop);
+        var hasMatchingTimes = this.times.length > 0;
+        return (stopsMatch && weekdayMatches && hasMatchingTimes);
+    };
     Bus.prototype.print = function () {
         console.log(this.name + "\n");
         console.log(this.weekdays + "\n");
@@ -150,31 +158,41 @@ function fetchBus(pageNumber) {
         });
     });
 }
-function constructBusAtPageNumber(pageNumber) {
-    // Example usage
-    fetchBus(1)
+function constructBusAtPageNumber(pageNumber, startStop, endStop, arrivalTime) {
+    fetchBus(pageNumber)
         .then(function (busInfo) {
-        console.log(busInfo);
         var myBus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(function (timeLine) { return timeLine.split(" "); }));
-        var startStop = "Leaves Union";
-        var endStop = "Floral & Main";
-        var arrivalTime = "9:55PM";
-        if (myBus.hasStartAndEndStop(startStop, endStop))
-            console.log("we have start and end stop\n");
-        else
-            console.log("we don't have start and end stop\n");
-        if (myBus.weekdaysMatchToday())
-            console.log("weekdays match today\n");
-        else
-            console.log("weekdays don't match today\n");
-        myBus.adjustTimes_AfterCurrentTime_AtStartStop(startStop);
-        myBus.adjustTimes_BeforeArrivalTime_AtEndStop(arrivalTime, endStop);
-        myBus.print();
+        // setting booleans for our filters
+        if (myBus.relevantToSearch(startStop, endStop, arrivalTime)) {
+            myBus.print();
+            var my_2D_array = myBus.times;
+            createTable(my_2D_array);
+        }
     })["catch"](function (error) {
-        console.error(error);
+        // TODO not good error checking, fix when you have time
+        // console.error(error);
     });
 }
 function constructBus() {
-    var pageNumber = 1;
-    constructBusAtPageNumber(pageNumber);
+    // our filters
+    var startStop = "Leaves Union";
+    var endStop = "Floral & Main";
+    var arrivalTime = "9:55PM";
+    var NUM_PAGES = 30;
+    for (var pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
+        constructBusAtPageNumber(pageNumber, startStop, endStop, arrivalTime);
+    }
+}
+function createTable(tableData) {
+    var table = document.createElement('table');
+    var row = {};
+    var cell = {};
+    tableData.forEach(function (rowData) {
+        row = table.insertRow(-1); // [-1] for last position in Safari
+        rowData.forEach(function (cellData) {
+            cell = row.insertCell();
+            cell.textContent = cellData;
+        });
+    });
+    document.body.appendChild(table);
 }
