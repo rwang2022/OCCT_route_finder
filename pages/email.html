@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        * {
+            position: relative;
+        }
+
         h1,
         h2,
         p {
@@ -14,19 +18,11 @@
 
         .grid-container {
             display: grid;
-            /* grid-template-columns: calc(100%/3) calc(100%/3) calc(100%/3); */
-            grid-template-columns: 55% 60% 20%;
+            grid-template-columns: 10% 80% 10%;
         }
 
         .grid-item {
             text-align: center;
-        }
-
-        .bottom-right {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            padding: 10px;
         }
 
         /* Style inputs with type="text", select elements and textareas */
@@ -40,18 +36,17 @@
             box-sizing: border-box;
             margin-top: 6px;
             margin-bottom: 16px;
-            margin-left: 45%;
-            resize: vertical
+            min-height: 30%;
         }
 
         /* Style the submit button with a specific background color etc */
         input[type=submit] {
+            width: 25%;
+            height: 4em;
             background-color: #d96153;
             color: white;
             padding: 12px 20px;
-            border: none;
             border-radius: 4px;
-            cursor: pointer;
             align-items: right;
         }
 
@@ -75,19 +70,23 @@
 
 <body>
     <h1>Tell me your bugs/suggestions/questions</h1>
-    
+
     <div class="grid-container">
-        <form action="https://postmail.invotes.com/send" method="post" id="email_form">
-            <input type="text" name="subject" placeholder="Subject (Required)" required />
-            <textarea name="text" placeholder="Message (Required) " required></textarea>
-            
-            <input type="hidden" name="access_token" value="c2oayufxyc5ls31domzinwni" />
-            <input type="hidden" name="success_url" value=".?message=Email+Successfully+Sent%21&isError=0" />
-            <input type="hidden" name="error_url" value=".?message=Email+could+not+be+sent.&isError=1" />
-            
-            <input type="text" name="reply_to" placeholder="Your Email (optional, only if you want a reply)" />
-            <div style="display: block; margin-left: 87.5%;"><input id="submit_form" type="submit" value="Send" /></div>
-        </form>
+        <div class="grid-item"></div>
+        <div class="grid-item">
+            <form action="https://postmail.invotes.com/send" method="post" id="email_form">
+                <input type="text" name="subject" placeholder="Subject (Required)" required />
+                <textarea style="height: 12em;" name="text" placeholder="Message (Required)" required></textarea>
+
+                <input type="hidden" name="access_token" value="c2oayufxyc5ls31domzinwni" />
+                <input type="hidden" name="success_url" value=".?message=Email+Successfully+Sent%21&isError=0" />
+                <input type="hidden" name="error_url" value=".?message=Email+could+not+be+sent.&isError=1" />
+
+                <input type="text" name="reply_to" placeholder="Your Email (optional, only if you want a reply)" />
+                <input id="submit_form" type="submit" value="Send" />
+            </form>
+        </div>
+        <div class="grid-item"></div>
     </div>
 
     <h2>Known bugs</h2>
