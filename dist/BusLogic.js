@@ -221,3 +221,7 @@ function displayAllRelevantBuses() {
         displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime);
     }
 }
+function displayAllRelevantBuses2() {
+    var scroll = document.getElementById("scroll");
+    scroll.scrollIntoView();
+}

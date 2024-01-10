@@ -15,28 +15,36 @@
 
 <body>
 
-  <h1>I want to go </h1>
+  <div class="container">
+    <div class="content">
+      <h1>I want to go </h1>
 
-  <h2>
-    from
-    <input list="busStops" id="chosenStart" value="Leaves UDC" type="search">
-    <datalist id="busStops"></datalist>
-    departing at <input id="departingTime" style="width: 8em;" type="search" value="now">
-  </h2>
+      <h2>
+        from
+        <input list="busStops" id="chosenStart" value="Leaves UDC" type="search">
+        <datalist id="busStops"></datalist>
+        departing at <input id="departingTime" style="width: 8em;" type="search" value="now">
+      </h2>
 
-  <h2>
-    to
-    <input list="location2" id="chosenEnd" value="Returns to Campus" type="search">
-    <datalist id="location2"></datalist>
-    arriving by <input id="arrivalTime" style="width: 8em;" type="search">
-  </h2>
+      <h2>
+        to
+        <input list="location2" id="chosenEnd" value="Returns to Campus" type="search">
+        <datalist id="location2"></datalist>
+        arriving by <input id="arrivalTime" style="width: 8em;" type="search">
+      </h2>
 
-  <a href="./pages/email.html">bugs/suggestions/questions</a>
-  <br>
-  <br>
-  <button onclick="displayAllRelevantBuses()">Show Me Buses</button>
+      <a href="./pages/email.html">bugs/suggestions/questions</a>
+      <br>
+      <br>
+      <button onclick="displayAllRelevantBuses()">Show Me Buses</button>
+    </div>
+  </div>
 
   <div id="output">
+  </div>
+
+  <div id="scroll">
+    <p>scroll down here</p>
   </div>
 
 </body>
