@@ -61,28 +61,30 @@ class Bus {
     }
 
     private differenceInMinutes(time1: string, time2: string) {
+        /**
+         * hours are out of 24
+         * @param time string like "12:00AM"
+         * @returns [hours, minutes]
+         */
         function parseTime(time: string) {
-            const period = time.trim().slice(-2).toUpperCase();
-            const timePart = time.slice(0, -2);
-            const hours = parseInt(timePart.split(':')[0], 10);
-            const minutes = parseInt(timePart.split(':')[1], 10);
-            const periodValue = (period === 'PM') ? 1 : 0;
+            time.trim();
 
-            return [hours, minutes, periodValue];
+            const timePart = time.slice(0, -2);
+            const period = time.slice(-2).toUpperCase();
+
+            let hours = parseInt(timePart.split(':')[0], 10);
+            const minutes = parseInt(timePart.split(':')[1], 10);
+
+            if (hours === 12 && period === 'AM') hours = 0;
+            if (hours !== 12 && period === 'PM') hours += 12;
+
+            return [hours, minutes];
         }
 
-        const [hours1, minutes1, period1] = parseTime(time1);
-        const [hours2, minutes2, period2] = parseTime(time2);
+        const [hours1, minutes1] = parseTime(time1);
+        const [hours2, minutes2] = parseTime(time2);
 
-        // Convert 12-hour format to 24-hour format
-        let adjustedHours1 = (period1 === 1 && hours1 !== 12) ? (hours1 + 12) : hours1;
-        let adjustedHours2 = (period2 === 1 && hours2 !== 12) ? (hours2 + 12) : hours2;
-
-        // adjust for 12AM
-        if (hours1 === 12 && period1 === 0) adjustedHours1 = 0;
-        if (hours2 === 12 && period2 === 0) adjustedHours2 = 0;
-
-        return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
+        return (hours1 * 60 + minutes1) - (hours2 * 60 + minutes2);
     }
 }
 

@@ -93,25 +93,26 @@ var Bus = /** @class */ (function () {
         return (first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z');
     };
     Bus.prototype.differenceInMinutes = function (time1, time2) {
+        /**
+         * hours are out of 24
+         * @param time string like "12:00AM"
+         * @returns [hours, minutes]
+         */
         function parseTime(time) {
-            var period = time.trim().slice(-2).toUpperCase();
+            time.trim();
             var timePart = time.slice(0, -2);
+            var period = time.slice(-2).toUpperCase();
             var hours = parseInt(timePart.split(':')[0], 10);
             var minutes = parseInt(timePart.split(':')[1], 10);
-            var periodValue = (period === 'PM') ? 1 : 0;
-            return [hours, minutes, periodValue];
+            if (hours === 12 && period === 'AM')
+                hours = 0;
+            if (hours !== 12 && period === 'PM')
+                hours += 12;
+            return [hours, minutes];
         }
-        var _a = parseTime(time1), hours1 = _a[0], minutes1 = _a[1], period1 = _a[2];
-        var _b = parseTime(time2), hours2 = _b[0], minutes2 = _b[1], period2 = _b[2];
-        // Convert 12-hour format to 24-hour format
-        var adjustedHours1 = (period1 === 1 && hours1 !== 12) ? (hours1 + 12) : hours1;
-        var adjustedHours2 = (period2 === 1 && hours2 !== 12) ? (hours2 + 12) : hours2;
-        // adjust for 12AM
-        if (hours1 === 12 && period1 === 0)
-            adjustedHours1 = 0;
-        if (hours2 === 12 && period2 === 0)
-            adjustedHours2 = 0;
-        return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
+        var _a = parseTime(time1), hours1 = _a[0], minutes1 = _a[1];
+        var _b = parseTime(time2), hours2 = _b[0], minutes2 = _b[1];
+        return (hours1 * 60 + minutes1) - (hours2 * 60 + minutes2);
     };
     return Bus;
 }());
