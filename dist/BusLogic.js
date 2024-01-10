@@ -175,7 +175,7 @@ function createTableForBus(myBus, pageNumber, startStop, endStop) {
         var th = document.createElement('th');
         th.textContent = headerInfo;
         if (th.textContent == startStop || th.textContent == endStop) {
-            th.style.backgroundColor = '#5E716A';
+            th.style.background = 'linear-gradient(135deg, #1a2533, #1f618d)';
         }
         headerRow.appendChild(th);
     });

@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    width: fit-content;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+input,
+datalist,
+option,
+button {
+    height: 2em;
+    width: 12em;
+    color: blue;
+    font-size: x-large;
+}
