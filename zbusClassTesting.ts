@@ -134,8 +134,7 @@ function constructBusAtPageNumber(pageNumber: number, startStop, endStop, arriva
             // setting booleans for our filters
             if (myBus.relevantToSearch(startStop, endStop, arrivalTime)) {
                 myBus.print();
-                const my_2D_array = myBus.times;
-                createTable(my_2D_array);
+                createTable(myBus);
             }
         })
         .catch(error => {
@@ -146,9 +145,12 @@ function constructBusAtPageNumber(pageNumber: number, startStop, endStop, arriva
 
 function constructBus() {
     // our filters
-    const startStop = "Leaves Union";
-    const endStop = "Floral & Main";
-    const arrivalTime = "9:55PM";
+    // const startStop = "Leaves Union";
+    // const endStop = "Floral & Main";
+    // const arrivalTime = "9:55PM";
+    const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
+    const endStop = (document.getElementById('chosenEnd') as HTMLInputElement).value;
+    const arrivalTime = (document.getElementById("userPreferredTime") as HTMLInputElement).value;
 
     const NUM_PAGES = 30;
     for (let pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
@@ -156,11 +158,24 @@ function constructBus() {
     }
 }
 
-function createTable(tableData: string[][]) {
+function createTable(myBus: Bus) {
+    var output = document.getElementById("output");
     var table = document.createElement('table');
+
+    // HEADER - bus stops
+    const headerData: string[] = myBus.stops;
+    var header = table.createTHead();
+    var headerRow = header.insertRow();
+    headerData.forEach(headerInfo => {
+        const th = document.createElement('th');
+        th.textContent = headerInfo;
+        headerRow.appendChild(th);
+    });
+    
+    // BODY - bus times
+    const tableData = myBus.times;
     var row = {};
     var cell = {};
-
     tableData.forEach(function (rowData) {
         row = table.insertRow(-1); // [-1] for last position in Safari
         rowData.forEach(function (cellData) {
@@ -168,5 +183,7 @@ function createTable(tableData: string[][]) {
             cell.textContent = cellData;
         });
     });
-    document.body.appendChild(table);
+
+    // actually attaching it
+    output.appendChild(table);
 }

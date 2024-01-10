@@ -165,8 +165,7 @@ function constructBusAtPageNumber(pageNumber, startStop, endStop, arrivalTime) {
         // setting booleans for our filters
         if (myBus.relevantToSearch(startStop, endStop, arrivalTime)) {
             myBus.print();
-            var my_2D_array = myBus.times;
-            createTable(my_2D_array);
+            createTable(myBus);
         }
     })["catch"](function (error) {
         // TODO not good error checking, fix when you have time
@@ -175,16 +174,31 @@ function constructBusAtPageNumber(pageNumber, startStop, endStop, arrivalTime) {
 }
 function constructBus() {
     // our filters
-    var startStop = "Leaves Union";
-    var endStop = "Floral & Main";
-    var arrivalTime = "9:55PM";
+    // const startStop = "Leaves Union";
+    // const endStop = "Floral & Main";
+    // const arrivalTime = "9:55PM";
+    var startStop = document.getElementById('chosenStart').value;
+    var endStop = document.getElementById('chosenEnd').value;
+    var arrivalTime = document.getElementById("userPreferredTime").value;
     var NUM_PAGES = 30;
     for (var pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
         constructBusAtPageNumber(pageNumber, startStop, endStop, arrivalTime);
     }
 }
-function createTable(tableData) {
+function createTable(myBus) {
+    var output = document.getElementById("output");
     var table = document.createElement('table');
+    // HEADER - bus stops
+    var headerData = myBus.stops;
+    var header = table.createTHead();
+    var headerRow = header.insertRow();
+    headerData.forEach(function (headerInfo) {
+        var th = document.createElement('th');
+        th.textContent = headerInfo;
+        headerRow.appendChild(th);
+    });
+    // BODY - bus times
+    var tableData = myBus.times;
     var row = {};
     var cell = {};
     tableData.forEach(function (rowData) {
@@ -194,5 +208,6 @@ function createTable(tableData) {
             cell.textContent = cellData;
         });
     });
-    document.body.appendChild(table);
+    // actually attaching it
+    output.appendChild(table);
 }
