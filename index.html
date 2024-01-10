@@ -48,8 +48,8 @@
     }
   </style>
 
-  <script src="dist/main.js"></script>
-  <script src="dist/BusLogic.js"></script>
+  <script src="../dist/main.js"></script>
+  <script src="../dist/BusLogic.js"></script>
 </head>
 
 <body>
@@ -60,19 +60,17 @@
     from
     <input list="busStops" id="chosenStart" value="Leaves UDC" type="search">
     <datalist id="busStops"></datalist>
+    departing at <input id="departingTime" style="width: 8em;" type="search" value="now">
   </h2>
 
   <h2>
     to
     <input list="location2" id="chosenEnd" value="Returns to Campus" type="search">
     <datalist id="location2"></datalist>
+    arriving by <input id="arrivalTime" style="width: 8em;" type="search">
   </h2>
 
-  <h2>
-    arriving by <input id="userPreferredTime" type="search">
-  </h2>
-
-  <a href="email.html" style="margin: 100px;">Fill this out if you have any bugs/suggestions/questions</a>
+  <a href="./pages/email.html" style="margin: 300px;">Fill this out if you have any bugs/suggestions/questions</a>
   <br>
   <br>
   <button onclick="displayAllRelevantBuses()">Show Me Buses</button>

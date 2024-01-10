@@ -41,10 +41,10 @@ var Bus = /** @class */ (function () {
         this.stops = stops;
         this.times = times;
     }
-    Bus.prototype.relevantToSearch = function (startStop, endStop, arrivalTime) {
+    Bus.prototype.relevantToSearch = function (startStop, endStop, departingTime, arrivalTime) {
         var stopsMatch = this.hasStartAndEndStop(startStop, endStop);
         var weekdayMatches = this.weekdaysMatchToday();
-        this.adjustTimes_AfterCurrentTime_AtStartStop(startStop);
+        this.adjustTimes_AfterDepartingTime_AtStartStop(departingTime, startStop);
         this.adjustTimes_BeforeArrivalTime_AtEndStop(arrivalTime, endStop);
         var hasMatchingTimes = this.times.length > 0;
         return (stopsMatch && weekdayMatches && hasMatchingTimes);
@@ -69,13 +69,15 @@ var Bus = /** @class */ (function () {
         else
             return false;
     };
-    Bus.prototype.adjustTimes_AfterCurrentTime_AtStartStop = function (startStop) {
+    Bus.prototype.adjustTimes_AfterDepartingTime_AtStartStop = function (departingTime, startStop) {
         var _this = this;
         var startStopIndex = this.stops.indexOf(startStop);
-        var currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // "3:00PM"
+        if (departingTime == "now") {
+            departingTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
         this.times = this.times.filter(function (time) {
             // TODO for now, we'll pass along times that are in the format "Mon-Fri8:00AM"
-            return _this.differenceInMinutes(currentTime, time[startStopIndex]) <= 0 || _this.startsWithLetter(time[0]);
+            return _this.differenceInMinutes(departingTime, time[startStopIndex]) <= 0 || _this.startsWithLetter(time[0]);
         });
     };
     Bus.prototype.adjustTimes_BeforeArrivalTime_AtEndStop = function (arrivalTime, endStop) {
@@ -192,12 +194,12 @@ function createTableForBus(myBus, pageNumber, startStop, endStop) {
     busDiv.appendChild(table);
     output === null || output === void 0 ? void 0 : output.appendChild(busDiv);
 }
-function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, arrivalTime) {
+function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime) {
     fetchBusAtPageNumber(pageNumber)
         .then(function (busInfo) {
         var myBus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(function (timeLine) { return timeLine.split(" "); }));
         // setting booleans for our filters
-        if (myBus.relevantToSearch(startStop, endStop, arrivalTime)) {
+        if (myBus.relevantToSearch(startStop, endStop, departingTime, arrivalTime)) {
             // myBus.print();
             createTableForBus(myBus, pageNumber, startStop, endStop); // createTable needs the stops so that it can format those differently
         }
@@ -210,11 +212,12 @@ function displayAllRelevantBuses() {
     // our filters, which decide what's relevant
     var startStop = document.getElementById('chosenStart').value;
     var endStop = document.getElementById('chosenEnd').value;
-    var arrivalTime = document.getElementById("userPreferredTime").value;
+    var arrivalTime = document.getElementById("arrivalTime").value;
+    var departingTime = document.getElementById("departingTime").value;
     console.clear();
     document.getElementById("output").innerHTML = "";
     var NUM_PAGES = 30;
     for (var pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
-        displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, arrivalTime);
+        displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime);
     }
 }

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1,
+        h2,
+        p {
+            text-align: center;
+        }
+
+        .grid-container {
+            display: grid;
+            /* grid-template-columns: calc(100%/3) calc(100%/3) calc(100%/3); */
+            grid-template-columns: 55% 60% 20%;
+        }
+
+        .grid-item {
+            text-align: center;
+        }
+
+        .bottom-right {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding: 10px;
+        }
+
+        /* Style inputs with type="text", select elements and textareas */
+        input[type=text],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            margin-left: 45%;
+            resize: vertical
+        }
+
+        /* Style the submit button with a specific background color etc */
+        input[type=submit] {
+            background-color: #d96153;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            align-items: right;
+        }
+
+        /* When moving the mouse over the submit button, add a darker green color */
+        input[type=submit]:hover {
+            background-color: #2b2828;
+        }
+    </style>
+    <script>
+        // optional, prevents the submit button from being pressed more than once 
+        var submitButton = document.getElementById("submit_form");
+        var form = document.getElementById("email_form");
+        form.addEventListener("submit", function (e) {
+            setTimeout(function () {
+                submitButton.value = "Sending...";
+                submitButton.disabled = true;
+            }, 1);
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Tell me your bugs/suggestions/questions</h1>
+    
+    <div class="grid-container">
+        <form action="https://postmail.invotes.com/send" method="post" id="email_form">
+            <input type="text" name="subject" placeholder="Subject (Required)" required />
+            <textarea name="text" placeholder="Message (Required) " required></textarea>
+            
+            <input type="hidden" name="access_token" value="c2oayufxyc5ls31domzinwni" />
+            <input type="hidden" name="success_url" value=".?message=Email+Successfully+Sent%21&isError=0" />
+            <input type="hidden" name="error_url" value=".?message=Email+could+not+be+sent.&isError=1" />
+            
+            <input type="text" name="reply_to" placeholder="Your Email (optional, only if you want a reply)" />
+            <div style="display: block; margin-left: 87.5%;"><input id="submit_form" type="submit" value="Send" /></div>
+        </form>
+    </div>
+
+    <h2>Known bugs</h2>
+    <p>1. can't handle <span style="font-family: 'Courier New', Courier, monospace;">departingTime: 10pm, arrivalTime:
+            2am</span></p>
+    <p>2. if there are no buses, the button does nothing instead of displaying a message</p>
+
+</body>
+
+</html>
