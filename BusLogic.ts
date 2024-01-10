@@ -164,7 +164,6 @@ function createTableForBus(myBus: Bus, pageNumber: number, startStop, endStop) {
     output?.appendChild(busDiv);
 }
 
-
 function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, endStop, departingTime, arrivalTime) {
     fetchBusAtPageNumber(pageNumber)
         .then(busInfo => {
@@ -186,8 +185,8 @@ function displayAllRelevantBuses() {
     // our filters, which decide what's relevant
     const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
     const endStop = (document.getElementById('chosenEnd') as HTMLInputElement).value;
-    const arrivalTime = (document.getElementById("arrivalTime") as HTMLInputElement).value;
     const departingTime = (document.getElementById("departingTime") as HTMLInputElement).value;
+    const arrivalTime = (document.getElementById("arrivalTime") as HTMLInputElement).value;
 
     console.clear();
     (document.getElementById("output") as HTMLElement).innerHTML = "";

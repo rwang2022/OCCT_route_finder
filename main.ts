@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-//* Make it so that by default, "arriving by" time is 4 hours from now, 
+//* Set default departingTime and arrivalTime
 document.addEventListener('DOMContentLoaded', function () {
     // Formats time as "hh:mmAM/PM"
     function formatTime(date) {
@@ -66,9 +66,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const period = date.getHours() < 12 ? 'AM' : 'PM';
         return `${hours}:${minutes}${period}`;
     }
+
     const currentTime = new Date();
-    const arriveInHours = 4;
-    currentTime.setHours(currentTime.getHours() + arriveInHours);
-    const formattedTime = formatTime(currentTime);
-    (document.getElementById('arrivalTime') as HTMLInputElement).value = formattedTime;
+    (document.getElementById('departingTime') as HTMLInputElement).value = formatTime(currentTime);
+    
+    const arriveInHours = 3;
+    const laterTime = currentTime; 
+    laterTime.setHours(currentTime.getHours() + arriveInHours);
+    (document.getElementById('arrivalTime') as HTMLInputElement).value = formatTime(laterTime);
 });

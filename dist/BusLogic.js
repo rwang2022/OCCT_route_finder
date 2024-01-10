@@ -212,8 +212,8 @@ function displayAllRelevantBuses() {
     // our filters, which decide what's relevant
     var startStop = document.getElementById('chosenStart').value;
     var endStop = document.getElementById('chosenEnd').value;
-    var arrivalTime = document.getElementById("arrivalTime").value;
     var departingTime = document.getElementById("departingTime").value;
+    var arrivalTime = document.getElementById("arrivalTime").value;
     console.clear();
     document.getElementById("output").innerHTML = "";
     var NUM_PAGES = 30;

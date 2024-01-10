@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="/images/bus-icon.png">
+    <title>OCCT Route Planning</title> <!--  cspell: disable-line  -->
     <style>
         * {
             position: relative;
@@ -14,6 +15,10 @@
         h2,
         p {
             text-align: center;
+        }
+
+        .code {
+            font-family: 'Courier New', Courier, monospace;
         }
 
         .grid-container {
@@ -89,10 +94,13 @@
         <div class="grid-item"></div>
     </div>
 
+    <!-- TODO get rid of these bugs -->
     <h2>Known bugs</h2>
-    <p>1. can't handle <span style="font-family: 'Courier New', Courier, monospace;">departingTime: 10pm, arrivalTime:
+    <p>1. can't handle <span class="code">departingTime: 10pm, arrivalTime:
             2am</span></p>
     <p>2. if there are no buses, the button does nothing instead of displaying a message</p>
+    <p>3. can't handle times that include weekdays like <span class="code">Fri10:35PM</span>. for now, we display them
+        always.</p>
 
 </body>
 
