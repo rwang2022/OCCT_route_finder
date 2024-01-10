@@ -56,7 +56,7 @@
   <script src="dist/get_data.js"></script>
   <script src="dist/filter_functions.js"></script>
   <script src="dist/main.js"></script>
-  <script src="dist/zbusClassTesting.js"></script>
+  <script src="dist/BusLogic.js"></script>
 </head>
 
 <body>
@@ -79,12 +79,14 @@
     arriving by <input id="userPreferredTime" type="search">
   </h2>
 
-  <button onclick="displayAllFilteredBuses()">Show me buses</button>
-  <br><br>
+
   <a href="email.html">Fill this out if you have any bugs/suggestions/questions</a>
+
+  <br><br>
+  <button onclick="displayAllFilteredBuses()">Show me buses</button>
   
   <br><br>
-  <button onclick="constructBus()">test Bus Class</button>
+  <button onclick="displayAllRelevantBuses()">Better Show Me Buses</button>
 
   <div id="output">
   </div>

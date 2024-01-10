@@ -92,7 +92,7 @@ class Bus {
  * @param pageNumber pageNumber of the bus you want
  * @returns array of all bus information
  */
-async function fetchBus(pageNumber: number): Promise<string[]> {
+async function fetchBusAtPageNumber(pageNumber: number): Promise<string[]> {
     const filePath = "full info.txt";
     const targetPage = `PAGE ${pageNumber}`;
 
@@ -125,42 +125,14 @@ async function fetchBus(pageNumber: number): Promise<string[]> {
     }
 }
 
-
-function constructBusAtPageNumber(pageNumber: number, startStop, endStop, arrivalTime) {
-    fetchBus(pageNumber)
-        .then(busInfo => {
-            const myBus: Bus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(timeLine => timeLine.split(" ")));
-
-            // setting booleans for our filters
-            if (myBus.relevantToSearch(startStop, endStop, arrivalTime)) {
-                myBus.print();
-                createTable(myBus);
-            }
-        })
-        .catch(error => {
-            // TODO not good error checking, fix when you have time
-            // console.error(error);
-        });
-}
-
-function constructBus() {
-    // our filters
-    // const startStop = "Leaves Union";
-    // const endStop = "Floral & Main";
-    // const arrivalTime = "9:55PM";
-    const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
-    const endStop = (document.getElementById('chosenEnd') as HTMLInputElement).value;
-    const arrivalTime = (document.getElementById("userPreferredTime") as HTMLInputElement).value;
-
-    const NUM_PAGES = 30;
-    for (let pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
-        constructBusAtPageNumber(pageNumber, startStop, endStop, arrivalTime);
-    }
-}
-
-function createTable(myBus: Bus) {
+function createTableForBus(myBus: Bus, pageNumber: number, startStop, endStop) {
     var output = document.getElementById("output");
+    const busDiv = document.createElement('div');
     var table = document.createElement('table');
+
+    const h2 = document.createElement('h2');
+    h2.textContent = "#" + pageNumber + " " + myBus.name + " " + myBus.weekdays;
+    busDiv.appendChild(h2);
 
     // HEADER - bus stops
     const headerData: string[] = myBus.stops;
@@ -169,6 +141,9 @@ function createTable(myBus: Bus) {
     headerData.forEach(headerInfo => {
         const th = document.createElement('th');
         th.textContent = headerInfo;
+        if (th.textContent == startStop || th.textContent == endStop) {
+            th.style.backgroundColor = '#5E716A';
+        }
         headerRow.appendChild(th);
     });
     
@@ -179,11 +154,45 @@ function createTable(myBus: Bus) {
     tableData.forEach(function (rowData) {
         row = table.insertRow(-1); // [-1] for last position in Safari
         rowData.forEach(function (cellData) {
-            cell = row.insertCell();
-            cell.textContent = cellData;
+            cell = (row as HTMLTableRowElement).insertCell();
+            (cell as HTMLTableCellElement).textContent = cellData;
         });
     });
 
     // actually attaching it
-    output.appendChild(table);
+    busDiv.appendChild(table);
+    output?.appendChild(busDiv);
+}
+
+
+function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, endStop, arrivalTime) {
+    fetchBusAtPageNumber(pageNumber)
+        .then(busInfo => {
+            const myBus: Bus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(timeLine => timeLine.split(" ")));
+
+            // setting booleans for our filters
+            if (myBus.relevantToSearch(startStop, endStop, arrivalTime)) {
+                // myBus.print();
+                createTableForBus(myBus, pageNumber, startStop, endStop); // createTable needs the stops so that it can format those differently
+            }
+        })
+        .catch(error => {
+            // TODO not good error checking, fix when you have time
+            // console.error(error);
+        });
+}
+
+function displayAllRelevantBuses() {
+    // our filters, which decide what's relevant
+    const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
+    const endStop = (document.getElementById('chosenEnd') as HTMLInputElement).value;
+    const arrivalTime = (document.getElementById("userPreferredTime") as HTMLInputElement).value;
+
+    console.clear();
+    (document.getElementById("output") as HTMLElement).innerHTML = "";
+
+    const NUM_PAGES = 30;
+    for (let pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
+        displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, arrivalTime);
+    }
 }

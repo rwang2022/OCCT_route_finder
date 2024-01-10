@@ -118,7 +118,7 @@ var Bus = /** @class */ (function () {
  * @param pageNumber pageNumber of the bus you want
  * @returns array of all bus information
  */
-function fetchBus(pageNumber) {
+function fetchBusAtPageNumber(pageNumber) {
     return __awaiter(this, void 0, Promise, function () {
         var filePath, targetPage, response, fullFileText, busDataArray, startIndex_1, endIndex, filteredBusInfoArray, error_1;
         return __generator(this, function (_a) {
@@ -158,36 +158,13 @@ function fetchBus(pageNumber) {
         });
     });
 }
-function constructBusAtPageNumber(pageNumber, startStop, endStop, arrivalTime) {
-    fetchBus(pageNumber)
-        .then(function (busInfo) {
-        var myBus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(function (timeLine) { return timeLine.split(" "); }));
-        // setting booleans for our filters
-        if (myBus.relevantToSearch(startStop, endStop, arrivalTime)) {
-            myBus.print();
-            createTable(myBus);
-        }
-    })["catch"](function (error) {
-        // TODO not good error checking, fix when you have time
-        // console.error(error);
-    });
-}
-function constructBus() {
-    // our filters
-    // const startStop = "Leaves Union";
-    // const endStop = "Floral & Main";
-    // const arrivalTime = "9:55PM";
-    var startStop = document.getElementById('chosenStart').value;
-    var endStop = document.getElementById('chosenEnd').value;
-    var arrivalTime = document.getElementById("userPreferredTime").value;
-    var NUM_PAGES = 30;
-    for (var pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
-        constructBusAtPageNumber(pageNumber, startStop, endStop, arrivalTime);
-    }
-}
-function createTable(myBus) {
+function createTableForBus(myBus, pageNumber, startStop, endStop) {
     var output = document.getElementById("output");
+    var busDiv = document.createElement('div');
     var table = document.createElement('table');
+    var h2 = document.createElement('h2');
+    h2.textContent = "#" + pageNumber + " " + myBus.name + " " + myBus.weekdays;
+    busDiv.appendChild(h2);
     // HEADER - bus stops
     var headerData = myBus.stops;
     var header = table.createTHead();
@@ -195,6 +172,9 @@ function createTable(myBus) {
     headerData.forEach(function (headerInfo) {
         var th = document.createElement('th');
         th.textContent = headerInfo;
+        if (th.textContent == startStop || th.textContent == endStop) {
+            th.style.backgroundColor = '#5E716A';
+        }
         headerRow.appendChild(th);
     });
     // BODY - bus times
@@ -209,5 +189,32 @@ function createTable(myBus) {
         });
     });
     // actually attaching it
-    output.appendChild(table);
+    busDiv.appendChild(table);
+    output === null || output === void 0 ? void 0 : output.appendChild(busDiv);
+}
+function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, arrivalTime) {
+    fetchBusAtPageNumber(pageNumber)
+        .then(function (busInfo) {
+        var myBus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(function (timeLine) { return timeLine.split(" "); }));
+        // setting booleans for our filters
+        if (myBus.relevantToSearch(startStop, endStop, arrivalTime)) {
+            // myBus.print();
+            createTableForBus(myBus, pageNumber, startStop, endStop); // createTable needs the stops so that it can format those differently
+        }
+    })["catch"](function (error) {
+        // TODO not good error checking, fix when you have time
+        // console.error(error);
+    });
+}
+function displayAllRelevantBuses() {
+    // our filters, which decide what's relevant
+    var startStop = document.getElementById('chosenStart').value;
+    var endStop = document.getElementById('chosenEnd').value;
+    var arrivalTime = document.getElementById("userPreferredTime").value;
+    console.clear();
+    document.getElementById("output").innerHTML = "";
+    var NUM_PAGES = 30;
+    for (var pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
+        displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, arrivalTime);
+    }
 }
