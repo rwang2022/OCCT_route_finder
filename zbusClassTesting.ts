@@ -1,7 +1,87 @@
+class Bus {
+    name: string;
+    weekdays: string;
+    stops: string[];
+    times: string[][];
+
+    constructor(name: string, weekdays: string, stops: string[], times: string[][]) {
+        this.name = name;
+        this.weekdays = weekdays;
+        this.stops = stops;
+        this.times = times;
+    }
+    
+    print() {
+        console.log(this.name + "\n");
+        console.log(this.weekdays + "\n");
+        console.log(this.stops + "\n");
+        console.log(this.times);
+    }
+
+    hasStartAndEndStop(startStop: string, endStop: string) {
+        const startStopIndex = this.stops.indexOf(startStop);
+        const endStopIndex = this.stops.indexOf(endStop);
+        return (startStopIndex !== -1 && endStopIndex !== -1 && startStopIndex < endStopIndex);
+    }
+
+    weekdaysMatchToday() {
+        const weekdayOfToday = new Date().getDay();
+        if (this.weekdays === 'Mon-Fri') return weekdayOfToday >= 1 && weekdayOfToday <= 5;
+        else if (this.weekdays === 'Saturday & Sunday') return weekdayOfToday === 0 || weekdayOfToday === 6;
+        else return false;
+    }
+
+    adjustTimes_AfterCurrentTime_AtStartStop(startStop: string) {
+        const startStopIndex = this.stops.indexOf(startStop);
+        const currentTime: string = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // "3:00PM"
+        this.times = this.times.filter(time => 
+            // TODO for now, we'll pass along times that are in the format "Mon-Fri8:00AM"
+            this.differenceInMinutes(currentTime, time[startStopIndex]) <= 0 || this.startsWithLetter(time[0]));
+    }
+
+    adjustTimes_BeforeArrivalTime_AtEndStop(arrivalTime: string, endStop: string) {
+        const endStopIndex = this.stops.indexOf(endStop);
+        this.times = this.times.filter(time => 
+            // TODO for now, we'll pass along times that are in the format "Mon-Fri8:00AM"
+            this.differenceInMinutes(time[endStopIndex], arrivalTime) <= 0 || this.startsWithLetter(time[0]));
+    }
+
+    private startsWithLetter(myString: string) {
+        const first = myString[0];
+        return (first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z');
+    }
+
+    private differenceInMinutes(time1: string, time2: string) {
+        function parseTime(time: string) {
+            const period = time.trim().slice(-2).toUpperCase();
+            const timePart = time.slice(0, -2);
+            const hours = parseInt(timePart.split(':')[0], 10);
+            const minutes = parseInt(timePart.split(':')[1], 10);
+            const periodValue = (period === 'PM') ? 1 : 0;
+    
+            return [hours, minutes, periodValue];
+        }
+
+        const [hours1, minutes1, period1] = parseTime(time1);
+        const [hours2, minutes2, period2] = parseTime(time2);
+
+        // Convert 12-hour format to 24-hour format
+        let adjustedHours1 = (period1 === 1 && hours1 !== 12) ? (hours1 + 12) : hours1;
+        let adjustedHours2 = (period2 === 1 && hours2 !== 12) ? (hours2 + 12) : hours2;
+
+        // adjust for 12AM
+        if (hours1 === 12 && period1 === 0) adjustedHours1 = 0;
+        if (hours2 === 12 && period2 === 0) adjustedHours2 = 0;
+
+        return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
+    }
+}
+
+
 /**
  * pageNumber => ["WS", "Mon-Fri", "stop1, stop2, stop3", "1:00 2:00 3:000\n1:10 2:10 3:10\n..."]
  * @param pageNumber pageNumber of the bus you want
- * @returns a Promise<string[]> giving info of what is necessary
+ * @returns array of all bus information
  */
 async function fetchBus(pageNumber: number): Promise<string[]> {
     const filePath = "full info.txt";
@@ -36,10 +116,6 @@ async function fetchBus(pageNumber: number): Promise<string[]> {
     }
 }
 
-function constructBus() {
-    const pageNumber: number = 1;
-    constructBusAtPageNumber(pageNumber);
-}
 
 function constructBusAtPageNumber(pageNumber: number) {
     // Example usage
@@ -54,86 +130,22 @@ function constructBusAtPageNumber(pageNumber: number) {
 
             if (myBus.hasStartAndEndStop(startStop, endStop)) console.log("we have start and end stop\n");
             else console.log("we don't have start and end stop\n");
-            
             if (myBus.weekdaysMatchToday()) console.log("weekdays match today\n");
             else console.log("weekdays don't match today\n");
-            
-            console.log("before adjustTimesAfterCurrentTime");
-            console.log(myBus.times);
-            console.log("after adjustTimesAfterCurrentTime");
-            myBus.adjustTimesAfterCurrentTime(startStop);
-            console.log(myBus.times);
-            
-            console.log("before adjustTimes_BeforeArrivalTime_AtEndStop");
-            console.log(myBus.times);
-            console.log("after adjustTimes_BeforeArrivalTime_AtEndStop");
+            myBus.adjustTimes_AfterCurrentTime_AtStartStop(startStop);
             myBus.adjustTimes_BeforeArrivalTime_AtEndStop(arrivalTime, endStop);
-            console.log(myBus.times);
+            
+            myBus.print();
         })
         .catch(error => {
             console.error(error);
         });
 }
 
-class Bus {
-    name: string;
-    weekdays: string;
-    stops: string[];
-    times: string[][];
 
-    constructor(name: string, weekdays: string, stops: string[], times: string[][]) {
-        this.name = name;
-        this.weekdays = weekdays;
-        this.stops = stops;
-        this.times = times;
-    }
-
-    hasStartAndEndStop(startStop: string, endStop: string) {
-        const startStopIndex = this.stops.indexOf(startStop);
-        const endStopIndex = this.stops.indexOf(endStop);
-        return (startStopIndex !== -1 && endStopIndex !== -1 && startStopIndex < endStopIndex);
-    }
-
-    weekdaysMatchToday() {
-        const weekdayOfToday = new Date().getDay();
-        if (this.weekdays === 'Mon-Fri') return weekdayOfToday >= 1 && weekdayOfToday <= 5;
-        else if (this.weekdays === 'Saturday & Sunday') return weekdayOfToday === 0 || weekdayOfToday === 6;
-        else return false;
-    }
-
-    adjustTimesAfterCurrentTime(startStop: string) {
-        const startStopIndex = this.stops.indexOf(startStop);
-        const currentTime: string = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // "3:00PM"
-        this.times = this.times.filter(time => this.differenceInMinutes(currentTime, time[startStopIndex]) <= 0);
-    }
-
-    adjustTimes_BeforeArrivalTime_AtEndStop(arrivalTime: string, endStop: string) {
-        const endStopIndex = this.stops.indexOf(endStop);
-        this.times = this.times.filter(time => this.differenceInMinutes(time[endStopIndex], arrivalTime) <= 0);
-    }
-
-    private differenceInMinutes(time1: string, time2: string) {
-        function parseTime(time: string) {
-            const period = time.trim().slice(-2).toUpperCase();
-            const timePart = time.slice(0, -2);
-            const hours = parseInt(timePart.split(':')[0], 10);
-            const minutes = parseInt(timePart.split(':')[1], 10);
-            const periodValue = (period === 'PM') ? 1 : 0;
-    
-            return [hours, minutes, periodValue];
-        }
-
-        const [hours1, minutes1, period1] = parseTime(time1);
-        const [hours2, minutes2, period2] = parseTime(time2);
-
-        // Convert 12-hour format to 24-hour format
-        let adjustedHours1 = (period1 === 1 && hours1 !== 12) ? (hours1 + 12) : hours1;
-        let adjustedHours2 = (period2 === 1 && hours2 !== 12) ? (hours2 + 12) : hours2;
-
-        // adjust for 12AM
-        if (hours1 === 12 && period1 === 0) adjustedHours1 = 0;
-        if (hours2 === 12 && period2 === 0) adjustedHours2 = 0;
-
-        return (adjustedHours1 * 60 + minutes1) - (adjustedHours2 * 60 + minutes2);
-    }
+function constructBus() {
+    const pageNumber: number = 1;
+    constructBusAtPageNumber(pageNumber);
 }
+
+
