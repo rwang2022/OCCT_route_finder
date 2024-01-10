@@ -220,7 +220,7 @@ function displayAllRelevantBuses() {
     for (var pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
         displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime);
     }
-    setTimeout(scrollToBottom, 100);
+    setTimeout(scrollToBottom, 200);
     // scrollToBottom();
 }
 // Function to scroll to the bottom of the page

@@ -196,7 +196,7 @@ function displayAllRelevantBuses() {
         displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime);
     }
 
-    setTimeout(scrollToBottom, 100);
+    setTimeout(scrollToBottom, 200);
     // scrollToBottom();
 }
 
