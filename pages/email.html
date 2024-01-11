@@ -5,18 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/images/bus-icon.png">
+    <link rel="stylesheet" href="../style.css">
     <title>OCCT Route Planning</title> <!--  cspell: disable-line  -->
     <style>
-        * {
-            position: relative;
-        }
-
-        h1,
-        h2,
-        p {
-            text-align: center;
-        }
-
         .code {
             font-family: 'Courier New', Courier, monospace;
         }
@@ -47,13 +38,13 @@
 
         /* Style the submit button with a specific background color etc */
         input[type=submit] {
-            width: 25%;
-            height: 4em;
+            font-size: large;
+            width: 40%;
+            height: 3rem;
             background-color: #d96153;
             color: white;
             padding: 12px 20px;
             border-radius: 4px;
-            align-items: right;
         }
 
         /* When moving the mouse over the submit button, add a darker green color */
@@ -77,33 +68,42 @@
 </head>
 
 <body>
-    <h1>Tell me your bugs/suggestions/questions</h1>
 
-    <div class="grid-container">
-        <div class="grid-item"></div>
-        <div class="grid-item">
-            <form action="https://postmail.invotes.com/send" method="post" id="email_form">
-                <input type="text" name="subject" placeholder="Subject (Required)" required />
-                <textarea style="height: 12em;" name="text" placeholder="Message (Required)" required></textarea>
+    <div class="container">
 
-                <input type="hidden" name="access_token" value="c2oayufxyc5ls31domzinwni" />
-                <input type="hidden" name="success_url" value=".?message=Email+Successfully+Sent%21&isError=0" />
-                <input type="hidden" name="error_url" value=".?message=Email+could+not+be+sent.&isError=1" />
+        <div class="content">
+            <h1 style="margin-bottom: 1rem;">Email me</h1>
 
-                <input type="text" name="reply_to" placeholder="Your Email (optional, only if you want a reply)" />
-                <input id="submit_form" type="submit" value="Send" />
-            </form>
+            <div class="grid-container">
+                <div class="grid-item"></div>
+                <div class="grid-item">
+                    <form action="https://postmail.invotes.com/send" method="post" id="email_form">
+                        <input type="text" name="subject" placeholder="Subject (Required)" required />
+                        <textarea style="height: 12em;" name="text" placeholder="Message (Required)"
+                            required></textarea>
+
+                        <input type="hidden" name="access_token" value="c2oayufxyc5ls31domzinwni" />
+                        <input type="hidden" name="success_url"
+                            value=".?message=Email+Successfully+Sent%21&isError=0" />
+                        <input type="hidden" name="error_url" value=".?message=Email+could+not+be+sent.&isError=1" />
+
+                        <input type="text" name="reply_to" placeholder="Your Email (optional, for replies)" />
+                        <input id="submit_form" type="submit" value="Send" />
+                    </form>
+                </div>
+                <div class="grid-item"></div>
+            </div>
+
+            <!-- TODO get rid of these bugs -->
+            <h2>Known bugs</h2>
+            <p>1. can't handle <span class="code">departingTime: 10pm, arrivalTime: 2am</span></p>
+            <p>2. if there are no buses, the button does nothing instead of displaying a message</p>
+            <p>3. can't handle times that include weekdays like <span class="code">Fri10:35PM</span>. for now, we
+                display
+                them
+                always.</p>
         </div>
-        <div class="grid-item"></div>
     </div>
-
-    <!-- TODO get rid of these bugs -->
-    <h2>Known bugs</h2>
-    <p>1. can't handle <span class="code">departingTime: 10pm, arrivalTime:
-            2am</span></p>
-    <p>2. if there are no buses, the button does nothing instead of displaying a message</p>
-    <p>3. can't handle times that include weekdays like <span class="code">Fri10:35PM</span>. for now, we display them
-        always.</p>
 
 </body>
 
