@@ -63,9 +63,9 @@ var Bus = /** @class */ (function () {
     Bus.prototype.weekdaysMatchToday = function () {
         var weekdayOfToday = new Date().getDay();
         if (this.weekdays === 'Mon-Fri')
-            return weekdayOfToday >= 1 && weekdayOfToday <= 5;
+            return 2 /* MONDAY */ <= weekdayOfToday && weekdayOfToday <= 6 /* FRIDAY */;
         else if (this.weekdays === 'Saturday & Sunday')
-            return weekdayOfToday === 0 || weekdayOfToday === 6;
+            return weekdayOfToday === 7 /* SATURDAY */ || weekdayOfToday === 1 /* SUNDAY */;
         else
             return false;
     };
@@ -165,10 +165,11 @@ function createTableForBus(myBus, pageNumber, startStop, endStop) {
     var output = document.getElementById("output");
     var busDiv = document.createElement('div');
     var table = document.createElement('table');
+    // BUS DESCRIPTION - number, name, weekdays
     var h2 = document.createElement('h2');
     h2.textContent = "#" + pageNumber + " " + myBus.name + " " + myBus.weekdays;
     busDiv.appendChild(h2);
-    // HEADER - bus stops
+    // TABLE HEADER - bus stops list
     var headerData = myBus.stops;
     var header = table.createTHead();
     var headerRow = header.insertRow();
@@ -180,7 +181,7 @@ function createTableForBus(myBus, pageNumber, startStop, endStop) {
         }
         headerRow.appendChild(th);
     });
-    // BODY - bus times
+    // BODY - bus times - 2D list 
     var tableData = myBus.times;
     var row = {};
     var cell = {};
@@ -202,7 +203,8 @@ function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, depar
         // setting booleans for our filters
         if (myBus.relevantToSearch(startStop, endStop, departingTime, arrivalTime)) {
             myBus.print();
-            createTableForBus(myBus, pageNumber, startStop, endStop); // createTable needs the stops so that it can format those differently
+            // createTable to know the stops so that it can format those differently
+            createTableForBus(myBus, pageNumber, startStop, endStop);
         }
     })["catch"](function (error) {
         // TODO not good error checking, fix when you have time
@@ -221,7 +223,8 @@ function displayAllRelevantBuses() {
     for (var pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
         displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime);
     }
-    setTimeout(scrollToBottom, 200);
+    var DELAY_MS = 200; // delay so that there is time for the busDivs to load into output
+    setTimeout(scrollToBottom, DELAY_MS);
     // scrollToBottom();
 }
 // Function to scroll to the bottom of the page

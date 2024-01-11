@@ -1,3 +1,13 @@
+const enum Days {
+    SUNDAY = 1,
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY
+}
+
 class Bus {
     name: string;
     weekdays: string;
@@ -35,8 +45,8 @@ class Bus {
 
     weekdaysMatchToday() {
         const weekdayOfToday = new Date().getDay();
-        if (this.weekdays === 'Mon-Fri') return weekdayOfToday >= 1 && weekdayOfToday <= 5;
-        else if (this.weekdays === 'Saturday & Sunday') return weekdayOfToday === 0 || weekdayOfToday === 6;
+        if (this.weekdays === 'Mon-Fri') return Days.MONDAY <= weekdayOfToday && weekdayOfToday <= Days.FRIDAY;
+        else if (this.weekdays === 'Saturday & Sunday') return weekdayOfToday === Days.SATURDAY || weekdayOfToday === Days.SUNDAY;
         else return false;
     }
 
@@ -100,21 +110,18 @@ async function fetchBusAtPageNumber(pageNumber: number): Promise<string[]> {
 
     try {
         const response = await fetch(filePath);
-        if (!response.ok) {
-            throw new Error(`Error loading ${filePath}: ${response.status} ${response.statusText}`);
-        }
+
+        if (!response.ok) { throw new Error(`Error loading ${filePath}: ${response.status} ${response.statusText}`); }
 
         const fullFileText = await response.text();
         const busDataArray = fullFileText.split('\n');
         const startIndex = busDataArray.findIndex(line => line.includes(targetPage));
 
-        if (startIndex === -1) {
-            throw new Error(`Page ${pageNumber} not found`);
-        }
+        if (startIndex === -1) { throw new Error(`Page ${pageNumber} not found`); }
 
         const endIndex = busDataArray.findIndex((line, index) => index > startIndex && line.includes(`PAGE ${pageNumber + 1}`));
 
-        // Filter out empty lines
+        // string[] of lines for the bus at pageNumber
         const filteredBusInfoArray = busDataArray
             .slice(startIndex + 1, endIndex !== -1 ? endIndex : undefined)
             .filter(lineData => lineData.trim() !== "") // filter out empty lines
@@ -132,11 +139,12 @@ function createTableForBus(myBus: Bus, pageNumber: number, startStop, endStop) {
     const busDiv = document.createElement('div');
     var table = document.createElement('table');
 
+    // BUS DESCRIPTION - number, name, weekdays
     const h2 = document.createElement('h2');
     h2.textContent = "#" + pageNumber + " " + myBus.name + " " + myBus.weekdays;
     busDiv.appendChild(h2);
 
-    // HEADER - bus stops
+    // TABLE HEADER - bus stops list
     const headerData: string[] = myBus.stops;
     var header = table.createTHead();
     var headerRow = header.insertRow();
@@ -149,7 +157,7 @@ function createTableForBus(myBus: Bus, pageNumber: number, startStop, endStop) {
         headerRow.appendChild(th);
     });
 
-    // BODY - bus times
+    // BODY - bus times - 2D list 
     const tableData = myBus.times;
     var row = {};
     var cell = {};
@@ -174,7 +182,8 @@ function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, endSto
             // setting booleans for our filters
             if (myBus.relevantToSearch(startStop, endStop, departingTime, arrivalTime)) {
                 myBus.print();
-                createTableForBus(myBus, pageNumber, startStop, endStop); // createTable needs the stops so that it can format those differently
+                // createTable to know the stops so that it can format those differently
+                createTableForBus(myBus, pageNumber, startStop, endStop); 
             }
         })
         .catch(error => {
@@ -198,7 +207,8 @@ function displayAllRelevantBuses() {
         displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime);
     }
 
-    setTimeout(scrollToBottom, 200);
+    const DELAY_MS = 200; // delay so that there is time for the busDivs to load into output
+    setTimeout(scrollToBottom, DELAY_MS);
     // scrollToBottom();
 }
 
