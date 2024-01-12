@@ -73,9 +73,6 @@ class Bus {
 
     adjustTimes_BeforeArrivalTime_AtEndStop(arrivalTime: string, endStop: string) {
         const endStopIndex = this.stops.indexOf(endStop);
-        this.times = this.times.filter(time =>
-            // TODO for now, we'll pass along times that are in the format "Mon-Fri8:00AM"
-            this.differenceInMinutes(time[endStopIndex], arrivalTime) <= 0 || this.startsWithLetter(time[0]));
 
         this.times = this.times.filter(time => {
             const startTime = time[endStopIndex];
@@ -260,8 +257,8 @@ function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, endSto
                 createTableForBus(myBus, pageNumber, startStop, endStop);
             }
         })
+        // TODO not good error checking, fix when you have time
         .catch(error => {
-            // TODO not good error checking, fix when you have time
             // console.error(error);
         });
 }

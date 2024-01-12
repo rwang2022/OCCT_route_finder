@@ -92,10 +92,6 @@ var Bus = /** @class */ (function () {
         var _this = this;
         var endStopIndex = this.stops.indexOf(endStop);
         this.times = this.times.filter(function (time) {
-            // TODO for now, we'll pass along times that are in the format "Mon-Fri8:00AM"
-            return _this.differenceInMinutes(time[endStopIndex], arrivalTime) <= 0 || _this.startsWithLetter(time[0]);
-        });
-        this.times = this.times.filter(function (time) {
             var startTime = time[endStopIndex];
             var timePart = _this.getTimePart(startTime);
             var weekdaysPart = _this.getWeekdaysPart(startTime);
@@ -267,7 +263,6 @@ function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, depar
             createTableForBus(myBus, pageNumber, startStop, endStop);
         }
     })["catch"](function (error) {
-        // TODO not good error checking, fix when you have time
         // console.error(error);
     });
 }
