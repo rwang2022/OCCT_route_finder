@@ -7,7 +7,7 @@ The results will be filtered to
 1. contain the start and end stop.
 2. be available on that weekday.
 3. leave after the desired departing time (by default now).
-4. arrive before desired arrival time (by default 4 hours from now).
+4. arrive before desired arrival time (by default 3 hours from now).
 
-# Bugs, suggestions or questions
-Open an issue, email me at rwang122@binghamton.edu, or submit the form on the website.
+# If you see any bugs, or have any suggestions or questions
+You can open an issue, email me at rwang122@binghamton.edu, or submit the form on the website.
