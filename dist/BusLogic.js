@@ -63,9 +63,9 @@ var Bus = /** @class */ (function () {
     Bus.prototype.weekdaysMatchToday = function () {
         var weekdayOfToday = new Date().getDay();
         if (this.weekdays === 'Mon-Fri')
-            return 2 /* MONDAY */ <= weekdayOfToday && weekdayOfToday <= 6 /* FRIDAY */;
+            return 1 /* MONDAY */ <= weekdayOfToday && weekdayOfToday <= 5 /* FRIDAY */;
         else if (this.weekdays === 'Saturday & Sunday')
-            return weekdayOfToday === 7 /* SATURDAY */ || weekdayOfToday === 1 /* SUNDAY */;
+            return weekdayOfToday === 6 /* SATURDAY */ || weekdayOfToday === 0 /* SUNDAY */;
         else
             return false;
     };
@@ -76,8 +76,16 @@ var Bus = /** @class */ (function () {
             departingTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         }
         this.times = this.times.filter(function (time) {
-            // TODO for now, we'll pass along times that are in the format "Mon-Fri8:00AM"
-            return _this.differenceInMinutes(departingTime, time[startStopIndex]) <= 0 || _this.startsWithLetter(time[0]);
+            var startTime = time[startStopIndex];
+            var timePart = _this.getTimePart(startTime);
+            var weekdaysPart = _this.getWeekdaysPart(startTime);
+            var timesMatch = _this.differenceInMinutes(departingTime, timePart) <= 0;
+            var weekdaysMatch = _this.busWeekdayMatchesToday(weekdaysPart);
+            // if (weekdaysPart !== "" && (timesMatch && weekdaysMatch)) console.log(
+            //     departingTime + " - " + timePart + " = " + this.differenceInMinutes(departingTime, timePart) + 
+            //     "\ntimePart:" + timePart + " weekdaysPart:" + weekdaysPart + 
+            // "\ntimesMatch:" + timesMatch + " weekdaysMatch:" + weekdaysMatch);
+            return timesMatch && weekdaysMatch;
         });
     };
     Bus.prototype.adjustTimes_BeforeArrivalTime_AtEndStop = function (arrivalTime, endStop) {
@@ -87,32 +95,50 @@ var Bus = /** @class */ (function () {
             // TODO for now, we'll pass along times that are in the format "Mon-Fri8:00AM"
             return _this.differenceInMinutes(time[endStopIndex], arrivalTime) <= 0 || _this.startsWithLetter(time[0]);
         });
+        this.times = this.times.filter(function (time) {
+            var startTime = time[endStopIndex];
+            var timePart = _this.getTimePart(startTime);
+            var weekdaysPart = _this.getWeekdaysPart(startTime);
+            var timesMatch = _this.differenceInMinutes(timePart, arrivalTime) <= 0;
+            var weekdaysMatch = _this.busWeekdayMatchesToday(weekdaysPart);
+            return timesMatch && weekdaysMatch;
+        });
     };
     /**
      * ! untested: may not work
      * @param time a string like "8:00AM" or "Mon-Fri8:00AM"
      * @returns a breakdown [timePart: string, weekdaysArray: Days[]]
      */
-    Bus.prototype.processBusTimesWithWeekDays = function (time) {
+    Bus.prototype.getTimePart = function (time) {
         time = time.trim();
-        var weekdaysPart = time.slice(0, this.findFirstNumberIndex(time));
         var timePart = time.slice(this.findFirstNumberIndex(time), undefined);
-        var weekdaysArray = [];
-        switch (weekdaysPart) {
+        return timePart;
+    };
+    Bus.prototype.getWeekdaysPart = function (time) {
+        var weekdaysPart = time.slice(0, this.findFirstNumberIndex(time));
+        return weekdaysPart;
+    };
+    // weekdayStr is "Mon-Thu", "Fri", "Sat", "Sun"
+    Bus.prototype.busWeekdayMatchesToday = function (weekdayStr) {
+        var weekdayOfToday = new Date().getDay();
+        var matches = true; // we want to over-display bus times, so we begin by assuming they match 
+        switch (weekdayStr) {
             case "Mon-Thu":
-                weekdaysArray = [2 /* MONDAY */, 3 /* TUESDAY */, 4 /* WEDNESDAY */, 5 /* THURSDAY */, 5 /* THURSDAY */];
+                matches = (1 /* MONDAY */ <= weekdayOfToday) && (weekdayOfToday <= 4 /* THURSDAY */);
                 break;
             case "Fri":
-                weekdaysArray = [6 /* FRIDAY */];
+                matches = (weekdayOfToday == 5 /* FRIDAY */);
                 break;
             case "Sat":
-                weekdaysArray = [7 /* SATURDAY */];
+                matches = (weekdayOfToday == 6 /* SATURDAY */);
+                break;
             case "Sun":
-                weekdaysArray = [1 /* SUNDAY */];
+                matches = (weekdayOfToday == 0 /* SUNDAY */);
+                break;
             default:
                 break;
         }
-        return [timePart, weekdaysArray];
+        return matches;
     };
     Bus.prototype.findFirstNumberIndex = function (inputString) {
         for (var i = 0; i < inputString.length; i++) {

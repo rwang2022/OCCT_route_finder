@@ -1,5 +1,5 @@
 const enum Days {
-    SUNDAY = 1,
+    SUNDAY = 0,
     MONDAY,
     TUESDAY,
     WEDNESDAY,
@@ -53,9 +53,22 @@ class Bus {
     adjustTimes_AfterDepartingTime_AtStartStop(departingTime: string, startStop: string) {
         const startStopIndex = this.stops.indexOf(startStop);
         if (departingTime == "now") { departingTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
-        this.times = this.times.filter(time =>
-            // TODO for now, we'll pass along times that are in the format "Mon-Fri8:00AM"
-            this.differenceInMinutes(departingTime, time[startStopIndex]) <= 0 || this.startsWithLetter(time[0]));
+
+        this.times = this.times.filter(time => {
+            const startTime = time[startStopIndex];
+            const timePart = this.getTimePart(startTime);
+            const weekdaysPart = this.getWeekdaysPart(startTime);
+
+            const timesMatch: boolean = this.differenceInMinutes(departingTime, timePart) <= 0;
+            const weekdaysMatch: boolean = this.busWeekdayMatchesToday(weekdaysPart);
+
+            // if (weekdaysPart !== "" && (timesMatch && weekdaysMatch)) console.log(
+            //     departingTime + " - " + timePart + " = " + this.differenceInMinutes(departingTime, timePart) + 
+            //     "\ntimePart:" + timePart + " weekdaysPart:" + weekdaysPart + 
+            // "\ntimesMatch:" + timesMatch + " weekdaysMatch:" + weekdaysMatch);
+
+            return timesMatch && weekdaysMatch;
+        });
     }
 
     adjustTimes_BeforeArrivalTime_AtEndStop(arrivalTime: string, endStop: string) {
@@ -63,6 +76,17 @@ class Bus {
         this.times = this.times.filter(time =>
             // TODO for now, we'll pass along times that are in the format "Mon-Fri8:00AM"
             this.differenceInMinutes(time[endStopIndex], arrivalTime) <= 0 || this.startsWithLetter(time[0]));
+
+        this.times = this.times.filter(time => {
+            const startTime = time[endStopIndex];
+            const timePart = this.getTimePart(startTime);
+            const weekdaysPart = this.getWeekdaysPart(startTime);
+
+            const timesMatch: boolean = this.differenceInMinutes(timePart, arrivalTime) <= 0;
+            const weekdaysMatch: boolean = this.busWeekdayMatchesToday(weekdaysPart);
+
+            return timesMatch && weekdaysMatch;
+        });
     }
 
     /**
@@ -70,28 +94,40 @@ class Bus {
      * @param time a string like "8:00AM" or "Mon-Fri8:00AM"
      * @returns a breakdown [timePart: string, weekdaysArray: Days[]]
      */
-    private processBusTimesWithWeekDays(time: string): [string, Days[]] {
+    private getTimePart(time: string): string {
         time = time.trim();
-        const weekdaysPart: string = time.slice(0, this.findFirstNumberIndex(time));
         const timePart: string = time.slice(this.findFirstNumberIndex(time), undefined);
+        return timePart;
+    }
 
-        let weekdaysArray: Days[] = [];
-        switch (weekdaysPart) {
+    getWeekdaysPart(time: string): string {
+        const weekdaysPart: string = time.slice(0, this.findFirstNumberIndex(time));
+        return weekdaysPart;
+    }
+
+    // weekdayStr is "Mon-Thu", "Fri", "Sat", "Sun"
+    busWeekdayMatchesToday(weekdayStr: string): boolean {
+        const weekdayOfToday = new Date().getDay();
+        let matches: boolean = true; // we want to over-display bus times, so we begin by assuming they match 
+
+        switch (weekdayStr) {
             case "Mon-Thu":
-                weekdaysArray = [Days.MONDAY, Days.TUESDAY, Days.WEDNESDAY, Days.THURSDAY, Days.THURSDAY];
+                matches = (Days.MONDAY <= weekdayOfToday) && (weekdayOfToday <= Days.THURSDAY);
                 break;
             case "Fri":
-                weekdaysArray = [Days.FRIDAY];
+                matches = (weekdayOfToday == Days.FRIDAY);
                 break;
             case "Sat":
-                weekdaysArray = [Days.SATURDAY];
+                matches = (weekdayOfToday == Days.SATURDAY);
+                break;
             case "Sun":
-                weekdaysArray = [Days.SUNDAY]
+                matches = (weekdayOfToday == Days.SUNDAY);
+                break;
             default:
                 break;
         }
-        
-        return [timePart, weekdaysArray];
+
+        return matches;
     }
 
     private findFirstNumberIndex(inputString: string): number | undefined {
@@ -101,7 +137,7 @@ class Bus {
             }
         }
         return undefined; // Return null if no number is found
-    }    
+    }
 
     private startsWithLetter(myString: string) {
         const first = myString[0];
@@ -221,7 +257,7 @@ function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, endSto
             if (myBus.relevantToSearch(startStop, endStop, departingTime, arrivalTime)) {
                 myBus.print();
                 // createTable to know the stops so that it can format those differently
-                createTableForBus(myBus, pageNumber, startStop, endStop); 
+                createTableForBus(myBus, pageNumber, startStop, endStop);
             }
         })
         .catch(error => {
