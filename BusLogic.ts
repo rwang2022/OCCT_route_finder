@@ -65,6 +65,44 @@ class Bus {
             this.differenceInMinutes(time[endStopIndex], arrivalTime) <= 0 || this.startsWithLetter(time[0]));
     }
 
+    /**
+     * ! untested: may not work
+     * @param time a string like "8:00AM" or "Mon-Fri8:00AM"
+     * @returns a breakdown [timePart: string, weekdaysArray: Days[]]
+     */
+    private processBusTimesWithWeekDays(time: string): [string, Days[]] {
+        time = time.trim();
+        const weekdaysPart: string = time.slice(0, this.findFirstNumberIndex(time));
+        const timePart: string = time.slice(this.findFirstNumberIndex(time), undefined);
+
+        let weekdaysArray: Days[] = [];
+        switch (weekdaysPart) {
+            case "Mon-Thu":
+                weekdaysArray = [Days.MONDAY, Days.TUESDAY, Days.WEDNESDAY, Days.THURSDAY, Days.THURSDAY];
+                break;
+            case "Fri":
+                weekdaysArray = [Days.FRIDAY];
+                break;
+            case "Sat":
+                weekdaysArray = [Days.SATURDAY];
+            case "Sun":
+                weekdaysArray = [Days.SUNDAY]
+            default:
+                break;
+        }
+        
+        return [timePart, weekdaysArray];
+    }
+
+    private findFirstNumberIndex(inputString: string): number | undefined {
+        for (let i = 0; i < inputString.length; i++) {
+            if (/\d/.test(inputString[i])) {
+                return i;
+            }
+        }
+        return undefined; // Return null if no number is found
+    }    
+
     private startsWithLetter(myString: string) {
         const first = myString[0];
         return (first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z');

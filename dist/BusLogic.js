@@ -88,6 +88,40 @@ var Bus = /** @class */ (function () {
             return _this.differenceInMinutes(time[endStopIndex], arrivalTime) <= 0 || _this.startsWithLetter(time[0]);
         });
     };
+    /**
+     * ! untested: may not work
+     * @param time a string like "8:00AM" or "Mon-Fri8:00AM"
+     * @returns a breakdown [timePart: string, weekdaysArray: Days[]]
+     */
+    Bus.prototype.processBusTimesWithWeekDays = function (time) {
+        time = time.trim();
+        var weekdaysPart = time.slice(0, this.findFirstNumberIndex(time));
+        var timePart = time.slice(this.findFirstNumberIndex(time), undefined);
+        var weekdaysArray = [];
+        switch (weekdaysPart) {
+            case "Mon-Thu":
+                weekdaysArray = [2 /* MONDAY */, 3 /* TUESDAY */, 4 /* WEDNESDAY */, 5 /* THURSDAY */, 5 /* THURSDAY */];
+                break;
+            case "Fri":
+                weekdaysArray = [6 /* FRIDAY */];
+                break;
+            case "Sat":
+                weekdaysArray = [7 /* SATURDAY */];
+            case "Sun":
+                weekdaysArray = [1 /* SUNDAY */];
+            default:
+                break;
+        }
+        return [timePart, weekdaysArray];
+    };
+    Bus.prototype.findFirstNumberIndex = function (inputString) {
+        for (var i = 0; i < inputString.length; i++) {
+            if (/\d/.test(inputString[i])) {
+                return i;
+            }
+        }
+        return undefined; // Return null if no number is found
+    };
     Bus.prototype.startsWithLetter = function (myString) {
         var first = myString[0];
         return (first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z');
