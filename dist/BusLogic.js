@@ -144,10 +144,6 @@ var Bus = /** @class */ (function () {
         }
         return undefined; // Return null if no number is found
     };
-    Bus.prototype.startsWithLetter = function (myString) {
-        var first = myString[0];
-        return (first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z');
-    };
     Bus.prototype.differenceInMinutes = function (time1, time2) {
         /**
          * hours are out of 24

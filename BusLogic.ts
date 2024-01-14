@@ -136,11 +136,6 @@ class Bus {
         return undefined; // Return null if no number is found
     }
 
-    private startsWithLetter(myString: string) {
-        const first = myString[0];
-        return (first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z');
-    }
-
     private differenceInMinutes(time1: string, time2: string) {
         /**
          * hours are out of 24
