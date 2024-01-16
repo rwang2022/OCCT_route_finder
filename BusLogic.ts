@@ -82,7 +82,7 @@ class Bus {
             const timesMatch: boolean = this.differenceInMinutes(timePart, arrivalTime) <= 0;
             const weekdaysMatch: boolean = this.busWeekdayMatchesToday(weekdaysPart);
 
-            return timesMatch && weekdaysMatch;
+            return (timesMatch && weekdaysMatch);
         });
     }
 

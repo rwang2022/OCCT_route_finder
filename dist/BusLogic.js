@@ -97,7 +97,7 @@ var Bus = /** @class */ (function () {
             var weekdaysPart = _this.getWeekdaysPart(startTime);
             var timesMatch = _this.differenceInMinutes(timePart, arrivalTime) <= 0;
             var weekdaysMatch = _this.busWeekdayMatchesToday(weekdaysPart);
-            return timesMatch && weekdaysMatch;
+            return (timesMatch && weekdaysMatch);
         });
     };
     /**
