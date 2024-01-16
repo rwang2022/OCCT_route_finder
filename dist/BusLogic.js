@@ -254,7 +254,7 @@ function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, depar
         var myBus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(function (timeLine) { return timeLine.split(" "); }));
         // setting booleans for our filters
         if (myBus.relevantToSearch(startStop, endStop, departingTime, arrivalTime)) {
-            myBus.print();
+            // myBus.print();
             // createTable to know the stops so that it can format those differently
             createTableForBus(myBus, pageNumber, startStop, endStop);
         }
@@ -263,11 +263,14 @@ function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, depar
     });
 }
 function displayAllRelevantBuses() {
-    // our filters, which decide what's relevant
+    // our filters to decide what's relevant
     var startStop = document.getElementById('chosenStart').value;
     var endStop = document.getElementById('chosenEnd').value;
-    var departingTime = document.getElementById("departingTime").value;
-    var arrivalTime = document.getElementById("arrivalTime").value;
+    // const departingTime = (document.getElementById("departingTime") as HTMLInputElement).value;
+    // const arrivalTime = (document.getElementById("arrivalTime") as HTMLInputElement).value;
+    var departingTime = document.getElementsByClassName("slider-time")[0].innerHTML;
+    var arrivalTime = document.getElementsByClassName("slider-time2")[0].innerHTML;
+    // reset to start
     console.clear();
     document.getElementById("output").innerHTML = "";
     var NUM_PAGES = 30;

@@ -247,7 +247,7 @@ function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, endSto
 
             // setting booleans for our filters
             if (myBus.relevantToSearch(startStop, endStop, departingTime, arrivalTime)) {
-                myBus.print();
+                // myBus.print();
                 // createTable to know the stops so that it can format those differently
                 createTableForBus(myBus, pageNumber, startStop, endStop);
             }
@@ -259,12 +259,16 @@ function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, endSto
 }
 
 function displayAllRelevantBuses() {
-    // our filters, which decide what's relevant
+    // our filters to decide what's relevant
     const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
     const endStop = (document.getElementById('chosenEnd') as HTMLInputElement).value;
-    const departingTime = (document.getElementById("departingTime") as HTMLInputElement).value;
-    const arrivalTime = (document.getElementById("arrivalTime") as HTMLInputElement).value;
 
+    // const departingTime = (document.getElementById("departingTime") as HTMLInputElement).value;
+    // const arrivalTime = (document.getElementById("arrivalTime") as HTMLInputElement).value;
+    const departingTime = document.getElementsByClassName("slider-time")[0].innerHTML;
+    const arrivalTime = document.getElementsByClassName("slider-time2")[0].innerHTML;
+
+    // reset to start
     console.clear();
     (document.getElementById("output") as HTMLElement).innerHTML = "";
 
