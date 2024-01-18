@@ -51,19 +51,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-//* Set default departingTime and arrivalTime
-document.addEventListener('DOMContentLoaded', function () {
-    // Formats time as "hh:mmAM/PM"
-    function formatTime(date) {
-        var hours = date.getHours() % 12 || 12;
-        var minutes = String(date.getMinutes()).padStart(2, '0');
-        var period = date.getHours() < 12 ? 'AM' : 'PM';
-        return hours + ":" + minutes + period;
-    }
-    var currentTime = new Date();
-    document.getElementById('departingTime').value = formatTime(currentTime);
-    var arriveInHours = 3;
-    var laterTime = currentTime;
-    laterTime.setHours(currentTime.getHours() + arriveInHours);
-    document.getElementById('arrivalTime').value = formatTime(laterTime);
-});
