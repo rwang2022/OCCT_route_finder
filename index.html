@@ -4,11 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <link rel="icon" type="image/x-icon" href="/images/bus-icon.png">
   <link rel="stylesheet" href="style.css">
-  <!-- <link rel="stylesheet" href="original_style.css"> -->
+  <link rel="stylesheet" href='./nouislider/dist/nouislider.css'>
+
   <title>OCCT Route Planning</title> <!--  cspell: disable-line  -->
 
+  <script type="module" src="slider.js"></script>
   <script src="../dist/main.js"></script>
   <script src="../dist/BusLogic.js"></script>
 </head>
@@ -36,11 +39,20 @@
       <a href="./pages/email.html">bugs/suggestions/questions</a>
       <br>
       <br>
+
+      <div id="slider1"></div>
+      <p>start time: <span id="slider1-span"></span></p>
+      <div id="slider2"></div>
+      <p>end time: <span id="slider2-span"></span></p>
+      <button id="lockbutton">Unlock</button>
+
+      <br>
+      <br>
       <button onclick="displayAllRelevantBuses()">Show Me Buses</button>
       <!-- <button onclick="scrollToBottom()">Scroll to Bottom</button> -->
     </div>
   </div>
-  
+
   <div id="output">
   </div>
 
