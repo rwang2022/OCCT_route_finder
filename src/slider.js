@@ -1,4 +1,4 @@
-import noUiSlider from '../nouislider/dist/nouislider.mjs';
+import noUiSlider from '/nouislider/dist/nouislider.mjs';
 
 var format = {
     to: function (minutesAfterMidnight) {
@@ -27,20 +27,17 @@ var format = {
     }
 }
 
-const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).replace(" ", "");
-var nowMinutes = format.from(nowStr);
-const MINUTES_OFFSET = 60;
 var lockedState = true;
-
-var lockedValues = [nowMinutes, nowMinutes + MINUTES_OFFSET];
-var slider1 = document.getElementById('slider1');
-var slider2 = document.getElementById('slider2');
 var lockButton = document.getElementById('lockbutton');
+
 lockButton.addEventListener('click', function () {
     lockedState = !lockedState;
-    // this.textContent = lockedState ? 'Unlock' : 'Lock';
     $(this).toggleClass('unlocked');
 });
+
+var slider1 = document.getElementById('slider1');
+var slider2 = document.getElementById('slider2');
+
 function crossUpdate(value, slider) {
     if (!lockedState) return;
     var a = slider1 === slider ? 0 : 1;
@@ -48,8 +45,14 @@ function crossUpdate(value, slider) {
     value -= lockedValues[b] - lockedValues[a];
     slider.noUiSlider.set(value);
 }
+
+const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).replace(" ", "");
+var nowMinutes = format.from(nowStr);
+const MINUTES_OFFSET = 60;
+var lockedValues = [nowMinutes, nowMinutes + MINUTES_OFFSET];
 const START_OF_DAY = 0;
 const LAST_MINUTE = 23 * 60 + 59;
+
 noUiSlider.create(slider1, {
     start: nowMinutes,
     animate: false,
@@ -66,12 +69,7 @@ noUiSlider.create(slider2, {
         max: LAST_MINUTE
     }
 });
-// slider1.noUiSlider.on('update', function (values, handle) {
-//     slider1Value.innerHTML = format.to(values[handle]);
-// });
-// slider2.noUiSlider.on('update', function (values, handle) {
-//     slider2Value.innerHTML = format.to(values[handle]);
-// });
+
 function setLockedValues() {
     lockedValues = [
         Number(slider1.noUiSlider.get()),
@@ -87,10 +85,6 @@ slider2.noUiSlider.on('slide', function (values, handle) {
     crossUpdate(values[handle], slider1);
 });
 
-
-// ! experimental
-var slider1 = document.getElementById('slider1');
-var slider2 = document.getElementById('slider2');
 
 var inputNumber1 = document.getElementById('departingTime');
 var inputNumber2 = document.getElementById('arrivalTime');

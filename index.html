@@ -13,9 +13,14 @@
 
   <title>OCCT Route Planning</title> <!--  cspell: disable-line  -->
 
+  <!-- * handles slider -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
   <script type="module" src="/src/slider.js"></script>
+
+  <!-- * handles populating start and end stops -->
   <script src="/dist/main.js"></script>
+
+  <!-- * handles finding, filtering, and displaying bus tables -->
   <script src="/dist/BusLogic.js"></script>
 </head>
 
@@ -47,6 +52,8 @@
       <!-- please display on digital ocean -->
       <div>start time: <input id="departingTime" style="width: 8em;" type="search" value="now"></div>
       <div id="slider1"></div>
+
+      <br>
 
       <div>end time: <input id="arrivalTime" style="width: 8em;" type="search"></div>
       <div id="slider2"></div>
