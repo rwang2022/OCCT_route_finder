@@ -240,26 +240,7 @@ function createTableForBus(myBus: Bus, pageNumber: number, startStop, endStop) {
     output?.appendChild(busDiv);
 }
 
-function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, endStop, departingTime, arrivalTime) {
-    fetchBusAtPageNumber(pageNumber)
-        .then(busInfo => {
-            const myBus: Bus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(timeLine => timeLine.split(" ")));
-
-            // setting booleans for our filters
-            if (myBus.relevantToSearch(startStop, endStop, departingTime, arrivalTime)) {
-                myBus.print();
-                // createTable to know the stops so that it can format those differently
-                createTableForBus(myBus, pageNumber, startStop, endStop);
-            }
-        })
-        // TODO not good error checking, fix when you have time
-        .catch(error => {
-            // console.error(error);
-        });
-}
-
 async function displayAllRelevantBuses() {
-    // our filters, which decide what's relevant
     const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
     const endStop = (document.getElementById('chosenEnd') as HTMLInputElement).value;
     const departingTime = (document.getElementById("departingTime") as HTMLInputElement).value;
@@ -269,28 +250,34 @@ async function displayAllRelevantBuses() {
     (document.getElementById("output") as HTMLElement).innerHTML = "";
 
     const NUM_PAGES = 30;
-    for (let pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
-        displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime);
+
+    // Use Promise.all to wait for all displayBusAtPageNumber_ifRelevant calls to complete
+    await Promise.all(Array.from({ length: NUM_PAGES }, (_, i) =>
+        displayBusAtPageNumber_ifRelevant(i + 1, startStop, endStop, departingTime, arrivalTime)
+    ));
+
+    const DELAY_MS = 300;
+    setTimeout(scrollToBottom, DELAY_MS);
+    scrollToBottom();
+}
+
+async function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, endStop, departingTime, arrivalTime) {
+    try {
+        const busInfo = await fetchBusAtPageNumber(pageNumber);
+        const myBus: Bus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(timeLine => timeLine.split(" ")));
+
+        if (myBus.relevantToSearch(startStop, endStop, departingTime, arrivalTime)) {
+            myBus.print();
+            createTableForBus(myBus, pageNumber, startStop, endStop);
+        }
+    } catch (error) {
+        // TODO Handle errors appropriately
+        // console.error(error);
     }
-
-    // const DELAY_MS = 200; // delay so that there is time for the busDivs to load into output
-    // setTimeout(scrollToBottom, DELAY_MS);
-    // scrollToBottom();
-
-    console.log("hello");
-    
 }
 
 // Function to scroll to the bottom of the page
-async function scrollToBottom() {
+function scrollToBottom() {
     const output = document.getElementById("output") as HTMLElement;
     output.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    console.log("hello there");
-    
-}
-
-async function displayThenScroll() {
-    await displayAllRelevantBuses();
-    await scrollToBottom();
 }

@@ -248,66 +248,60 @@ function createTableForBus(myBus, pageNumber, startStop, endStop) {
     busDiv.appendChild(table);
     output === null || output === void 0 ? void 0 : output.appendChild(busDiv);
 }
-function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime) {
-    fetchBusAtPageNumber(pageNumber)
-        .then(function (busInfo) {
-        var myBus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(function (timeLine) { return timeLine.split(" "); }));
-        // setting booleans for our filters
-        if (myBus.relevantToSearch(startStop, endStop, departingTime, arrivalTime)) {
-            myBus.print();
-            // createTable to know the stops so that it can format those differently
-            createTableForBus(myBus, pageNumber, startStop, endStop);
-        }
-    })["catch"](function (error) {
-        // console.error(error);
-    });
-}
 function displayAllRelevantBuses() {
     return __awaiter(this, void 0, void 0, function () {
-        var startStop, endStop, departingTime, arrivalTime, NUM_PAGES, pageNumber;
+        var startStop, endStop, departingTime, arrivalTime, NUM_PAGES, DELAY_MS;
         return __generator(this, function (_a) {
-            startStop = document.getElementById('chosenStart').value;
-            endStop = document.getElementById('chosenEnd').value;
-            departingTime = document.getElementById("departingTime").value;
-            arrivalTime = document.getElementById("arrivalTime").value;
-            console.clear();
-            document.getElementById("output").innerHTML = "";
-            NUM_PAGES = 30;
-            for (pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
-                displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime);
+            switch (_a.label) {
+                case 0:
+                    startStop = document.getElementById('chosenStart').value;
+                    endStop = document.getElementById('chosenEnd').value;
+                    departingTime = document.getElementById("departingTime").value;
+                    arrivalTime = document.getElementById("arrivalTime").value;
+                    console.clear();
+                    document.getElementById("output").innerHTML = "";
+                    NUM_PAGES = 30;
+                    // Use Promise.all to wait for all displayBusAtPageNumber_ifRelevant calls to complete
+                    return [4 /*yield*/, Promise.all(Array.from({ length: NUM_PAGES }, function (_, i) {
+                            return displayBusAtPageNumber_ifRelevant(i + 1, startStop, endStop, departingTime, arrivalTime);
+                        }))];
+                case 1:
+                    // Use Promise.all to wait for all displayBusAtPageNumber_ifRelevant calls to complete
+                    _a.sent();
+                    DELAY_MS = 300;
+                    setTimeout(scrollToBottom, DELAY_MS);
+                    scrollToBottom();
+                    return [2 /*return*/];
             }
-            // const DELAY_MS = 200; // delay so that there is time for the busDivs to load into output
-            // setTimeout(scrollToBottom, DELAY_MS);
-            // scrollToBottom();
-            console.log("hello");
-            return [2 /*return*/];
+        });
+    });
+}
+function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime) {
+    return __awaiter(this, void 0, void 0, function () {
+        var busInfo, myBus, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, fetchBusAtPageNumber(pageNumber)];
+                case 1:
+                    busInfo = _a.sent();
+                    myBus = new Bus(busInfo[0], busInfo[1], busInfo[2].split(", "), busInfo.slice(3, undefined).map(function (timeLine) { return timeLine.split(" "); }));
+                    if (myBus.relevantToSearch(startStop, endStop, departingTime, arrivalTime)) {
+                        myBus.print();
+                        createTableForBus(myBus, pageNumber, startStop, endStop);
+                    }
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_2 = _a.sent();
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
         });
     });
 }
 // Function to scroll to the bottom of the page
 function scrollToBottom() {
-    return __awaiter(this, void 0, void 0, function () {
-        var output;
-        return __generator(this, function (_a) {
-            output = document.getElementById("output");
-            output.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            console.log("hello there");
-            return [2 /*return*/];
-        });
-    });
-}
-function displayThenScroll() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, displayAllRelevantBuses()];
-                case 1:
-                    _a.sent();
-                    return [4 /*yield*/, scrollToBottom()];
-                case 2:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
-    });
+    var output = document.getElementById("output");
+    output.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
