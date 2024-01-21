@@ -1,4 +1,4 @@
-import noUiSlider from './nouislider/dist/nouislider.mjs';
+import noUiSlider from '../nouislider/dist/nouislider.mjs';
 
 var format = {
     to: function (minutesAfterMidnight) {

@@ -179,7 +179,7 @@ function fetchBusAtPageNumber(pageNumber) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    filePath = "full_info.txt";
+                    filePath = "/static/full_info.txt";
                     targetPage = "PAGE " + pageNumber;
                     _a.label = 1;
                 case 1:
@@ -302,4 +302,8 @@ function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, depar
 function scrollToBottom() {
     var output = document.getElementById("output");
     output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function doesNothing() {
+}
+function doesNothing2() {
 }

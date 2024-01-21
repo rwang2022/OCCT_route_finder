@@ -1,6 +1,6 @@
 "use strict";
 
-var _nouislider = _interopRequireDefault(require("./nouislider/dist/nouislider.mjs"));
+var _nouislider = _interopRequireDefault(require("../nouislider/dist/nouislider.mjs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 

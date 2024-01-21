@@ -171,7 +171,8 @@ class Bus {
  * @returns array of all bus information
  */
 async function fetchBusAtPageNumber(pageNumber: number): Promise<string[]> {
-    const filePath = "full_info.txt";
+    // const filePath = "full_info.txt";
+    const filePath = "/static/full_info.txt";
     const targetPage = `PAGE ${pageNumber}`;
 
     try {
@@ -278,4 +279,10 @@ async function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, 
 function scrollToBottom() {
     const output = document.getElementById("output") as HTMLElement;
     output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function doesNothing() {
+}
+
+function doesNothing2() {
 }
