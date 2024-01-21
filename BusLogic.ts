@@ -256,8 +256,6 @@ async function displayAllRelevantBuses() {
         displayBusAtPageNumber_ifRelevant(i + 1, startStop, endStop, departingTime, arrivalTime)
     ));
 
-    const DELAY_MS = 300;
-    setTimeout(scrollToBottom, DELAY_MS);
     scrollToBottom();
 }
 

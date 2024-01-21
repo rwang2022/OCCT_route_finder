@@ -250,7 +250,7 @@ function createTableForBus(myBus, pageNumber, startStop, endStop) {
 }
 function displayAllRelevantBuses() {
     return __awaiter(this, void 0, void 0, function () {
-        var startStop, endStop, departingTime, arrivalTime, NUM_PAGES, DELAY_MS;
+        var startStop, endStop, departingTime, arrivalTime, NUM_PAGES;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -268,8 +268,6 @@ function displayAllRelevantBuses() {
                 case 1:
                     // Use Promise.all to wait for all displayBusAtPageNumber_ifRelevant calls to complete
                     _a.sent();
-                    DELAY_MS = 300;
-                    setTimeout(scrollToBottom, DELAY_MS);
                     scrollToBottom();
                     return [2 /*return*/];
             }
