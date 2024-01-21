@@ -4,14 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
+
+
   <link rel="icon" type="image/x-icon" href="/static/images/bus-icon.png">
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/nouislider/dist/nouislider.css">
+  <link rel="stylesheet" href="/static/lock_style.css">
 
   <title>OCCT Route Planning</title> <!--  cspell: disable-line  -->
 
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
   <script type="module" src="/src/slider.js"></script>
   <script src="/dist/main.js"></script>
   <script src="/dist/BusLogic.js"></script>
@@ -37,6 +39,7 @@
         <!-- arriving by <input id="arrivalTime" style="width: 8em;" type="search"> -->
       </h2>
 
+      <br>
       <a href="/static/templates/email.html">bugs/suggestions/questions</a>
       <br>
       <br>
@@ -47,13 +50,12 @@
 
       <div>end time: <input id="arrivalTime" style="width: 8em;" type="search"></div>
       <div id="slider2"></div>
-      
-      <br>
-      <button id="lockbutton">Unlock</button>
 
       <br>
+      <button class="lock" id="lockbutton" style="margin-top: 1rem; margin-bottom: 1.5rem;"></button>
       <br>
-      <button onclick="displayAllRelevantBuses()">Show Me Buses</button>
+
+      <button class="non_lock" onclick="displayAllRelevantBuses()">Show Me Buses</button>
       <!-- <button onclick="scrollToBottom()">Scroll to Bottom</button> -->
     </div>
   </div>

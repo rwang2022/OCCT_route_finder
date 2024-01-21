@@ -38,7 +38,8 @@ var slider2 = document.getElementById('slider2');
 var lockButton = document.getElementById('lockbutton');
 lockButton.addEventListener('click', function () {
     lockedState = !lockedState;
-    this.textContent = lockedState ? 'Unlock' : 'Lock';
+    // this.textContent = lockedState ? 'Unlock' : 'Lock';
+    $(this).toggleClass('unlocked');
 });
 function crossUpdate(value, slider) {
     if (!lockedState) return;

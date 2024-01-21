@@ -1,0 +1,9 @@
+copy and paste the whole pdf text (just CTRL+A and CTRL+C)
+
+remove ^(?![\d\s:AMPM]+$).+$    (these are lines that do NOT just contain numbers, whitespace, :, AM or PM)
+remove empty lines
+remove space between AM and PM (" AM" to "AM", " PM" to "PM")
+
+Now you should have a text file with just lines
+You must manually add "PAGE #", bus name, weekdays, stops list and 
+special weekdays for particular bus line times
