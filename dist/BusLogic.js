@@ -263,23 +263,51 @@ function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, depar
     });
 }
 function displayAllRelevantBuses() {
-    // our filters, which decide what's relevant
-    var startStop = document.getElementById('chosenStart').value;
-    var endStop = document.getElementById('chosenEnd').value;
-    var departingTime = document.getElementById("departingTime").value;
-    var arrivalTime = document.getElementById("arrivalTime").value;
-    console.clear();
-    document.getElementById("output").innerHTML = "";
-    var NUM_PAGES = 30;
-    for (var pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
-        displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime);
-    }
-    var DELAY_MS = 200; // delay so that there is time for the busDivs to load into output
-    setTimeout(scrollToBottom, DELAY_MS);
-    // scrollToBottom();
+    return __awaiter(this, void 0, void 0, function () {
+        var startStop, endStop, departingTime, arrivalTime, NUM_PAGES, pageNumber;
+        return __generator(this, function (_a) {
+            startStop = document.getElementById('chosenStart').value;
+            endStop = document.getElementById('chosenEnd').value;
+            departingTime = document.getElementById("departingTime").value;
+            arrivalTime = document.getElementById("arrivalTime").value;
+            console.clear();
+            document.getElementById("output").innerHTML = "";
+            NUM_PAGES = 30;
+            for (pageNumber = 1; pageNumber <= NUM_PAGES; pageNumber++) {
+                displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime);
+            }
+            // const DELAY_MS = 200; // delay so that there is time for the busDivs to load into output
+            // setTimeout(scrollToBottom, DELAY_MS);
+            // scrollToBottom();
+            console.log("hello");
+            return [2 /*return*/];
+        });
+    });
 }
 // Function to scroll to the bottom of the page
 function scrollToBottom() {
-    var output = document.getElementById("output");
-    output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return __awaiter(this, void 0, void 0, function () {
+        var output;
+        return __generator(this, function (_a) {
+            output = document.getElementById("output");
+            output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            console.log("hello there");
+            return [2 /*return*/];
+        });
+    });
+}
+function displayThenScroll() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, displayAllRelevantBuses()];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, scrollToBottom()];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
 }

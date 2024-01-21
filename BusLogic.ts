@@ -258,7 +258,7 @@ function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, endSto
         });
 }
 
-function displayAllRelevantBuses() {
+async function displayAllRelevantBuses() {
     // our filters, which decide what's relevant
     const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
     const endStop = (document.getElementById('chosenEnd') as HTMLInputElement).value;
@@ -273,13 +273,24 @@ function displayAllRelevantBuses() {
         displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, departingTime, arrivalTime);
     }
 
-    const DELAY_MS = 200; // delay so that there is time for the busDivs to load into output
-    setTimeout(scrollToBottom, DELAY_MS);
+    // const DELAY_MS = 200; // delay so that there is time for the busDivs to load into output
+    // setTimeout(scrollToBottom, DELAY_MS);
     // scrollToBottom();
+
+    console.log("hello");
+    
 }
 
 // Function to scroll to the bottom of the page
-function scrollToBottom() {
+async function scrollToBottom() {
     const output = document.getElementById("output") as HTMLElement;
     output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    console.log("hello there");
+    
+}
+
+async function displayThenScroll() {
+    await displayAllRelevantBuses();
+    await scrollToBottom();
 }
