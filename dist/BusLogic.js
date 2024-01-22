@@ -303,7 +303,7 @@ function scrollToBottom() {
     var output = document.getElementById("output");
     output.innerHTML.trim();
     if (output.innerHTML === '')
-        output.innerHTML = "<p>No buses found. Try changing the start and end times.</p>";
+        output.innerHTML = "<p style=\"font-size: 30px; padding: 5rem;\">No buses, change times.</p>";
     console.log("hello");
     output.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
