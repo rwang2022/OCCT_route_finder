@@ -38,17 +38,9 @@ lockButton.addEventListener('click', function () {
 var slider1 = document.getElementById('slider1');
 var slider2 = document.getElementById('slider2');
 
-function crossUpdate(value, slider) {
-    if (!lockedState) return;
-    var a = slider1 === slider ? 0 : 1;
-    var b = a ? 0 : 1;
-    value -= lockedValues[b] - lockedValues[a];
-    slider.noUiSlider.set(value);
-}
-
 const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).replace(" ", "");
 var nowMinutes = format.from(nowStr);
-const MINUTES_OFFSET = 60;
+const MINUTES_OFFSET = 120;
 var lockedValues = [nowMinutes, nowMinutes + MINUTES_OFFSET];
 const START_OF_DAY = 0;
 const LAST_MINUTE = 23 * 60 + 59;
@@ -70,14 +62,26 @@ noUiSlider.create(slider2, {
     }
 });
 
+
 function setLockedValues() {
     lockedValues = [
         Number(slider1.noUiSlider.get()),
         Number(slider2.noUiSlider.get())
     ];
 }
+
 slider1.noUiSlider.on('change', setLockedValues);
 slider2.noUiSlider.on('change', setLockedValues);
+
+
+function crossUpdate(value, slider) {
+    if (!lockedState) return;
+    var a = slider1 === slider ? 0 : 1;
+    var b = a ? 0 : 1;
+    value -= lockedValues[b] - lockedValues[a];
+    slider.noUiSlider.set(value);
+}
+
 slider1.noUiSlider.on('slide', function (values, handle) {
     crossUpdate(values[handle], slider2);
 });
@@ -86,6 +90,7 @@ slider2.noUiSlider.on('slide', function (values, handle) {
 });
 
 
+// update the input values as you slide the slider
 var inputNumber1 = document.getElementById('departingTime');
 var inputNumber2 = document.getElementById('arrivalTime');
 
@@ -109,10 +114,12 @@ slider2.noUiSlider.on('update', function (values, handle) {
     }
 });
 
-inputNumber1.addEventListener('change', function () {
-    slider1.noUiSlider.set([this.value, null]);
-});
+// // ! experimental
+// var startMinusButton = document.getElementById('start-=15');
 
-inputNumber2.addEventListener('change', function () {
-    slider1.noUiSlider.set([null, this.value]);
-});
+// startMinusButton.addEventListener('click', () => {
+//     if (lockedState) { 
+//         var newTime = format.from(inputNumber1.value) - 15; 
+//         slider1.(format.to(newTime)); 
+//     }
+// });

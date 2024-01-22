@@ -278,6 +278,11 @@ async function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, 
 // Function to scroll to the bottom of the page
 function scrollToBottom() {
     const output = document.getElementById("output") as HTMLElement;
+    output.innerHTML.trim();
+    
+    if (output.innerHTML === '') output.innerHTML = "<p>No buses found. Try changing the start and end times.</p>";
+    console.log("hello");
+    
     output.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 

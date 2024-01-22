@@ -301,6 +301,10 @@ function displayBusAtPageNumber_ifRelevant(pageNumber, startStop, endStop, depar
 // Function to scroll to the bottom of the page
 function scrollToBottom() {
     var output = document.getElementById("output");
+    output.innerHTML.trim();
+    if (output.innerHTML === '')
+        output.innerHTML = "<p>No buses found. Try changing the start and end times.</p>";
+    console.log("hello");
     output.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 function doesNothing() {
