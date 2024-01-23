@@ -27,14 +27,17 @@ var format = {
     }
 }
 
+// create and initialize a locked state
 var lockedState = true;
 var lockButton = document.getElementById('lockbutton');
 
+// allow the lockbutton to toggle
 lockButton.addEventListener('click', function () {
     lockedState = !lockedState;
     $(this).toggleClass('unlocked');
 });
 
+// initialize the sliders
 var slider1 = document.getElementById('slider1');
 var slider2 = document.getElementById('slider2');
 
@@ -63,6 +66,9 @@ noUiSlider.create(slider2, {
 });
 
 
+/**
+ * set values in lockedValues, which keeps track of locked values...
+ */
 function setLockedValues() {
     lockedValues = [
         Number(slider1.noUiSlider.get()),
@@ -74,6 +80,12 @@ slider1.noUiSlider.on('change', setLockedValues);
 slider2.noUiSlider.on('change', setLockedValues);
 
 
+/**
+ * sets the values of both sliders when locked
+ * @param {*} value value to set the slider as
+ * @param {*} slider the slider whose value we want to change
+ * @returns nothing
+ */
 function crossUpdate(value, slider) {
     if (!lockedState) return;
     var a = slider1 === slider ? 0 : 1;
@@ -90,7 +102,7 @@ slider2.noUiSlider.on('slide', function (values, handle) {
 });
 
 
-// update the input values as you slide the slider
+// updating the sliders updates the inputs
 var inputNumber1 = document.getElementById('departingTime');
 var inputNumber2 = document.getElementById('arrivalTime');
 
@@ -113,6 +125,21 @@ slider2.noUiSlider.on('update', function (values, handle) {
         inputNumber2.value = format.to(value);
     }
 });
+
+
+// updating the inputs updates the sliders as well
+inputNumber1.addEventListener('change', function() {
+    var startMinutes = format.from(inputNumber1.value);
+    slider1.noUiSlider.setHandle(0, startMinutes);
+    crossUpdate(startMinutes, slider2);
+});
+
+inputNumber2.addEventListener('change', function() {
+    var endMinutes = format.from(inputNumber2.value);
+    slider2.noUiSlider.setHandle(0, endMinutes);
+    crossUpdate(endMinutes, slider1);
+});
+
 
 // // ! experimental
 // var startMinusButton = document.getElementById('start-=15');
