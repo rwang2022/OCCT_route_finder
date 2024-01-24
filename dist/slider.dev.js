@@ -66,7 +66,7 @@ var nowStr = new Date().toLocaleTimeString([], {
   minute: '2-digit'
 }).replace(" ", "");
 var nowMinutes = format.from(nowStr);
-var MINUTES_OFFSET = 120;
+var MINUTES_OFFSET = 60;
 var lockedValues = [nowMinutes, nowMinutes + MINUTES_OFFSET];
 var START_OF_DAY = 0;
 var LAST_MINUTE = 23 * 60 + 59;

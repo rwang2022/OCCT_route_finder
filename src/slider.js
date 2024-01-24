@@ -49,7 +49,7 @@ lockButton.addEventListener('click', function () {
 
 const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).replace(" ", "");
 var nowMinutes = format.from(nowStr);
-const MINUTES_OFFSET = 120;
+const MINUTES_OFFSET = 60;
 var lockedValues = [nowMinutes, nowMinutes + MINUTES_OFFSET];
 const START_OF_DAY = 0;
 const LAST_MINUTE = 23 * 60 + 59;
