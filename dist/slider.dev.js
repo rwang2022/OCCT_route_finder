@@ -44,7 +44,10 @@ var format = {
     var minutesAfterMidnight = hours * 60 + minutes;
     return minutesAfterMidnight;
   }
-}; // create and initialize a locked state
+}; // initialize the sliders
+
+var slider1 = document.getElementById('slider1');
+var slider2 = document.getElementById('slider2'); // create and initialize a locked state
 
 var lockedState = true;
 var lockButton = document.getElementById('lockbutton'); // allow the lockbutton to toggle
@@ -52,10 +55,12 @@ var lockButton = document.getElementById('lockbutton'); // allow the lockbutton 
 lockButton.addEventListener('click', function () {
   lockedState = !lockedState;
   $(this).toggleClass('unlocked');
-}); // initialize the sliders
+  var touchCollection = document.getElementsByClassName('noUi-touch-area');
 
-var slider1 = document.getElementById('slider1');
-var slider2 = document.getElementById('slider2');
+  for (var i = 0; i < touchCollection.length; i++) {
+    touchCollection[i].toggleAttribute('unlocked');
+  }
+});
 var nowStr = new Date().toLocaleTimeString([], {
   hour: '2-digit',
   minute: '2-digit'

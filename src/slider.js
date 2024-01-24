@@ -27,6 +27,10 @@ var format = {
     }
 }
 
+// initialize the sliders
+var slider1 = document.getElementById('slider1');
+var slider2 = document.getElementById('slider2');
+
 // create and initialize a locked state
 var lockedState = true;
 var lockButton = document.getElementById('lockbutton');
@@ -35,11 +39,13 @@ var lockButton = document.getElementById('lockbutton');
 lockButton.addEventListener('click', function () {
     lockedState = !lockedState;
     $(this).toggleClass('unlocked');
+    var touchCollection = document.getElementsByClassName('noUi-touch-area');
+    for (let i = 0; i < touchCollection.length; i++) {
+        touchCollection[i].toggleAttribute('unlocked');
+    }
 });
 
-// initialize the sliders
-var slider1 = document.getElementById('slider1');
-var slider2 = document.getElementById('slider2');
+
 
 const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).replace(" ", "");
 var nowMinutes = format.from(nowStr);

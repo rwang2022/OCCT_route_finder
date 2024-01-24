@@ -3,8 +3,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    --locked-color: #5fadbf;
-    --unlocked-color: #ff5153;
+    /* --locked-color: #5fadbf; */
+    --locked-color: #f04447;
+    --locked-color-light: #f04447cc;
+    --unlocked-color: #339c5f;
+    --unlocked-color-light: #339c5fcc;
 }
 
 .container {
@@ -14,10 +17,24 @@
     min-height: 400px;
 }
 
+button {
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.noUi-touch-area {
+    background-color: var(--locked-color-light);
+}
+
+.noUi-touch-area[unlocked] {
+    background-color: var(--unlocked-color-light);
+}
+
 /* :::::::::::::: Required CSS */
 /* Locked */
 .lock {
     all: unset;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 1rem; margin-bottom: 1.5rem;
     width: 24px;
     height: 21px;
     border: 3px solid var(--locked-color);
