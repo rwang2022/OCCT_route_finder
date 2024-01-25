@@ -172,7 +172,7 @@ class Bus {
  */
 async function fetchBusAtPageNumber(pageNumber: number): Promise<string[]> {
     // const filePath = "full_info.txt";
-    const filePath = "/static/full_info.txt";
+    const filePath = "/static/full_info_spring2024.txt";
     const targetPage = `PAGE ${pageNumber}`;
 
     try {
