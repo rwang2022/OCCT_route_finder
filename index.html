@@ -22,6 +22,21 @@
 
   <!-- * handles finding, filtering, and displaying bus tables -->
   <script src="/dist/BusLogic.js"></script>
+
+  <script>
+    function UDC_to_BU() {
+      document.getElementById('chosenStart').value = "Leaves UDC";
+      document.getElementById('chosenEnd').value = "Returns to Campus";
+    }
+    function BU_to_UDC() {
+      document.getElementById('chosenStart').value = "Leaves Union";
+      document.getElementById('chosenEnd').value = "Arrives at UDC";
+    }
+    function Rafuse_to_Walmart() {
+      document.getElementById('chosenStart').value = "Leaves Rafuse";
+      document.getElementById('chosenEnd').value = "Town Square Mall (Walmart)";
+    }
+  </script>
 </head>
 
 <body>
@@ -29,6 +44,9 @@
   <div class="container">
     <div class="content">
       <h1>I want to go </h1>
+      <button id="homeToUniversity" class="image-button" onclick="UDC_to_BU()">UDC→UU</button>
+      <button id="universityToHome" class="image-button" onclick="BU_to_UDC()">UU→UDC</button>
+      <button id="universityToHome" class="image-button" onclick="Rafuse_to_Walmart()">Rafuse→Walmart</button>
 
       <h2>
         from

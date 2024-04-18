@@ -21,6 +21,27 @@ body {
     box-sizing: border-box;
 }
 
+.image-button {
+    width: auto;  /* Adjust as needed */
+    height: 30px;  /* Adjust as needed */
+    padding-left: 1em;
+    padding-right: 1em;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 10px;
+}
+
+#homeToUniversity {
+    text-shadow: #333;
+    /* background-image: url('../../UDC.png'); */
+}
+
+#universityToHome {
+    text-shadow: #333;
+    /* background-image: url('../../BU.png'); */
+}
+
 /* Input Styles */
 input {
     padding: 12px;
