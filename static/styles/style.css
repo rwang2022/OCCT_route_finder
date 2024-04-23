@@ -11,6 +11,49 @@ body {
     text-align: center;
 }
 
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #d9ebf8;
+}
+
+/* Style the links inside the navigation bar */
+.topnav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    text-align: center;
+}
+
+.topnav li {
+    list-style-type: none;
+    width: fit-content;
+    display: inline-block;
+}
+
+.topnav li a {
+    color: blue;
+    font-size: large;
+
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #5183c4;
+    color: white;
+}
+
 .container {
     align-items: center;
     display: flex;
@@ -22,8 +65,10 @@ body {
 }
 
 .image-button {
-    width: auto;  /* Adjust as needed */
-    height: 30px;  /* Adjust as needed */
+    width: auto;
+    /* Adjust as needed */
+    height: 30px;
+    /* Adjust as needed */
     padding-left: 1em;
     padding-right: 1em;
     border: none;

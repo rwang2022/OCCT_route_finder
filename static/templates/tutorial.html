@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link rel="icon" type="image/x-icon" href="/static/images/bus-icon.png">
+    <link rel="stylesheet" href="/static/styles/style.css">
+    <link rel="stylesheet" href="/nouislider/dist/nouislider.css">
+    <link rel="stylesheet" href="/static/styles/lock_style.css">
+
+    <title>OCCT Route Planning</title> <!--  cspell: disable-line  -->
+
+    <script>
+        document.querySelectorAll("topnav").forEach((link) => {
+            if (link.href === window.location.href) {
+                link.classList.add("active");
+            }
+        });
+    </script>
+    <style>
+        h2 {
+            padding-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="topnav">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/static/templates/tutorial.html">Tutorial</a></li>
+        <li><a href="/static/templates/email.html">Suggestions</a></li>
+    </ul>
+
+    <h1 style="margin-top: 3rem;">Tutorial/FAQ</h1>
+    <p>If your question is not here, click Tutorial at the top and email me.</p>
+    <h2>What's the lock about?</h2>
+    <img src="/static/images/howToUseLock.gif" alt="Gif on how to use the lock"
+        style="border: 2px solid #555; width: 350px; max-width: 1000px;">
+    <h2>What do the stops mean?</h2>
+    <p>The stops are the official names of the stops in the <a
+            href="https://occtransport.s3.amazonaws.com/Spring+2024/OCCT+Spring+2024+Master+Schedule.pdf">OCCT
+            bus pdf</a>.
+        Here are some examples</p>
+    <img src="/static/images/example1.png" style="width: 350px;">
+    <img src="/static/images/example2.png" style="width: 350px;">
+    <p>Yes, this does mean that you need to know what your stop is called for this app to be useful.</p>
+    <h2>What are the 3 buttons for?</h2>
+    <img src="/static/images/3buttons.gif" style="width: 350px;">
+    <p style="padding-bottom: 200px;">Those 3 buttons are there for conveniently setting (what I think are) the
+        3 most common trips.</p>
+
+</body>
