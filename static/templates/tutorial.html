@@ -22,7 +22,7 @@
     </script>
     <style>
         h2 {
-            padding-top: 2rem;
+            display: inline-block;
         }
     </style>
 </head>
@@ -36,20 +36,32 @@
 
     <h1 style="margin-top: 3rem;">Tutorial/FAQ</h1>
     <p>If your question is not here, click Suggestions at the top and email me.</p>
-    <h2>What's the lock about?</h2>
-    <img src="/static/images/howToUseLock.gif" alt="Gif on how to use the lock"
-        style="border: 2px solid #555; width: 350px; max-width: 1000px;">
-    <h2>What do the stops mean?</h2>
-    <p>The stops are the official names of the stops in the <a
-            href="https://occtransport.s3.amazonaws.com/Spring+2024/OCCT+Spring+2024+Master+Schedule.pdf">OCCT
-            bus pdf</a>.
-        Here are some examples</p>
-    <img src="/static/images/example1.png" style="width: 350px;">
-    <img src="/static/images/example2.png" style="width: 350px;">
-    <p>Yes, this does mean that you need to know what your stop is called for this app to be useful.</p>
-    <h2>What are the 3 buttons for?</h2>
-    <img src="/static/images/3buttons.gif" style="width: 350px;">
-    <p style="padding-bottom: 200px;">Those 3 buttons are there for conveniently setting (what I think are) the
-        3 most common trips.</p>
+    <br>
+
+
+    <details>
+        <summary><h2>What's the lock about?</h2></summary>
+        <p>The lock is a way for you to fix the time difference between the start and end time.</p>
+        <img src="/static/images/howToUseLock.gif" alt="Gif on how to use the lock">
+    </details>
+
+
+    <details>
+        <summary><h2>What do the stops mean?</h2></summary>
+        <p>The stops are the official names of the stops in the <a
+                href="https://occtransport.s3.amazonaws.com/Spring+2024/OCCT+Spring+2024+Master+Schedule.pdf">OCCT
+                bus pdf</a>.
+            <br>Some examples include "Leaves UDC", "Returns to Campus", and "Arrives at UDC".</p>
+        <img src="/static/images/example1.png" style="height: 150px">
+        <img src="/static/images/example2.png" style="height: 150px">
+        <p>Yes, this does mean that you need to know what your stop is called for this app to be useful.</p>
+    </details>
+
+
+    <details>
+        <summary><h2>What are the 3 buttons for?</h2></summary>
+        <img src="/static/images/3buttons.gif">
+        <p style="padding-bottom: 200px;">Those 3 buttons are there for conveniently setting the 3 most common trips.</p>
+    </details>
 
 </body>

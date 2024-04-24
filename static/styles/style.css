@@ -11,12 +11,16 @@ body {
     text-align: center;
 }
 
-/* Add a black background color to the top navigation */
+img {
+    border: 2px solid #555;
+    width: 350px;
+    max-width: 1000px;
+}
+
 .topnav {
     background-color: #d9ebf8;
 }
 
-/* Style the links inside the navigation bar */
 .topnav ul {
     list-style-type: none;
     margin: 0;

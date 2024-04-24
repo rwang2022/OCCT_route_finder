@@ -37,6 +37,8 @@
       document.getElementById('chosenEnd').value = "Town Square Mall (Walmart)";
     }
   </script>
+
+  <style></style>
 </head>
 
 <body>
@@ -52,6 +54,9 @@
       <button id="homeToUniversity" class="image-button" onclick="UDC_to_BU()">UDC→UU</button>
       <button id="universityToHome" class="image-button" onclick="BU_to_UDC()">UU→UDC</button>
       <button id="universityToHome" class="image-button" onclick="Rafuse_to_Walmart()">Rafuse→Walmart</button>
+      
+      <br>
+      <br>
 
       <h2>
         from
@@ -66,23 +71,20 @@
         <datalist id="location2"></datalist>
         <!-- arriving by <input id="arrivalTime" style="width: 8em;" type="search"> -->
       </h2>
-
-      <br>
+      
+      <br><br><br>
+      <p>Sliders are locked <button class="lock" id="lockbutton"></button></p>
 
       <!-- please display on digital ocean -->
       <div>start time: <input id="departingTime" style="width: 8em;" type="search" value="now"></div>
       <!-- TODO attempt to add +- 15 minutes buttons -->
       <!-- <div><button id="start-=15">-15</button> start time: <input id="departingTime" style="width: 8em;" type="search" value="now"></div> -->
       <div id="slider1"></div>
-      <br>
 
       <div>end time: <input id="arrivalTime" style="width: 8em;" type="search"></div>
       <div id="slider2"></div>
 
-      <br>
-      <button class="lock" id="lockbutton"></button>
-      <br>
-
+      <br><br>
       <button class="non_lock" onclick="displayAllRelevantBuses()">Show Me Buses</button>
       <!-- <button onclick="scrollToBottom()">Scroll to Bottom</button> -->
     </div>
