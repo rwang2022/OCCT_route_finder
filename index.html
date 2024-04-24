@@ -5,22 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- ! TOGGLE -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles/toggle_style.css">
+  <script type="module" src="/dist/toggle.js"></script>
 
   <link rel="icon" type="image/x-icon" href="/static/images/bus-icon.png">
   <link rel="stylesheet" href="/static/styles/style.css">
   <link rel="stylesheet" href="/nouislider/dist/nouislider.css">
   <link rel="stylesheet" href="/static/styles/lock_style.css">
-
+  
   <title>OCCT Route Planning</title> <!--  cspell: disable-line  -->
-
-  <!-- * handles slider -->
+  
+  <!-- handles slider -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
   <script type="module" src="/src/slider.js"></script>
-
-  <!-- * handles populating start and end stops -->
+  
+  <!-- handles populating start and end stops -->
   <script src="/dist/main.js"></script>
-
-  <!-- * handles finding, filtering, and displaying bus tables -->
+  
+  <!-- handles finding, filtering, and displaying bus tables -->
   <script src="/dist/BusLogic.js"></script>
 
   <script>
@@ -74,6 +78,11 @@
       
       <br><br><br>
       <p>Sliders are locked <button class="lock" id="lockbutton"></button></p>
+      <div class='toggle'>
+        <div class='slide'>
+          <span class='fa fa-circle-o'></span>
+        </div>
+      </div>
 
       <!-- please display on digital ocean -->
       <div>start time: <input id="departingTime" style="width: 8em;" type="search" value="now"></div>
