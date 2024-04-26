@@ -242,6 +242,7 @@ function createTableForBus(myBus: Bus, pageNumber: number, startStop, endStop) {
 }
 
 async function displayAllRelevantBuses() {
+    var Start = new Date().getTime(); 
     const startStop = (document.getElementById('chosenStart') as HTMLInputElement).value;
     const endStop = (document.getElementById('chosenEnd') as HTMLInputElement).value;
     const departingTime = (document.getElementById("departingTime") as HTMLInputElement).value;
@@ -258,6 +259,9 @@ async function displayAllRelevantBuses() {
     ));
 
     scrollToBottom();
+    var End = new Date().getTime();
+    var timeTook = End - Start;
+    console.log("that took " + timeTook + " ms");
 }
 
 async function displayBusAtPageNumber_ifRelevant(pageNumber: number, startStop, endStop, departingTime, arrivalTime) {

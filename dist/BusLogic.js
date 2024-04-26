@@ -250,10 +250,11 @@ function createTableForBus(myBus, pageNumber, startStop, endStop) {
 }
 function displayAllRelevantBuses() {
     return __awaiter(this, void 0, void 0, function () {
-        var startStop, endStop, departingTime, arrivalTime, NUM_PAGES;
+        var Start, startStop, endStop, departingTime, arrivalTime, NUM_PAGES, End, timeTook;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    Start = new Date().getTime();
                     startStop = document.getElementById('chosenStart').value;
                     endStop = document.getElementById('chosenEnd').value;
                     departingTime = document.getElementById("departingTime").value;
@@ -269,6 +270,9 @@ function displayAllRelevantBuses() {
                     // Use Promise.all to wait for all displayBusAtPageNumber_ifRelevant calls to complete
                     _a.sent();
                     scrollToBottom();
+                    End = new Date().getTime();
+                    timeTook = End - Start;
+                    console.log("that took " + timeTook + " ms");
                     return [2 /*return*/];
             }
         });
