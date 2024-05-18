@@ -179,7 +179,7 @@ function fetchBusAtPageNumber(pageNumber) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    filePath = "/static/full_info_spring2024.txt";
+                    filePath = "/static/summer2024.txt";
                     targetPage = "PAGE " + pageNumber;
                     _a.label = 1;
                 case 1:
