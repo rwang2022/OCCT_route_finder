@@ -1,4 +1,36 @@
-import {lines, uniqueStops} from './summer2024_helper';
+const lines = [
+    'Leaves Union, Floral & Main, Main & Murray, Arrives at UDC',
+    'Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus',
+    'Leaves Union, Riverside & Columbus, Leroy & Murray, Arrives at UDC',
+    'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus',
+    'Leaves Rafuse, Parkway Plaza (Target), Town Square Mall (Walmart), Returns to Campus',
+    'Leaves Mohawk, UClub, Washington & Lehigh',
+    'Leaves Union, Hillside, Mohawk, ITC, UClub',
+    'Leaves Union, Floral & Main, Main & Murray, Arrives at UDC',
+    'Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus',
+    'Leaves Union, Riverside & Columbus, Leroy & Murray, Arrives at UDC',
+    'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus',
+    'Leaves Mohawk, UClub, Washington & Lehigh'
+];
+const uniqueStops = [
+    'Arrives at UDC',
+    'Floral & Main',
+    'Hillside',
+    'ITC',
+    'Leaves Mohawk',
+    'Leaves Rafuse',
+    'Leaves UDC',
+    'Leaves Union',
+    'Leroy & Murray',
+    'Main & Murray',
+    'Mohawk',
+    'Parkway Plaza (Target)',
+    'Returns to Campus',
+    'Riverside & Columbus',
+    'Town Square Mall (Walmart)',
+    'UClub',
+    'Washington & Lehigh'
+];
 
 //* populate the start and destination stops dropdown
 document.addEventListener('DOMContentLoaded', function () {
@@ -28,6 +60,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         stopsAfterString.push(...stops.slice(searchStringIndex + 1).filter(stop => !stopsAfterString.includes(stop)));
                     }
                 }
+                console.log(searchString)
+                console.log(stopsAfterString);
                 return stopsAfterString;
             } catch (error) {
                 console.error('Error reading the file:', error.message);

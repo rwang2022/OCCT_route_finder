@@ -1,4 +1,4 @@
-PAGE 1 (2)
+PAGE 1
 WS Outbound
 Mon-Fri
 Leaves Union, Floral & Main, Main & Murray, Arrives at UDC
@@ -17,7 +17,7 @@ Leaves Union, Floral & Main, Main & Murray, Arrives at UDC
 7:00PM 7:09PM 7:15PM 7:25PM
 8:00PM 8:09PM 8:15PM 8:25PM
 
-PAGE 2 (3)
+PAGE 2
 DCL Inbound
 Mon-Fri
 Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus
@@ -36,7 +36,7 @@ Leaves UDC, Leroy & Murray, Riverside & Columbus, Returns to Campus
 7:25PM 7:28PM 7:34PM 7:45PM
 8:25PM 8:28PM 8:34PM 8:45PM
 
-PAGE 3 (4)
+PAGE 3
 DCL Outbound
 Mon-Fri
 Leaves Union, Riverside & Columbus, Leroy & Murray, Arrives at UDC
@@ -54,7 +54,7 @@ Leaves Union, Riverside & Columbus, Leroy & Murray, Arrives at UDC
 5:30PM 5:36PM 5:41PM 5:48PM
 7:15PM 7:21PM 7:26PM 7:33PM
 
-PAGE 4 (5)
+PAGE 4
 WS Inbound
 Mon-Fri
 Leaves UDC, Main & Murray, Floral & Main, Returns to Campus
@@ -72,7 +72,7 @@ Leaves UDC, Main & Murray, Floral & Main, Returns to Campus
 5:50PM 5:53PM 5:59PM 6:15PM
 7:35PM 7:38PM 7:44PM 8:00PM
 
-PAGE 5 (6)
+PAGE 5
 RRT - Riviera Ridge - Town Square Mall Shuttle
 Mon-Fri
 Leaves Rafuse, Parkway Plaza (Target), Town Square Mall (Walmart), Returns to Campus
@@ -85,7 +85,7 @@ Leaves Rafuse, Parkway Plaza (Target), Town Square Mall (Walmart), Returns to Ca
 5:00PM 5:09PM 5:15PM 5:25PM
 6:15PM 6:24PM 6:30PM 6:40PM
 
-PAGE 6 (7)
+PAGE 6
 UClub Shuttle
 Mon-Fri
 Leaves Mohawk, UClub, Washington & Lehigh
@@ -94,7 +94,7 @@ Leaves Mohawk, UClub, Washington & Lehigh
 7:00PM 7:05PM 7:09PM
 7:45PM 7:50PM 7:54PM
 
-PAGE 7 (8)
+PAGE 7
 Res-ITC-UClub Shuttle
 Mon-Fri
 Leaves Union, Hillside, Mohawk, ITC, UClub

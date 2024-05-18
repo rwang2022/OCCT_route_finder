@@ -285,7 +285,6 @@ function scrollToBottom() {
     output.innerHTML.trim();
     
     if (output.innerHTML === '') output.innerHTML = "<p style=\"font-size: 30px; padding: 5rem;\">No buses, change times.</p>";
-    console.log("hello");
     
     output.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
