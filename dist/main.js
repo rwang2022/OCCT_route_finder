@@ -58,8 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         stopsAfterString_1.push.apply(stopsAfterString_1, stops.slice(searchStringIndex + 1).filter(function (stop) { return !stopsAfterString_1.includes(stop); }));
                     }
                 }
-                console.log(searchString);
-                console.log(stopsAfterString_1);
                 return stopsAfterString_1;
             }
             catch (error) {

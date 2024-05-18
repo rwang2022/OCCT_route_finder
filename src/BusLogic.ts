@@ -184,7 +184,7 @@ async function fetchBusAtPageNumber(pageNumber: number): Promise<string[]> {
         const busDataArray = fullFileText.split('\n');
         const startIndex = busDataArray.findIndex(line => line.includes(targetPage));
 
-        if (startIndex === -1) { throw new Error(`Page ${pageNumber} not found`); }
+        if (startIndex === -1) {throw new Error(`Page ${pageNumber} not found, the times might be too narrow`); }
 
         const endIndex = busDataArray.findIndex((line, index) => index > startIndex && line.includes(`PAGE ${pageNumber + 1}`));
 

@@ -196,7 +196,7 @@ function fetchBusAtPageNumber(pageNumber) {
                     busDataArray = fullFileText.split('\n');
                     startIndex_1 = busDataArray.findIndex(function (line) { return line.includes(targetPage); });
                     if (startIndex_1 === -1) {
-                        throw new Error("Page " + pageNumber + " not found");
+                        throw new Error("Page " + pageNumber + " not found, the times might be too narrow");
                     }
                     endIndex = busDataArray.findIndex(function (line, index) { return index > startIndex_1 && line.includes("PAGE " + (pageNumber + 1)); });
                     filteredBusInfoArray = busDataArray

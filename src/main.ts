@@ -11,7 +11,8 @@ const lines = [
     'Leaves Union, Riverside & Columbus, Leroy & Murray, Arrives at UDC',
     'Leaves UDC, Main & Murray, Floral & Main, Returns to Campus',
     'Leaves Mohawk, UClub, Washington & Lehigh'
-];
+]
+
 const uniqueStops = [
     'Arrives at UDC',
     'Floral & Main',
@@ -30,7 +31,7 @@ const uniqueStops = [
     'Town Square Mall (Walmart)',
     'UClub',
     'Washington & Lehigh'
-];
+]
 
 //* populate the start and destination stops dropdown
 document.addEventListener('DOMContentLoaded', function () {
@@ -60,8 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         stopsAfterString.push(...stops.slice(searchStringIndex + 1).filter(stop => !stopsAfterString.includes(stop)));
                     }
                 }
-                console.log(searchString)
-                console.log(stopsAfterString);
                 return stopsAfterString;
             } catch (error) {
                 console.error('Error reading the file:', error.message);
