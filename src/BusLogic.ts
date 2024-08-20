@@ -47,6 +47,8 @@ class Bus {
         const weekdayOfToday = new Date().getDay();
         if (this.weekdays === 'Mon-Fri') return Days.MONDAY <= weekdayOfToday && weekdayOfToday <= Days.FRIDAY;
         else if (this.weekdays === 'Saturday & Sunday') return weekdayOfToday === Days.SATURDAY || weekdayOfToday === Days.SUNDAY;
+        else if (this.weekdays === 'Friday') return weekdayOfToday === 5;
+        else if (this.weekdays === 'Friday & Saturday') return weekdayOfToday === 5 || weekdayOfToday === 6;
         else return false;
     }
 
