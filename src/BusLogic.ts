@@ -296,3 +296,6 @@ function doesNothing() {
 
 function doesNothing2() {
 }
+
+
+function doesNothing3() {}
