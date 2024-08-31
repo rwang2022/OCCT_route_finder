@@ -34,16 +34,19 @@ def parse_bus_routes(file_path: str):
 
     return lines, unique_stops
 
-# File path to the fall2024.txt
-file_path = '../static/fall2024.txt'
+from pathlib import Path
+file_path = Path('./static/fall2024.txt').resolve()
+print(file_path)
 
 # Parse the file and generate the lists
 if os.path.exists(file_path):
-    lines, unique_stops = parse_bus_routes(file_path)
+    lines, unique_stops = parse_bus_routes(str(file_path))
     
     # Output the results
+    print(f'these are the results for {file_path}\n')
     print('const lines = ', lines)
-    print()
     print('const uniqueStops = ', unique_stops)
+
+    print("\nnow please go to /src/main.ts and update \nconst lines = ...\nconst uniqueStops =...\n")
 else:
     print(f'File not found: {file_path}')
