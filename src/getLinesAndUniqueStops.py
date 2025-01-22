@@ -35,7 +35,7 @@ def parse_bus_routes(file_path: str):
     return lines, unique_stops
 
 from pathlib import Path
-file_path = Path('../static/fall2024.txt').resolve()
+file_path = Path('./static/spring2025.txt').resolve()
 print(file_path)
 
 # Parse the file and generate the lists
