@@ -39,8 +39,7 @@ const LAST_MINUTE = 23 * 60 + 59;
 
 noUiSlider.create(slider3, {
     start: [nowMinutes, nowMinutes + MINUTES_OFFSET], // two sets of sliders
-    step: 15,
-    animate: false,
+    step: 30,
     behaviour: 'drag', // slider itself is draggable
     connect: true,
     range: {
@@ -66,22 +65,17 @@ var inputNumber1 = document.getElementById('departingTime');
 var inputNumber2 = document.getElementById('arrivalTime');
 
 slider3.noUiSlider.on('update', function (values, handle) {
-    var value = values[handle];
-
-    if (handle) {
-        inputNumber1.value = format.to(value[0]);
-    } else {
-        inputNumber2.value = format.to(value[1]);
-    }
+    inputNumber1.value = format.to(values[0]);
+    inputNumber2.value = format.to(values[1]);
 });
 
 // updating the inputs updates the sliders as well
 inputNumber1.addEventListener('change', function() {
     var startMinutes = format.from(inputNumber1.value);
-    slider3.noUiSlider.setHandle(0, startMinutes);
+    slider3.noUiSlider.set([startMinutes, null]);
 });
 
 inputNumber2.addEventListener('change', function() {
     var endMinutes = format.from(inputNumber2.value);
-    slider3.noUiSlider.setHandle(0, endMinutes);
+    slider3.noUiSlider.set([null, endMinutes]);
 });
