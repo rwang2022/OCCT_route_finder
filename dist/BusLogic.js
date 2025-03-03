@@ -150,7 +150,7 @@ class Bus {
 function fetchBusAtPageNumber(pageNumber) {
     return __awaiter(this, void 0, void 0, function* () {
         // const filePath = "full_info.txt";
-        const filePath = "/static/fall2024.txt";
+        const filePath = "/static/spring2025.txt";
         const targetPage = `PAGE ${pageNumber}`;
         try {
             const response = yield fetch(filePath);
