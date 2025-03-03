@@ -32,7 +32,7 @@ var slider3 = document.getElementById('slider3');
 
 const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).replace(" ", "");
 var nowMinutes = format.from(nowStr);
-const MINUTES_OFFSET = 60;
+const MINUTES_OFFSET = 120;
 var lockedValues = [nowMinutes, nowMinutes + MINUTES_OFFSET];
 const START_OF_DAY = 0;
 const LAST_MINUTE = 23 * 60 + 59;
