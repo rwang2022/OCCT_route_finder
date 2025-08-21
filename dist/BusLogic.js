@@ -36,9 +36,9 @@ class Bus {
     weekdaysMatchToday() {
         const weekdayOfToday = new Date().getDay();
         if (this.weekdays === 'Mon-Fri')
-            return 1 /* Days.MONDAY */ <= weekdayOfToday && weekdayOfToday <= 5 /* Days.FRIDAY */;
+            return 1 /* MONDAY */ <= weekdayOfToday && weekdayOfToday <= 5 /* FRIDAY */;
         else if (this.weekdays === 'Saturday & Sunday')
-            return weekdayOfToday === 6 /* Days.SATURDAY */ || weekdayOfToday === 0 /* Days.SUNDAY */;
+            return weekdayOfToday === 6 /* SATURDAY */ || weekdayOfToday === 0 /* SUNDAY */;
         else if (this.weekdays === 'Friday')
             return weekdayOfToday === 5;
         else if (this.weekdays === 'Friday & Saturday')
@@ -95,16 +95,16 @@ class Bus {
         let matches = true; // we want to over-display bus times, so we begin by assuming they match 
         switch (weekdayStr) {
             case "Mon-Thu":
-                matches = (1 /* Days.MONDAY */ <= weekdayOfToday) && (weekdayOfToday <= 4 /* Days.THURSDAY */);
+                matches = (1 /* MONDAY */ <= weekdayOfToday) && (weekdayOfToday <= 4 /* THURSDAY */);
                 break;
             case "Fri":
-                matches = (weekdayOfToday == 5 /* Days.FRIDAY */);
+                matches = (weekdayOfToday == 5 /* FRIDAY */);
                 break;
             case "Sat":
-                matches = (weekdayOfToday == 6 /* Days.SATURDAY */);
+                matches = (weekdayOfToday == 6 /* SATURDAY */);
                 break;
             case "Sun":
-                matches = (weekdayOfToday == 0 /* Days.SUNDAY */);
+                matches = (weekdayOfToday == 0 /* SUNDAY */);
                 break;
             default:
                 break;
@@ -150,7 +150,7 @@ class Bus {
 function fetchBusAtPageNumber(pageNumber) {
     return __awaiter(this, void 0, void 0, function* () {
         // const filePath = "full_info.txt";
-        const filePath = "/static/spring2025.txt";
+        const filePath = "/static/fall2025.txt";
         const targetPage = `PAGE ${pageNumber}`;
         try {
             const response = yield fetch(filePath);

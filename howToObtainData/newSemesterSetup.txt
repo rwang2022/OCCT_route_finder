@@ -21,4 +21,9 @@ GO TO src/getLinesAndUniqueStops.py
 - run src/getLinesAndUniqueStops.py 
 - replace const lines = ... const uniqueStops = ... with the terminal output
 
+GO TO src/BusLogic.ts 
+- replace the line      const filePath = "/static/fall2025.txt";
+
+RUN VSCode TSC: Compile Project
+
 AND YOU'RE DONE! TEST FOR ANY ISSUES 

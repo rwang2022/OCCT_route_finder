@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cssClasses = exports.PipsType = exports.PipsMode = void 0;
-exports.create = initialize;
+exports.cssClasses = exports.create = exports.PipsType = exports.PipsMode = void 0;
 var PipsMode;
 (function (PipsMode) {
     PipsMode["Range"] = "range";
@@ -9,14 +8,14 @@ var PipsMode;
     PipsMode["Positions"] = "positions";
     PipsMode["Count"] = "count";
     PipsMode["Values"] = "values";
-})(PipsMode || (exports.PipsMode = PipsMode = {}));
+})(PipsMode = exports.PipsMode || (exports.PipsMode = {}));
 var PipsType;
 (function (PipsType) {
     PipsType[PipsType["None"] = -1] = "None";
     PipsType[PipsType["NoValue"] = 0] = "NoValue";
     PipsType[PipsType["LargeValue"] = 1] = "LargeValue";
     PipsType[PipsType["SmallValue"] = 2] = "SmallValue";
-})(PipsType || (exports.PipsType = PipsType = {}));
+})(PipsType = exports.PipsType || (exports.PipsType = {}));
 //region Helper Methods
 function isValidFormatter(entry) {
     return isValidPartialFormatter(entry) && typeof entry.from === "function";
@@ -2227,9 +2226,9 @@ function scope(target, options, originalOptions) {
         __moveHandles: function (upward, proposal, handleNumbers) {
             moveHandles(upward, proposal, scope_Locations, handleNumbers);
         },
-        options: originalOptions, // Issue #600, #678
+        options: originalOptions,
         updateOptions: updateOptions,
-        target: scope_Target, // Issue #597
+        target: scope_Target,
         removePips: removePips,
         removeTooltips: removeTooltips,
         getPositions: function () {
@@ -2260,6 +2259,7 @@ function initialize(target, originalOptions) {
     target.noUiSlider = api;
     return api;
 }
+exports.create = initialize;
 exports.default = {
     // Exposed for unit testing, don't use this in your application.
     __spectrum: Spectrum,
