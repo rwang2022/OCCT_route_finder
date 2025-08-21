@@ -184,7 +184,6 @@ Leaves Union, Arrives at UDC
 PAGE 6
 University Downtown Center Inbound
 Mon-Fri
-Leaves Union, Arrives at UDC
 Leaves UDC, Arrives on Campus
 7:45AM 8:00AM
 8:15AM 8:30AM
